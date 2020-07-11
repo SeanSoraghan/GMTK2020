@@ -27,6 +27,7 @@ public class CubeController : MonoBehaviour
         Stationary
 	}
     static float SMALL_DISTANCE = 0.2f;
+    public static int WORLD_CUBE_LIMIT = 2;
 
     static CameraPanel.DisplayPosition ControlSchemeToPanelPosition(ControlScheme controls)
 	{
@@ -60,8 +61,6 @@ public class CubeController : MonoBehaviour
         return ControlScheme.TopDown;
     }
 
-    public GameObject camerasParent;
-    public GameObject fpsFrontPanel;
     public UIController uiController;
     public float unitMovementTimeSeconds = 0.2f;
 
@@ -97,25 +96,32 @@ public class CubeController : MonoBehaviour
             if (moveState == MovementState.Stationary)
             {
                 moveState = value;
+                float limit = WORLD_CUBE_LIMIT - 0.1f;
                 switch (moveState)
 				{
                     case MovementState.MovingForwards:
-                        moveTargetPos = transform.position + Vector3.forward;
+                        if (transform.position.z < limit)
+                            moveTargetPos = transform.position + Vector3.forward;
                         break;
                     case MovementState.MovingBackwards:
-                        moveTargetPos = transform.position - Vector3.forward;
+                        if (transform.position.z > -limit)
+                            moveTargetPos = transform.position - Vector3.forward;
                         break;
                     case MovementState.MovingRight:
-                        moveTargetPos = transform.position + Vector3.right;
+                        if (transform.position.x < limit)
+                            moveTargetPos = transform.position + Vector3.right;
                         break;
                     case MovementState.MovingLeft:
-                        moveTargetPos = transform.position - Vector3.right;
+                        if (transform.position.x > -limit)
+                            moveTargetPos = transform.position - Vector3.right;
                         break;
                     case MovementState.MovingUp:
-                        moveTargetPos = transform.position + Vector3.up;
+                        if (transform.position.y < limit)
+                            moveTargetPos = transform.position + Vector3.up;
                         break;
                     case MovementState.MovingDown:
-                        moveTargetPos = transform.position - Vector3.up;
+                        if (transform.position.y > -limit)
+                            moveTargetPos = transform.position - Vector3.up;
                         break;
                     default: break;
                 }
@@ -141,6 +147,7 @@ public class CubeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
         controller = GetComponent<CharacterController>();
         Assert.IsNotNull(controller);
         PlayerInput input = GetComponent<PlayerInput>();
@@ -149,8 +156,6 @@ public class CubeController : MonoBehaviour
             inputActions = input.actions;
         Assert.IsNotNull(uiController);
         Assert.IsNotNull(inputActions);
-        Assert.IsNotNull(camerasParent);
-        Assert.IsNotNull(fpsFrontPanel);
 
         moveTargetPos = transform.position;
         moveVec = Vector3.zero;
@@ -241,7 +246,6 @@ public class CubeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        camerasParent.transform.position = gameObject.transform.position;
         if (MoveState != MovementState.Stationary)
 		{
             Vector3 currentFrameTarget = transform.position + moveVec * (Time.deltaTime / unitMovementTimeSeconds);
