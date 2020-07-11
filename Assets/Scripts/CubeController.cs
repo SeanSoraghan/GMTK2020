@@ -7,6 +7,15 @@ using UnityEngine.UIElements;
 
 public class CubeController : MonoBehaviour
 {
+    public enum ControlScheme : int
+	{
+        TopDown = 1,
+        FPSFront = 2,
+        FPSBack = 3,
+        SideScroller = 4,
+        NumSchemes
+	}
+
     public enum MovementState : int
 	{
         MovingForwards = 0,
@@ -23,13 +32,24 @@ public class CubeController : MonoBehaviour
     public GameObject fpsFrontPanel;
     public float unitMovementTimeSeconds = 0.2f;
 
-    PlayerInput input;
+    InputActionAsset inputActions;
     CharacterController controller;
-    Vector3 moveStartPos;
     Vector3 moveTargetPos;
     Vector3 moveVec;
-    float moveStartTime = 0.0f;
-    float moveLerpX = 0.0f;
+    ControlScheme _controlScheme = ControlScheme.TopDown;
+    ControlScheme controlScheme
+	{
+        get
+		{
+            return _controlScheme;
+		}
+        set
+		{
+            inputActions.actionMaps[(int)_controlScheme].Disable();
+            _controlScheme = value;
+            inputActions.actionMaps[(int)_controlScheme].Enable();
+        }
+    }
 
     MovementState moveState = MovementState.Stationary;
     MovementState MoveState
@@ -67,9 +87,7 @@ public class CubeController : MonoBehaviour
                 }
                 if (moveState != MovementState.Stationary)
 				{
-                    moveStartTime = Time.time;
-                    moveStartPos = transform.position;
-                    moveVec = (moveTargetPos - moveStartPos).normalized;
+                    moveVec = (moveTargetPos - transform.position).normalized;
                 }
             }
             else if (value == MovementState.Stationary)
@@ -91,16 +109,28 @@ public class CubeController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         Assert.IsTrue(controller != null);
-        input = GetComponent<PlayerInput>();
+        PlayerInput input = GetComponent<PlayerInput>();
         Assert.IsTrue(input != null);
+        if (input != null)
+            inputActions = input.actions;
+        Assert.IsTrue(inputActions != null);
         Assert.IsTrue(camerasParent != null);
         Assert.IsTrue(fpsFrontPanel != null);
 
         moveTargetPos = transform.position;
         moveVec = Vector3.zero;
 
-        for (int i = 0; i < input.actions.actionMaps[0].actions.Count; ++i)
-            input.actions.actionMaps[0].actions[i].performed += GetResponder((MovementState)i);
+        InputActionMap metaControls = inputActions.actionMaps[0];
+        metaControls.actions[0].performed += OnSwitchControlsHorizontal;
+        metaControls.actions[1].performed += OnSwitchControlsVertical;
+        for (int map = 1; map < inputActions.actionMaps.Count; ++map)
+        {
+            InputActionMap actionMap = inputActions.actionMaps[map];
+            for (int i = 0; i < actionMap.actions.Count; ++i)
+                actionMap.actions[i].performed += GetResponder((MovementState)i);
+            actionMap.Disable();
+        }
+        controlScheme = ControlScheme.TopDown;
     }
 
     System.Action<InputAction.CallbackContext> GetResponder(MovementState movementState)
@@ -128,6 +158,44 @@ public class CubeController : MonoBehaviour
     public void OnMoveUp(InputAction.CallbackContext context) { MoveState = MovementState.MovingUp; }
 
     public void OnMoveDown(InputAction.CallbackContext context) { MoveState = MovementState.MovingDown; }
+
+    public void OnSwitchControlsHorizontal(InputAction.CallbackContext context)
+	{
+        switch (controlScheme)
+		{
+            case ControlScheme.TopDown: 
+                controlScheme = ControlScheme.FPSFront;
+                break;
+            case ControlScheme.FPSFront:
+                controlScheme = ControlScheme.TopDown;
+                break;
+            case ControlScheme.SideScroller:
+                controlScheme = ControlScheme.FPSBack;
+                break;
+            case ControlScheme.FPSBack:
+                controlScheme = ControlScheme.SideScroller;
+                break;
+        }
+	}
+
+    public void OnSwitchControlsVertical(InputAction.CallbackContext context)
+    {
+        switch (controlScheme)
+        {
+            case ControlScheme.TopDown:
+                controlScheme = ControlScheme.SideScroller;
+                break;
+            case ControlScheme.SideScroller:
+                controlScheme = ControlScheme.TopDown;
+                break;
+            case ControlScheme.FPSFront:
+                controlScheme = ControlScheme.FPSBack;
+                break;
+            case ControlScheme.FPSBack:
+                controlScheme = ControlScheme.FPSFront;
+                break;
+        }
+    }
 
     // Update is called once per frame
     void Update()

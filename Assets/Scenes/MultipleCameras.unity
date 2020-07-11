@@ -278,7 +278,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: FPS
+  m_DefaultActionMap: TopDown
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &518168403

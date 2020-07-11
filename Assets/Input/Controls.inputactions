@@ -2,7 +2,159 @@
     "name": "Controls",
     "maps": [
         {
-            "name": "FPS",
+            "name": "MetaControls",
+            "id": "ed31afe1-470b-47c3-ae6c-339172ef17c5",
+            "actions": [
+                {
+                    "name": "SwitchHorizontal",
+                    "type": "Button",
+                    "id": "7b078015-47ff-4bb5-a401-04d1d4ef2fae",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SwitchVertical",
+                    "type": "Button",
+                    "id": "09036028-1f75-493d-be9d-6a2caf56fe5c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a8151fca-600a-4baa-a58b-fc89f72c2dfd",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchHorizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cecdd127-7d59-43e3-8ef3-31cec4be70a2",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchHorizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b92222c-0862-4ef1-8066-b486a04dd489",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchVertical",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "686005c6-93e2-4433-9245-f4560b7aecef",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchVertical",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "TopDown",
+            "id": "54061b01-ab05-4abe-aecb-173c4798f718",
+            "actions": [
+                {
+                    "name": "MoveForwards",
+                    "type": "Button",
+                    "id": "9b648051-4b04-4395-84a0-cb07d3e0e345",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveBackwards",
+                    "type": "Button",
+                    "id": "cf00209d-eac1-450f-a2ab-9b881dae5db7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveRight",
+                    "type": "Button",
+                    "id": "a76fcd40-71ce-4929-9c65-4d27ae63957b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveLeft",
+                    "type": "Button",
+                    "id": "86b0cd3f-6acd-4a6e-a76a-9d59e83e3ef5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6fe605d3-aec3-4a92-a2c3-d111c3881717",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8f721b3-3586-47a6-a558-0f9e2aab9298",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveForwards",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "89edb9ed-ca64-4363-9d79-db9ce5599ba8",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveBackwards",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9915a478-3d7e-47d3-ae63-ce72d1d2a98b",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "FPSFront",
             "id": "0d1b717c-9ad0-49c7-b00c-15e9b07156fd",
             "actions": [
                 {
@@ -86,17 +238,93 @@
             ]
         },
         {
-            "name": "SideScroller",
-            "id": "5a2622ba-a890-4940-851f-c4340c579047",
+            "name": "FPSBack",
+            "id": "7de7c611-d94f-4b09-88cb-01d0bc545cc1",
             "actions": [
                 {
-                    "name": "Jump",
+                    "name": "MoveForwards",
                     "type": "Button",
-                    "id": "ebe96f88-6925-4e51-935d-8ccb24284e3e",
+                    "id": "9b1ef52d-b71f-451d-83ae-8fba8c8f261c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
+                {
+                    "name": "MoveBackwards",
+                    "type": "Button",
+                    "id": "708d07ff-c0b9-4f0a-91af-30a1bb1d0b84",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveRight",
+                    "type": "Button",
+                    "id": "54745018-56ad-4800-9019-08077b78aad8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveLeft",
+                    "type": "Button",
+                    "id": "8bcf5c56-cf36-45ed-bb6a-f2a8d7579f40",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9e51b6f7-2307-4781-9601-3a9f8db62afd",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveForwards",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "faf78953-1d05-4725-b13b-0304a6ea7212",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveBackwards",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8cc385f4-573c-49af-b29a-e1c0b29163c7",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b61ad488-1334-4641-a152-20dac48ce065",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "SideScroller",
+            "id": "5a2622ba-a890-4940-851f-c4340c579047",
+            "actions": [
                 {
                     "name": "MoveForwards",
                     "type": "Button",
@@ -112,6 +340,38 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "MoveRight",
+                    "type": "Button",
+                    "id": "e7e98ce1-780d-4525-8ce8-2db0fef05d5a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveLeft",
+                    "type": "Button",
+                    "id": "9c2672e2-910e-4c86-b348-66417a414e9f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveUp",
+                    "type": "Button",
+                    "id": "ebe96f88-6925-4e51-935d-8ccb24284e3e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveDown",
+                    "type": "Button",
+                    "id": "e5be641f-18d3-4333-8250-b3f652001af8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -122,7 +382,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
+                    "action": "MoveUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -147,31 +407,37 @@
                     "action": "MoveBackwards",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "TopDown",
-            "id": "bcfc11b8-b719-4010-97f3-e0ded7b7a0c0",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "b1f3896a-8989-4638-bb7e-4a99cfa81125",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
+                },
                 {
                     "name": "",
-                    "id": "b171f403-5bb3-4c8e-accd-33f2ee1ea418",
+                    "id": "071ef6ea-d015-4579-a6db-2b2cf28fc413",
                     "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "MoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "371ca5aa-bdb7-43cb-bd8f-82790714a50c",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2be5caa6-d58b-48c5-aa69-4b54c16d0a1b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
