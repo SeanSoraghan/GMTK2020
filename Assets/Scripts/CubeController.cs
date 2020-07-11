@@ -9,10 +9,10 @@ public class CubeController : MonoBehaviour
 {
     public enum ControlScheme : int
 	{
-        TopDown = 1,
-        FPSFront = 2,
-        FPSBack = 3,
-        SideScroller = 4,
+        TopDown = 0,
+        FPSFront,
+        FPSBack,
+        SideScroller,
         NumSchemes
 	}
 
@@ -28,8 +28,41 @@ public class CubeController : MonoBehaviour
 	}
     static float SMALL_DISTANCE = 0.2f;
 
+    static CameraPanel.DisplayPosition ControlSchemeToPanelPosition(ControlScheme controls)
+	{
+        switch (controls)
+		{
+            case ControlScheme.TopDown:
+                return CameraPanel.DisplayPosition.TopLeft;
+            case ControlScheme.FPSFront:
+                return CameraPanel.DisplayPosition.TopRight;
+            case ControlScheme.FPSBack:
+                return CameraPanel.DisplayPosition.BottomRight;
+            case ControlScheme.SideScroller:
+                return CameraPanel.DisplayPosition.BottomLeft;
+        }
+        return CameraPanel.DisplayPosition.TopLeft;
+	}
+
+    static ControlScheme PanelPositionToControlScheme(CameraPanel.DisplayPosition displayPosition)
+    {
+        switch (displayPosition)
+        {
+            case CameraPanel.DisplayPosition.TopLeft:
+                return ControlScheme.TopDown;
+            case CameraPanel.DisplayPosition.TopRight:
+                return ControlScheme.FPSFront;
+            case CameraPanel.DisplayPosition.BottomRight:
+                return ControlScheme.FPSBack;
+            case CameraPanel.DisplayPosition.BottomLeft:
+                return ControlScheme.SideScroller;
+        }
+        return ControlScheme.TopDown;
+    }
+
     public GameObject camerasParent;
     public GameObject fpsFrontPanel;
+    public UIController uiController;
     public float unitMovementTimeSeconds = 0.2f;
 
     InputActionAsset inputActions;
@@ -48,6 +81,7 @@ public class CubeController : MonoBehaviour
             inputActions.actionMaps[(int)_controlScheme].Disable();
             _controlScheme = value;
             inputActions.actionMaps[(int)_controlScheme].Enable();
+            uiController.PositionPanelUI(ControlSchemeToPanelPosition(_controlScheme));
         }
     }
 
@@ -108,29 +142,30 @@ public class CubeController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        Assert.IsTrue(controller != null);
+        Assert.IsNotNull(controller);
         PlayerInput input = GetComponent<PlayerInput>();
-        Assert.IsTrue(input != null);
+        Assert.IsNotNull(input);
         if (input != null)
             inputActions = input.actions;
-        Assert.IsTrue(inputActions != null);
-        Assert.IsTrue(camerasParent != null);
-        Assert.IsTrue(fpsFrontPanel != null);
+        Assert.IsNotNull(uiController);
+        Assert.IsNotNull(inputActions);
+        Assert.IsNotNull(camerasParent);
+        Assert.IsNotNull(fpsFrontPanel);
 
         moveTargetPos = transform.position;
         moveVec = Vector3.zero;
 
-        InputActionMap metaControls = inputActions.actionMaps[0];
-        metaControls.actions[0].performed += OnSwitchControlsHorizontal;
-        metaControls.actions[1].performed += OnSwitchControlsVertical;
-        for (int map = 1; map < inputActions.actionMaps.Count; ++map)
+        for (int map = 0; map < inputActions.actionMaps.Count; ++map)
         {
             InputActionMap actionMap = inputActions.actionMaps[map];
-            for (int i = 0; i < actionMap.actions.Count; ++i)
+            Assert.IsTrue(actionMap.actions.Count == (int)MovementState.Stationary + 2);
+            for (int i = 0; i < (int)MovementState.Stationary; ++i)
                 actionMap.actions[i].performed += GetResponder((MovementState)i);
+            actionMap.actions[(int)MovementState.Stationary].performed += OnSwitchControlsVertical;
+            actionMap.actions[(int)MovementState.Stationary + 1].performed += OnSwitchControlsHorizontal;
             actionMap.Disable();
         }
-        controlScheme = ControlScheme.TopDown;
+        controlScheme = ControlScheme.SideScroller;
     }
 
     System.Action<InputAction.CallbackContext> GetResponder(MovementState movementState)
@@ -147,11 +182,17 @@ public class CubeController : MonoBehaviour
         return OnMoveForwards;
 	}
     // Input responders
-    public void OnMoveForwards(InputAction.CallbackContext context) { MoveState = MovementState.MovingForwards; }
+    public void OnMoveForwards(InputAction.CallbackContext context)
+    {
+        MoveState = MovementState.MovingForwards;
+    }
 
     public void OnMoveBackwards(InputAction.CallbackContext context) { MoveState = MovementState.MovingBackwards; }
 
-    public void OnMoveRight(InputAction.CallbackContext context) { MoveState = MovementState.MovingRight; }
+    public void OnMoveRight(InputAction.CallbackContext context)
+    {
+        MoveState = MovementState.MovingRight;
+    }
 
     public void OnMoveLeft(InputAction.CallbackContext context) { MoveState = MovementState.MovingLeft; }
 
@@ -159,40 +200,40 @@ public class CubeController : MonoBehaviour
 
     public void OnMoveDown(InputAction.CallbackContext context) { MoveState = MovementState.MovingDown; }
 
-    public void OnSwitchControlsHorizontal(InputAction.CallbackContext context)
-	{
-        switch (controlScheme)
-		{
-            case ControlScheme.TopDown: 
-                controlScheme = ControlScheme.FPSFront;
-                break;
-            case ControlScheme.FPSFront:
-                controlScheme = ControlScheme.TopDown;
-                break;
-            case ControlScheme.SideScroller:
-                controlScheme = ControlScheme.FPSBack;
-                break;
-            case ControlScheme.FPSBack:
-                controlScheme = ControlScheme.SideScroller;
-                break;
-        }
-	}
-
     public void OnSwitchControlsVertical(InputAction.CallbackContext context)
     {
-        switch (controlScheme)
+        switch (ControlSchemeToPanelPosition(controlScheme))
         {
-            case ControlScheme.TopDown:
-                controlScheme = ControlScheme.SideScroller;
+            case CameraPanel.DisplayPosition.TopLeft:
+                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.BottomLeft);
                 break;
-            case ControlScheme.SideScroller:
-                controlScheme = ControlScheme.TopDown;
+            case CameraPanel.DisplayPosition.TopRight:
+                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.BottomRight);
                 break;
-            case ControlScheme.FPSFront:
-                controlScheme = ControlScheme.FPSBack;
+            case CameraPanel.DisplayPosition.BottomRight:
+                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.TopRight);
                 break;
-            case ControlScheme.FPSBack:
-                controlScheme = ControlScheme.FPSFront;
+            case CameraPanel.DisplayPosition.BottomLeft:
+                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.TopLeft);
+                break;
+        }
+    }
+
+    public void OnSwitchControlsHorizontal(InputAction.CallbackContext context)
+    {
+        switch (ControlSchemeToPanelPosition(controlScheme))
+        {
+            case CameraPanel.DisplayPosition.TopLeft:
+                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.TopRight);
+                break;
+            case CameraPanel.DisplayPosition.TopRight:
+                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.TopLeft);
+                break;
+            case CameraPanel.DisplayPosition.BottomRight:
+                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.BottomLeft);
+                break;
+            case CameraPanel.DisplayPosition.BottomLeft:
+                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.BottomRight);
                 break;
         }
     }
@@ -203,8 +244,6 @@ public class CubeController : MonoBehaviour
         camerasParent.transform.position = gameObject.transform.position;
         if (MoveState != MovementState.Stationary)
 		{
-            //         moveLerpX = (Time.time - moveStartTime) / unitMovementTimeSeconds;
-            //         Vector3.Lerp(moveStartPos, moveTargetPos, moveLerpX);
             Vector3 currentFrameTarget = transform.position + moveVec * (Time.deltaTime / unitMovementTimeSeconds);
 
 			if (Vector3.Distance(transform.position, moveTargetPos) < SMALL_DISTANCE || Vector3.Distance(currentFrameTarget, moveTargetPos) < SMALL_DISTANCE)
