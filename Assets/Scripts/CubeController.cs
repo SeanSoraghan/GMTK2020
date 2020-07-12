@@ -26,6 +26,14 @@ public class CubeController : MonoBehaviour
         MovingDown,
         Stationary
 	}
+
+    public enum PanelSwitch : int
+	{
+        Vertical,
+        Horizontal,
+        None
+	}
+
     static float SMALL_DISTANCE = 0.2f;
     public static int WORLD_CUBE_LIMIT = 2;
 
@@ -67,16 +75,14 @@ public class CubeController : MonoBehaviour
     public float unitMovementTimeSeconds = 0.2f;
 
     InputActionAsset inputActions;
+
     CharacterController controller;
     Vector3 moveTargetPos;
     Vector3 moveVec;
     ControlScheme _controlScheme = ControlScheme.TopDown;
     ControlScheme controlScheme
 	{
-        get
-		{
-            return _controlScheme;
-		}
+        get { return _controlScheme; }
         set
 		{
             inputActions.actionMaps[(int)_controlScheme].Disable();
@@ -89,10 +95,7 @@ public class CubeController : MonoBehaviour
     MovementState moveState = MovementState.Stationary;
     MovementState MoveState
     {
-        get
-        {
-            return moveState;
-        }
+        get { return moveState; }
         set
         {
             if (moveState == MovementState.Stationary)
@@ -176,10 +179,10 @@ public class CubeController : MonoBehaviour
         {
             InputActionMap actionMap = inputActions.actionMaps[map];
             Assert.IsTrue(actionMap.actions.Count == (int)MovementState.Stationary + 2);
-            for (int i = 0; i < (int)MovementState.Stationary; ++i)
-                actionMap.actions[i].performed += GetResponder((MovementState)i);
-            actionMap.actions[(int)MovementState.Stationary].performed += OnSwitchControlsVertical;
-            actionMap.actions[(int)MovementState.Stationary + 1].performed += OnSwitchControlsHorizontal;
+            actionMap.actions[0].performed += OnSwitchControlsVertical;
+            actionMap.actions[1].performed += OnSwitchControlsHorizontal;
+            for (int i = 2; i < actionMap.actions.Count; ++i)
+                actionMap.actions[i].performed += GetResponder((MovementState)(i - 2));
             actionMap.Disable();
         }
         controlScheme = ControlScheme.SideScrollLR;
@@ -214,6 +217,16 @@ public class CubeController : MonoBehaviour
 
     public void OnSwitchControlsVertical(InputAction.CallbackContext context)
     {
+        SwitchPanelVertical();
+    }
+
+    public void OnSwitchControlsHorizontal(InputAction.CallbackContext context)
+    {
+        SwitchPanelHorizontal();
+    }
+
+    void SwitchPanelVertical()
+    {
         switch (ControlSchemeToPanelPosition(controlScheme))
         {
             case CameraPanel.DisplayPosition.TopLeft:
@@ -231,7 +244,7 @@ public class CubeController : MonoBehaviour
         }
     }
 
-    public void OnSwitchControlsHorizontal(InputAction.CallbackContext context)
+    void SwitchPanelHorizontal()
     {
         switch (ControlSchemeToPanelPosition(controlScheme))
         {
@@ -250,8 +263,15 @@ public class CubeController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void Update()
+	{
+        if (MoveState == MovementState.Stationary)
+        {
+            InputSystem.Update();
+        }
+	}
+
+	void FixedUpdate()
     {
         if (MoveState != MovementState.Stationary)
 		{
@@ -268,11 +288,4 @@ public class CubeController : MonoBehaviour
             }
 		}
     }
-
- //   void OnGUI()
-	//{
- //       if (guiSkin != null)
- //           GUI.skin = guiSkin;
- //       Debug.Log("Help");
-	//}
 }
