@@ -29,6 +29,8 @@ public class CubeController : MonoBehaviour
     static float SMALL_DISTANCE = 0.2f;
     public static int WORLD_CUBE_LIMIT = 2;
 
+    public GUISkin guiSkin;
+
     public static CameraPanel.DisplayPosition ControlSchemeToPanelPosition(ControlScheme controls)
 	{
         switch (controls)
@@ -61,7 +63,7 @@ public class CubeController : MonoBehaviour
         return ControlScheme.TopDown;
     }
 
-    public UIController uiController;
+    public UIController2 uiController;
     public float unitMovementTimeSeconds = 0.2f;
 
     InputActionAsset inputActions;
@@ -95,33 +97,42 @@ public class CubeController : MonoBehaviour
         {
             if (moveState == MovementState.Stationary)
             {
+                Vector3 pos = transform.position;
+                float xR = Mathf.Abs(Mathf.Repeat(pos.x, 1.0f));
+                float yR = Mathf.Abs(Mathf.Repeat(pos.y, 1.0f));
+                float zR = Mathf.Abs(Mathf.Repeat(pos.z, 1.0f));
+                if (xR != 0.0f || yR != 0.0f || zR != 0.0f)
+				{
+                    Debug.Log("Caught");
+                    Assert.IsTrue(false);
+				}
                 moveState = value;
                 float limit = WORLD_CUBE_LIMIT - 0.1f;
                 switch (moveState)
 				{
                     case MovementState.MovingForwards:
                         if (transform.position.z < limit)
-                            moveTargetPos = transform.position + Vector3.forward;
+                            moveTargetPos = pos + Vector3.forward;
                         break;
                     case MovementState.MovingBackwards:
                         if (transform.position.z > -limit)
-                            moveTargetPos = transform.position - Vector3.forward;
+                            moveTargetPos = pos - Vector3.forward;
                         break;
                     case MovementState.MovingRight:
                         if (transform.position.x < limit)
-                            moveTargetPos = transform.position + Vector3.right;
+                            moveTargetPos = pos + Vector3.right;
                         break;
                     case MovementState.MovingLeft:
                         if (transform.position.x > -limit)
-                            moveTargetPos = transform.position - Vector3.right;
+                            moveTargetPos = pos - Vector3.right;
                         break;
                     case MovementState.MovingUp:
                         if (transform.position.y < limit)
-                            moveTargetPos = transform.position + Vector3.up;
+                            moveTargetPos = pos + Vector3.up;
                         break;
                     case MovementState.MovingDown:
                         if (transform.position.y > -limit)
-                            moveTargetPos = transform.position - Vector3.up;
+                            moveTargetPos = pos - Vector3.up;
                         break;
                     default: break;
                 }
@@ -148,6 +159,7 @@ public class CubeController : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
+        moveTargetPos = transform.position;
         controller = GetComponent<CharacterController>();
         Assert.IsNotNull(controller);
         PlayerInput input = GetComponent<PlayerInput>();
@@ -171,6 +183,7 @@ public class CubeController : MonoBehaviour
             actionMap.Disable();
         }
         controlScheme = ControlScheme.SideScrollLR;
+        uiController.TeleportPanel();
     }
 
     System.Action<InputAction.CallbackContext> GetResponder(MovementState movementState)
@@ -238,7 +251,7 @@ public class CubeController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (MoveState != MovementState.Stationary)
 		{
@@ -256,5 +269,10 @@ public class CubeController : MonoBehaviour
 		}
     }
 
-    
+ //   void OnGUI()
+	//{
+ //       if (guiSkin != null)
+ //           GUI.skin = guiSkin;
+ //       Debug.Log("Help");
+	//}
 }

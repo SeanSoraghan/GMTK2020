@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207a8fb2f4b79eb41afafa37f66cc838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guiSkin: {fileID: 11400000, guid: 60e553bc802d9bb47bf87fcefb00f0f6, type: 2}
   uiController: {fileID: 1399842693}
   unitMovementTimeSeconds: 0.15
 --- !u!143 &63243442
@@ -2129,8 +2130,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -281, y: 248.5}
-  m_SizeDelta: {x: 562, y: 497}
+  m_AnchoredPosition: {x: -281, y: 207.75}
+  m_SizeDelta: {x: 562, y: 415.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1399842693
 MonoBehaviour:
@@ -2141,9 +2142,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1399842691}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a554bde8d88c8e6438489b5af52224a1, type: 3}
+  m_Script: {fileID: 11500000, guid: ffedf90614ede9a41982dbe55b163ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelThickness: 20
+  panelAnimationTimeSeconds: 0.2
+  guiSkin: {fileID: 11400000, guid: 60e553bc802d9bb47bf87fcefb00f0f6, type: 2}
 --- !u!114 &1399842694
 MonoBehaviour:
   m_ObjectHideFlags: 0

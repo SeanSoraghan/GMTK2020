@@ -4,49 +4,52 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+public class UIController2 : MonoBehaviour
 {
     public float panelThickness = 20.0f;
     public float panelAnimationTimeSeconds = 0.2f;
     public GUISkin guiSkin;
 
-    RectTransform imageRect;
     CameraPanel.DisplayPosition displayPos = CameraPanel.DisplayPosition.TopLeft;
     Vector2 panelFrameCentre;
     Vector2 _movementTarget;
     Vector2 movementTarget
-	{
-		get
-		{
+    {
+        get
+        {
             return _movementTarget;
-		}
+        }
         set
-		{
+        {
             _movementTarget = value;
             lerpStartTime = Time.time;
-		}
-	}
+        }
+    }
     Vector2 movementStartPos;
     float lerpX;
     float lerpStartTime;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         Assert.IsNotNull(guiSkin);
-        imageRect = GetComponent<RectTransform>();
-        Assert.IsNotNull(imageRect);
-        float w = Screen.width;
-        float h = Screen.height;
-        imageRect.sizeDelta = new Vector2(0.5f * w, 0.5f * h);
-        UpdateDisplay();
+        UpdateDisplay(true);
     }
 
     public void PositionPanelUI(CameraPanel.DisplayPosition displayPosition)
-	{
+    {
         displayPos = displayPosition;
-        UpdateDisplay();
-        switch (displayPosition)
-		{
+        UpdateDisplay(false);
+    }
+
+    public void TeleportPanel()
+	{
+        panelFrameCentre = movementTarget;
+	}
+
+    void UpdateDisplay(bool teleport)
+	{
+        switch (displayPos)
+        {
             case CameraPanel.DisplayPosition.BottomLeft:
                 movementTarget = new Vector2(0.25f, 0.75f);
                 break;
@@ -60,57 +63,36 @@ public class UIController : MonoBehaviour
                 movementTarget = new Vector2(0.75f, 0.25f);
                 break;
         }
-        movementStartPos = panelFrameCentre;
-	}
-
-    void UpdateDisplay()
-	{
-        if (imageRect != null)
+        if (teleport)
         {
-            float w = Screen.width;
-            float h = Screen.height;
-            switch (displayPos)
-            {
-                case CameraPanel.DisplayPosition.TopLeft:
-                    imageRect.anchoredPosition = new Vector2(-0.25f * w, 0.25f * h);
-                    break;
-                case CameraPanel.DisplayPosition.TopRight:
-                    imageRect.anchoredPosition = new Vector2(0.25f * w, 0.25f * h);
-                    break;
-                case CameraPanel.DisplayPosition.BottomLeft:
-                    imageRect.anchoredPosition = new Vector2(-0.25f * w, -0.25f * h);
-                    break;
-                case CameraPanel.DisplayPosition.BottomRight:
-                    imageRect.anchoredPosition = new Vector2(0.25f * w, -0.25f * h);
-                    break;
-                default: break;
-            }
+            panelFrameCentre = movementTarget;
         }
+        movementStartPos = panelFrameCentre;
     }
 
     void OnGUI()
     {
         if (panelFrameCentre != movementTarget)
-		{
+        {
             lerpX = (Time.time - lerpStartTime) / panelAnimationTimeSeconds;
             panelFrameCentre = Vector2.Lerp(movementStartPos, movementTarget, lerpX);
             if (Vector2.Distance(panelFrameCentre, movementTarget) < 0.05f)
-			{
+            {
                 panelFrameCentre = movementTarget;
-			}
-		}
+            }
+        }
         DrawPanel();
     }
 
     void DrawPanel()
-	{
+    {
         if (guiSkin != null)
             GUI.skin = guiSkin;
 
         float w = Screen.width;
         float h = Screen.height;
         Vector2 centre = panelFrameCentre * new Vector2(w, h);
-        
+
         Vector2 leftBarXY = new Vector2(centre.x - 0.25f * w, centre.y - 0.25f * h);
         GUI.Box(new Rect(leftBarXY.x, leftBarXY.y, panelThickness, h * 0.5f), "");
 
@@ -119,7 +101,7 @@ public class UIController : MonoBehaviour
 
         Vector2 topBarXY = new Vector2(centre.x - 0.25f * w, centre.y - 0.25f * h);
         GUI.Box(new Rect(topBarXY.x, topBarXY.y, 0.5f * w, panelThickness), "");
-        
+
         Vector2 bottomBarXY = new Vector2(centre.x - 0.25f * w, centre.y + 0.25f * h - panelThickness);
         GUI.Box(new Rect(bottomBarXY.x, bottomBarXY.y, 0.5f * w, panelThickness), "");
     }
