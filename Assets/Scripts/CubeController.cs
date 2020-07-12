@@ -74,6 +74,9 @@ public class CubeController : MonoBehaviour
     public UIController2 uiController;
     public float unitMovementTimeSeconds = 0.2f;
 
+    bool shouldReset = false;
+    bool goalReached = false;
+
     InputActionAsset inputActions;
 
     CharacterController controller;
@@ -148,6 +151,8 @@ public class CubeController : MonoBehaviour
 			{
                 moveState = value;
                 moveVec = Vector3.zero;
+                if (goalReached)
+                    shouldReset = true;
 			}
         }
     }
@@ -271,6 +276,11 @@ public class CubeController : MonoBehaviour
         }
 	}
 
+	private void OnTriggerEnter(Collider other)
+	{
+        if (other.tag == "Goal")
+            goalReached = true;
+    }
 	void FixedUpdate()
     {
         if (MoveState != MovementState.Stationary)
@@ -287,5 +297,11 @@ public class CubeController : MonoBehaviour
                 controller.Move(moveVec * (Time.deltaTime / unitMovementTimeSeconds));
             }
 		}
+        if (shouldReset) // Ideally the player would be animated back to starting position.
+		{
+            transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
+            goalReached = false;
+            shouldReset = false;
+        }
     }
 }
