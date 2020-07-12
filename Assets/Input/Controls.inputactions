@@ -184,11 +184,11 @@
             ]
         },
         {
-            "name": "FPSFront",
+            "name": "BottomUp",
             "id": "0d1b717c-9ad0-49c7-b00c-15e9b07156fd",
             "actions": [
                 {
-                    "name": "MoveForwardsFPSF",
+                    "name": "MoveForwardsBU",
                     "type": "Button",
                     "id": "81cf834b-f30c-4b1f-84cb-a07907ab9c0e",
                     "expectedControlType": "Button",
@@ -196,7 +196,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "MoveBackwardsFPSF",
+                    "name": "MoveBackwardsBU",
                     "type": "Button",
                     "id": "b571e1b6-cc3c-4213-94b5-1ec77e679887",
                     "expectedControlType": "Button",
@@ -204,7 +204,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "MoveRightFPSF",
+                    "name": "MoveRightBU",
                     "type": "Button",
                     "id": "77c3dff3-b4e2-48ed-b92b-b09185ec93bb",
                     "expectedControlType": "Button",
@@ -212,7 +212,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "MoveLeftFPSF",
+                    "name": "MoveLeftBU",
                     "type": "Button",
                     "id": "53a8172f-3a41-45e0-8d20-25a8d2f210cf",
                     "expectedControlType": "Button",
@@ -220,7 +220,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "MoveUpFPSF",
+                    "name": "MoveUpBU",
                     "type": "Button",
                     "id": "62f0f721-94ce-4020-8b7d-955c612af710",
                     "expectedControlType": "Button",
@@ -228,7 +228,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "MoveDownFPSF",
+                    "name": "MoveDownBU",
                     "type": "Button",
                     "id": "8f98c71d-a34b-4350-84de-66bd7868cc30",
                     "expectedControlType": "Button",
@@ -236,7 +236,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "SwitchVerticalFPSF",
+                    "name": "SwitchVerticalBU",
                     "type": "Button",
                     "id": "919204fb-98a4-4d5d-a793-cc785a5003e1",
                     "expectedControlType": "Button",
@@ -244,7 +244,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "SwitchHorizontalFPSF",
+                    "name": "SwitchHorizontalBU",
                     "type": "Button",
                     "id": "1b48d87f-3690-476c-873f-ee9b7a0a6d17",
                     "expectedControlType": "Button",
@@ -256,22 +256,22 @@
                 {
                     "name": "",
                     "id": "65588322-eaa1-4e24-bd69-1bdceb03e2f1",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveForwardsFPSF",
+                    "action": "MoveForwardsBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "b5493b44-f814-4c1e-872e-23a52ccfb7e2",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveBackwardsFPSF",
+                    "action": "MoveBackwardsBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -282,7 +282,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveRightFPSF",
+                    "action": "MoveRightBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -293,7 +293,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveLeftFPSF",
+                    "action": "MoveLeftBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -304,7 +304,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveDownFPSF",
+                    "action": "MoveDownBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -315,7 +315,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveUpFPSF",
+                    "action": "MoveUpBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -326,7 +326,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchHorizontalFPSF",
+                    "action": "SwitchHorizontalBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -337,7 +337,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchHorizontalFPSF",
+                    "action": "SwitchHorizontalBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -348,7 +348,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchVerticalFPSF",
+                    "action": "SwitchVerticalBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -359,196 +359,14 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchVerticalFPSF",
+                    "action": "SwitchVerticalBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "FPSBack",
-            "id": "7de7c611-d94f-4b09-88cb-01d0bc545cc1",
-            "actions": [
-                {
-                    "name": "MoveForwardsFPSB",
-                    "type": "Button",
-                    "id": "9b1ef52d-b71f-451d-83ae-8fba8c8f261c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveBackwardsFPSB",
-                    "type": "Button",
-                    "id": "708d07ff-c0b9-4f0a-91af-30a1bb1d0b84",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveRightFPSB",
-                    "type": "Button",
-                    "id": "54745018-56ad-4800-9019-08077b78aad8",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveLeftFPSB",
-                    "type": "Button",
-                    "id": "8bcf5c56-cf36-45ed-bb6a-f2a8d7579f40",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveUpFPSB",
-                    "type": "Button",
-                    "id": "25bf2c47-d7b9-4b97-9799-48e0579bca6b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveDownFPSB",
-                    "type": "Button",
-                    "id": "74c3a154-ee6f-4ffb-9627-1d4a12f35006",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "SwitchVerticalFPSB",
-                    "type": "Button",
-                    "id": "fa92d1be-6d2b-4ae1-b563-10b06726da3f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "SwitchHorizontalFPSB",
-                    "type": "Button",
-                    "id": "fea04fc5-35fa-4dca-b12e-380a5d05e821",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "9e51b6f7-2307-4781-9601-3a9f8db62afd",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveForwardsFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "faf78953-1d05-4725-b13b-0304a6ea7212",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveBackwardsFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8cc385f4-573c-49af-b29a-e1c0b29163c7",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveRightFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b61ad488-1334-4641-a152-20dac48ce065",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveLeftFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d21c1cf3-9caf-43a2-9989-a2be432e7c15",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveDownFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9548be2d-7651-47fd-a062-a4f9d1931243",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveUpFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2b416b51-e4f6-434b-9765-f41883b16ca3",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchHorizontalFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1252a600-3542-4e11-ab55-713523d5d2c1",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchHorizontalFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4977183f-8ec2-4c51-baf9-5fd9f9d65a65",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchVerticalFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ab855d95-f8d1-4bbc-aab1-30262ea28c32",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchVerticalFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "SideScroller",
+            "name": "SideScrollerLR",
             "id": "5a2622ba-a890-4940-851f-c4340c579047",
             "actions": [
                 {
@@ -652,30 +470,8 @@
                 },
                 {
                     "name": "",
-                    "id": "071ef6ea-d015-4579-a6db-2b2cf28fc413",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveRightSS",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "371ca5aa-bdb7-43cb-bd8f-82790714a50c",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveLeftSS",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "2be5caa6-d58b-48c5-aa69-4b54c16d0a1b",
-                    "path": "<Keyboard>/p",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -724,6 +520,166 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchHorizontalSS",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "SideScrollerRL",
+            "id": "7de7c611-d94f-4b09-88cb-01d0bc545cc1",
+            "actions": [
+                {
+                    "name": "MoveForwardsFPSB",
+                    "type": "Button",
+                    "id": "9b1ef52d-b71f-451d-83ae-8fba8c8f261c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveBackwardsFPSB",
+                    "type": "Button",
+                    "id": "708d07ff-c0b9-4f0a-91af-30a1bb1d0b84",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveRightFPSB",
+                    "type": "Button",
+                    "id": "54745018-56ad-4800-9019-08077b78aad8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveLeftFPSB",
+                    "type": "Button",
+                    "id": "8bcf5c56-cf36-45ed-bb6a-f2a8d7579f40",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveUpFPSB",
+                    "type": "Button",
+                    "id": "25bf2c47-d7b9-4b97-9799-48e0579bca6b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveDownFPSB",
+                    "type": "Button",
+                    "id": "74c3a154-ee6f-4ffb-9627-1d4a12f35006",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SwitchVerticalFPSB",
+                    "type": "Button",
+                    "id": "fa92d1be-6d2b-4ae1-b563-10b06726da3f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SwitchHorizontalFPSB",
+                    "type": "Button",
+                    "id": "fea04fc5-35fa-4dca-b12e-380a5d05e821",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9e51b6f7-2307-4781-9601-3a9f8db62afd",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveForwardsFPSB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "faf78953-1d05-4725-b13b-0304a6ea7212",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveBackwardsFPSB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d21c1cf3-9caf-43a2-9989-a2be432e7c15",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveDownFPSB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9548be2d-7651-47fd-a062-a4f9d1931243",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveUpFPSB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b416b51-e4f6-434b-9765-f41883b16ca3",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchHorizontalFPSB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1252a600-3542-4e11-ab55-713523d5d2c1",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchHorizontalFPSB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4977183f-8ec2-4c51-baf9-5fd9f9d65a65",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchVerticalFPSB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab855d95-f8d1-4bbc-aab1-30262ea28c32",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchVerticalFPSB",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

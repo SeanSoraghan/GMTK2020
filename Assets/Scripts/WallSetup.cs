@@ -6,11 +6,12 @@ using UnityEngine;
 public class WallSetup : MonoBehaviour
 {
     public CubeController.MovementState direction;
+    public float offset = 0.0f;
     // Start is called before the first frame update
     void Awake()
     {
         Vector3 pos = transform.position;
-        float worldExtent = CubeController.WORLD_CUBE_LIMIT + 2;
+        float worldExtent = CubeController.WORLD_CUBE_LIMIT + 2 + offset;
         switch (direction)
 		{
             case CubeController.MovementState.MovingForwards:

@@ -10,9 +10,9 @@ public class CubeController : MonoBehaviour
     public enum ControlScheme : int
 	{
         TopDown = 0,
-        FPSFront,
-        FPSBack,
-        SideScroller,
+        BottomUp,
+        SideScrollLR,
+        SideScrollRL,
         NumSchemes
 	}
 
@@ -29,34 +29,34 @@ public class CubeController : MonoBehaviour
     static float SMALL_DISTANCE = 0.2f;
     public static int WORLD_CUBE_LIMIT = 2;
 
-    static CameraPanel.DisplayPosition ControlSchemeToPanelPosition(ControlScheme controls)
+    public static CameraPanel.DisplayPosition ControlSchemeToPanelPosition(ControlScheme controls)
 	{
         switch (controls)
 		{
             case ControlScheme.TopDown:
                 return CameraPanel.DisplayPosition.TopLeft;
-            case ControlScheme.FPSFront:
+            case ControlScheme.BottomUp:
                 return CameraPanel.DisplayPosition.TopRight;
-            case ControlScheme.FPSBack:
+            case ControlScheme.SideScrollRL:
                 return CameraPanel.DisplayPosition.BottomRight;
-            case ControlScheme.SideScroller:
+            case ControlScheme.SideScrollLR:
                 return CameraPanel.DisplayPosition.BottomLeft;
         }
         return CameraPanel.DisplayPosition.TopLeft;
 	}
 
-    static ControlScheme PanelPositionToControlScheme(CameraPanel.DisplayPosition displayPosition)
+    public static ControlScheme PanelPositionToControlScheme(CameraPanel.DisplayPosition displayPosition)
     {
         switch (displayPosition)
         {
             case CameraPanel.DisplayPosition.TopLeft:
                 return ControlScheme.TopDown;
             case CameraPanel.DisplayPosition.TopRight:
-                return ControlScheme.FPSFront;
+                return ControlScheme.BottomUp;
             case CameraPanel.DisplayPosition.BottomRight:
-                return ControlScheme.FPSBack;
+                return ControlScheme.SideScrollRL;
             case CameraPanel.DisplayPosition.BottomLeft:
-                return ControlScheme.SideScroller;
+                return ControlScheme.SideScrollLR;
         }
         return ControlScheme.TopDown;
     }
@@ -170,7 +170,7 @@ public class CubeController : MonoBehaviour
             actionMap.actions[(int)MovementState.Stationary + 1].performed += OnSwitchControlsHorizontal;
             actionMap.Disable();
         }
-        controlScheme = ControlScheme.SideScroller;
+        controlScheme = ControlScheme.SideScrollLR;
     }
 
     System.Action<InputAction.CallbackContext> GetResponder(MovementState movementState)
@@ -187,17 +187,11 @@ public class CubeController : MonoBehaviour
         return OnMoveForwards;
 	}
     // Input responders
-    public void OnMoveForwards(InputAction.CallbackContext context)
-    {
-        MoveState = MovementState.MovingForwards;
-    }
+    public void OnMoveForwards(InputAction.CallbackContext context) { MoveState = MovementState.MovingForwards; }
 
     public void OnMoveBackwards(InputAction.CallbackContext context) { MoveState = MovementState.MovingBackwards; }
 
-    public void OnMoveRight(InputAction.CallbackContext context)
-    {
-        MoveState = MovementState.MovingRight;
-    }
+    public void OnMoveRight(InputAction.CallbackContext context) { MoveState = MovementState.MovingRight; }
 
     public void OnMoveLeft(InputAction.CallbackContext context) { MoveState = MovementState.MovingLeft; }
 
