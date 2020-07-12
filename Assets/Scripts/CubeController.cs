@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class CubeController : MonoBehaviour
@@ -152,7 +153,9 @@ public class CubeController : MonoBehaviour
                 moveState = value;
                 moveVec = Vector3.zero;
                 if (goalReached)
+                {
                     shouldReset = true;
+                }
 			}
         }
     }
@@ -163,8 +166,21 @@ public class CubeController : MonoBehaviour
         return MoveState == direction;
 	}
 
-    // Start is called before the first frame update
-    void Start()
+	private void OnDestroy()
+	{
+        for (int map = 0; map < inputActions.actionMaps.Count; ++map)
+        {
+            InputActionMap actionMap = inputActions.actionMaps[map];
+            Assert.IsTrue(actionMap.actions.Count == (int)MovementState.Stationary + 2);
+            actionMap.actions[0].performed -= OnSwitchControlsVertical;
+            actionMap.actions[1].performed -= OnSwitchControlsHorizontal;
+            for (int i = 2; i < actionMap.actions.Count; ++i)
+                actionMap.actions[i].performed -= GetResponder((MovementState)(i - 2));
+            actionMap.Disable();
+        }
+    }
+	// Start is called before the first frame update
+	void Start()
     {
         transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
         moveTargetPos = transform.position;
@@ -302,6 +318,7 @@ public class CubeController : MonoBehaviour
             transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
             goalReached = false;
             shouldReset = false;
+            SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
         }
     }
 }

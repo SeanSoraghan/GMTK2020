@@ -1,0 +1,93 @@
+{
+    "name": "MenuControls",
+    "maps": [
+        {
+            "name": "ActionMap",
+            "id": "0ddcd277-1b46-40b1-a04b-583baf8faf3d",
+            "actions": [
+                {
+                    "name": "ConfirmOOCMenu",
+                    "type": "Button",
+                    "id": "202d7907-c274-425b-8920-54a2002f736e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SwitchVerticalMenu",
+                    "type": "Button",
+                    "id": "11a26db1-0ade-4f17-b51c-1f3296d93d82",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SwitchHorizontalMenu",
+                    "type": "Button",
+                    "id": "fdfaf0f6-ccbc-40da-abe9-088a75cc43af",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7911fa75-055a-43b0-b900-7df8f9292438",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchHorizontalMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f92ad5cd-bfd4-48ec-8dd5-7c05e5e6fe07",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchHorizontalMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2902611-de1f-47e7-81aa-6b295cce7d71",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchVerticalMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb085ccb-73da-49b3-b93c-3cb5fbcc552b",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchVerticalMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "31375fb1-8458-42bf-b13f-60019efd9fca",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConfirmOOCMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

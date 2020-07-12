@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class UIController2 : MonoBehaviour
 {
     public float panelThickness = 20.0f;
+    public float panelHeightRatio = 0.75f;
     public float panelAnimationTimeSeconds = 0.2f;
     public GUISkin guiSkin;
 
     CameraPanel.DisplayPosition displayPos = CameraPanel.DisplayPosition.TopLeft;
+    CameraPanel.DisplayPosition prevDisplayPos = CameraPanel.DisplayPosition.TopLeft;
     Vector2 panelFrameCentre;
     Vector2 _movementTarget;
     Vector2 movementTarget
@@ -39,6 +41,7 @@ public class UIController2 : MonoBehaviour
     {
         displayPos = displayPosition;
         UpdateDisplay(false);
+        prevDisplayPos = displayPos;
     }
 
     public void TeleportPanel()
@@ -93,16 +96,24 @@ public class UIController2 : MonoBehaviour
         float h = Screen.height;
         Vector2 centre = panelFrameCentre * new Vector2(w, h);
 
+        float fullLength = h * 0.5f;
+        float length = panelHeightRatio * fullLength;
+        float offset = (1.0f - panelHeightRatio) * fullLength * 0.5f;
+
         Vector2 leftBarXY = new Vector2(centre.x - 0.25f * w, centre.y - 0.25f * h);
-        GUI.Box(new Rect(leftBarXY.x, leftBarXY.y, panelThickness, h * 0.5f), "");
+        GUI.Box(new Rect(leftBarXY.x, leftBarXY.y + offset, panelThickness, length), "");
 
         Vector2 rightBarXY = new Vector2(centre.x + 0.25f * w - panelThickness, centre.y - 0.25f * h);
-        GUI.Box(new Rect(rightBarXY.x, rightBarXY.y, panelThickness, h * 0.5f), "");
+        GUI.Box(new Rect(rightBarXY.x, rightBarXY.y + offset, panelThickness, length), "");
+
+        fullLength = w * 0.5f;
+        length = panelHeightRatio * fullLength;
+        offset = (1.0f - panelHeightRatio) * fullLength * 0.5f;
 
         Vector2 topBarXY = new Vector2(centre.x - 0.25f * w, centre.y - 0.25f * h);
-        GUI.Box(new Rect(topBarXY.x, topBarXY.y, 0.5f * w, panelThickness), "");
+        GUI.Box(new Rect(topBarXY.x + offset, topBarXY.y, length, panelThickness), "");
 
         Vector2 bottomBarXY = new Vector2(centre.x - 0.25f * w, centre.y + 0.25f * h - panelThickness);
-        GUI.Box(new Rect(bottomBarXY.x, bottomBarXY.y, 0.5f * w, panelThickness), "");
+        GUI.Box(new Rect(bottomBarXY.x + offset, bottomBarXY.y, length, panelThickness), "");
     }
 }
