@@ -90,7 +90,7 @@
                 {
                     "name": "",
                     "id": "6fe605d3-aec3-4a92-a2c3-d111c3881717",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -100,30 +100,8 @@
                 },
                 {
                     "name": "",
-                    "id": "c8f721b3-3586-47a6-a558-0f9e2aab9298",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveForwardsTD",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "89edb9ed-ca64-4363-9d79-db9ce5599ba8",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveBackwardsTD",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9915a478-3d7e-47d3-ae63-ce72d1d2a98b",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -134,7 +112,7 @@
                 {
                     "name": "",
                     "id": "368933cb-caf4-4419-8ff7-be1b452a223b",
-                    "path": "",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -145,7 +123,7 @@
                 {
                     "name": "",
                     "id": "a782df8c-1bf4-44a8-883a-957a8125dec9",
-                    "path": "",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -287,28 +265,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "65588322-eaa1-4e24-bd69-1bdceb03e2f1",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveForwardsBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b5493b44-f814-4c1e-872e-23a52ccfb7e2",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveBackwardsBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "308296f2-c240-4d8f-b87c-92f87ba4e04d",
                     "path": "<Keyboard>/d",
                     "interactions": "",
@@ -332,7 +288,7 @@
                 {
                     "name": "",
                     "id": "491e9e4a-f25f-4be2-9595-95ca60eb509f",
-                    "path": "",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -343,7 +299,7 @@
                 {
                     "name": "",
                     "id": "4312fb0c-72b0-497d-becd-5f2c66ec8511",
-                    "path": "",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
