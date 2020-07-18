@@ -13,8 +13,7 @@ public class CubeController : MonoBehaviour
         TopDown = 0,
         BottomUp,
         SideScrollLR,
-        SideScrollRL,
-        NumSchemes
+        SideScrollRL
 	}
 
     public enum MovementState : int
@@ -40,38 +39,6 @@ public class CubeController : MonoBehaviour
 
     public GUISkin guiSkin;
 
-    public static CameraPanel.DisplayPosition ControlSchemeToPanelPosition(ControlScheme controls)
-	{
-        switch (controls)
-		{
-            case ControlScheme.TopDown:
-                return CameraPanel.DisplayPosition.TopLeft;
-            case ControlScheme.BottomUp:
-                return CameraPanel.DisplayPosition.TopRight;
-            case ControlScheme.SideScrollRL:
-                return CameraPanel.DisplayPosition.BottomRight;
-            case ControlScheme.SideScrollLR:
-                return CameraPanel.DisplayPosition.BottomLeft;
-        }
-        return CameraPanel.DisplayPosition.TopLeft;
-	}
-
-    public static ControlScheme PanelPositionToControlScheme(CameraPanel.DisplayPosition displayPosition)
-    {
-        switch (displayPosition)
-        {
-            case CameraPanel.DisplayPosition.TopLeft:
-                return ControlScheme.TopDown;
-            case CameraPanel.DisplayPosition.TopRight:
-                return ControlScheme.BottomUp;
-            case CameraPanel.DisplayPosition.BottomRight:
-                return ControlScheme.SideScrollRL;
-            case CameraPanel.DisplayPosition.BottomLeft:
-                return ControlScheme.SideScrollLR;
-        }
-        return ControlScheme.TopDown;
-    }
-
     public UIController2 uiController;
     public float unitMovementTimeSeconds = 0.2f;
 
@@ -92,7 +59,7 @@ public class CubeController : MonoBehaviour
             inputActions.actionMaps[(int)_controlScheme].Disable();
             _controlScheme = value;
             inputActions.actionMaps[(int)_controlScheme].Enable();
-            uiController.PositionPanelUI(ControlSchemeToPanelPosition(_controlScheme));
+            uiController.PositionPanelUI((CameraPanel.DisplayPosition)_controlScheme);
         }
     }
 
@@ -248,40 +215,12 @@ public class CubeController : MonoBehaviour
 
     void SwitchPanelVertical()
     {
-        switch (ControlSchemeToPanelPosition(controlScheme))
-        {
-            case CameraPanel.DisplayPosition.TopLeft:
-                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.BottomLeft);
-                break;
-            case CameraPanel.DisplayPosition.TopRight:
-                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.BottomRight);
-                break;
-            case CameraPanel.DisplayPosition.BottomRight:
-                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.TopRight);
-                break;
-            case CameraPanel.DisplayPosition.BottomLeft:
-                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.TopLeft);
-                break;
-        }
+		controlScheme = (ControlScheme)CameraPanel.SwitchPositionVertical((CameraPanel.DisplayPosition)controlScheme);
     }
 
     void SwitchPanelHorizontal()
     {
-        switch (ControlSchemeToPanelPosition(controlScheme))
-        {
-            case CameraPanel.DisplayPosition.TopLeft:
-                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.TopRight);
-                break;
-            case CameraPanel.DisplayPosition.TopRight:
-                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.TopLeft);
-                break;
-            case CameraPanel.DisplayPosition.BottomRight:
-                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.BottomLeft);
-                break;
-            case CameraPanel.DisplayPosition.BottomLeft:
-                controlScheme = PanelPositionToControlScheme(CameraPanel.DisplayPosition.BottomRight);
-                break;
-        }
+		controlScheme = (ControlScheme)CameraPanel.SwitchPositionHorizontal((CameraPanel.DisplayPosition)controlScheme);
     }
 
     void Update()

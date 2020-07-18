@@ -13,7 +13,19 @@ public class CameraPanel : MonoBehaviour
         BottomRight
 	};
 
-    public CubeController.ControlScheme controlScheme;
+	public static DisplayPosition SwitchPositionHorizontal(DisplayPosition position)
+	{
+		int p = (int)position;
+		return (DisplayPosition)(p + (p % 2 == 0 ? 1 : -1)); 
+	}
+
+	public static DisplayPosition SwitchPositionVertical(DisplayPosition position)
+	{
+		int p = (int)position;
+		return (DisplayPosition)(p + (p % 2 == 0 ? 2 : -2));
+	}
+
+	public CubeController.ControlScheme controlScheme;
     public Camera cam;
 
     // Start is called before the first frame update
@@ -22,7 +34,7 @@ public class CameraPanel : MonoBehaviour
         cam = gameObject.GetComponent<Camera>();
         if (cam == null)
             cam = gameObject.AddComponent<Camera>();
-        DisplayPosition camPosition = CubeController.ControlSchemeToPanelPosition(controlScheme);
+        DisplayPosition camPosition = (CameraPanel.DisplayPosition)controlScheme;
         switch (camPosition)
         {
             case DisplayPosition.TopLeft:

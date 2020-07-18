@@ -10,10 +10,10 @@ public class MenuController : MonoBehaviour
 {
     public enum ButtonSelection : int
 	{
-        PLAY = 0,
+        LOGO = 0,
         INFO,
         Placeholder,
-        EXIT,
+        PLAY,
 	}
 
     public static string ButtonSelectionString(ButtonSelection selection)
@@ -23,43 +23,14 @@ public class MenuController : MonoBehaviour
             case ButtonSelection.PLAY: return "PLAY";
             case ButtonSelection.INFO: return "INFO";
             case ButtonSelection.Placeholder: return "";
-            case ButtonSelection.EXIT: return "EXIT";
+            case ButtonSelection.LOGO: return "LOGO";
         }
         return "";
 	}
 
-    public static CameraPanel.DisplayPosition ButtonSelectionDisplayPosition(ButtonSelection selection)
-	{
-        switch (selection)
-		{
-            case ButtonSelection.PLAY: return CameraPanel.DisplayPosition.BottomRight;
-            case ButtonSelection.INFO: return CameraPanel.DisplayPosition.TopRight;
-            case ButtonSelection.Placeholder: return CameraPanel.DisplayPosition.BottomLeft;
-            case ButtonSelection.EXIT: return CameraPanel.DisplayPosition.TopLeft;
-        }
-        return CameraPanel.DisplayPosition.TopLeft;
-	}
-
-    public static ButtonSelection DisplayPositionToButtonSelection(CameraPanel.DisplayPosition pos)
-    {
-        switch (pos)
-        {
-            case CameraPanel.DisplayPosition.TopLeft: return ButtonSelection.EXIT;
-            case CameraPanel.DisplayPosition.TopRight: return ButtonSelection.INFO;
-            case CameraPanel.DisplayPosition.BottomLeft: return ButtonSelection.Placeholder;
-            case CameraPanel.DisplayPosition.BottomRight: return ButtonSelection.PLAY;
-        }
-        return ButtonSelection.PLAY;
-    }
-
- //   public static string GetStringForButtonPosition(CameraPanel.DisplayPosition pos)
-	//{
- //       return ButtonSelectionString(ButtonSelectionDisplayPosition())
-	//}
-
     public GUISkin guiSkin;
     public GUIStyle guiStylePLAY;
-    public GUIStyle guiStyleEXIT;
+    public GUIStyle guiStyleLOGO;
     public GUIStyle guiStyleINFO;
     public GUIStyle guiStyleCONF;
     public float buttonHeight = 100.0f;
@@ -74,7 +45,7 @@ public class MenuController : MonoBehaviour
         set
 		{
             _currentSelection = value;
-            panelController.PositionPanelUI(ButtonSelectionDisplayPosition(_currentSelection));
+            panelController.PositionPanelUI((CameraPanel.DisplayPosition)_currentSelection);
 		}
 	}
     // Start is called before the first frame update
@@ -82,12 +53,12 @@ public class MenuController : MonoBehaviour
     {
         Assert.IsNotNull(guiSkin);
         Assert.IsNotNull(guiStylePLAY);
-        Assert.IsNotNull(guiStyleEXIT);
+        Assert.IsNotNull(guiStyleLOGO);
         Assert.IsNotNull(guiStyleINFO);
         Assert.IsNotNull(guiStyleCONF);
         panelController = GetComponent<UIController2>();
         Assert.IsNotNull(panelController);
-        currentSelection = ButtonSelection.EXIT;
+        currentSelection = ButtonSelection.LOGO;
         panelController.TeleportPanel();
         PlayerInput input = GetComponent<PlayerInput>();
         Assert.IsNotNull(input);
@@ -113,7 +84,7 @@ public class MenuController : MonoBehaviour
             case ButtonSelection.PLAY: return guiStylePLAY;
             case ButtonSelection.INFO: return guiStyleINFO;
             case ButtonSelection.Placeholder: return guiStyleCONF;
-            case ButtonSelection.EXIT: return guiStyleEXIT;
+            case ButtonSelection.LOGO: return guiStyleLOGO;
         }
         return guiStylePLAY;
     }
@@ -138,50 +109,22 @@ public class MenuController : MonoBehaviour
         float logoSize = w > h ? w * 0.5f * 0.4f : h * 0.5f * 0.4f;
         float logoX = w * 0.25f - logoSize * 0.5f;
         float logoY = h * 0.25f - logoSize * 0.5f;
-        GUI.Box(new Rect(logoX, logoY, logoSize, logoSize), "", ButtonSelectionStyle(DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.TopLeft)));
-        GUI.Box(new Rect(xRight, yTop, buttonWidth, buttonHeight), "", ButtonSelectionStyle(DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.TopRight)));
-        GUI.Box(new Rect(xLeft, yBottom, buttonWidth, buttonHeight), "", ButtonSelectionStyle(DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.BottomLeft)));
-        GUI.Box(new Rect(xRight, yBottom, buttonWidth, buttonHeight), "", ButtonSelectionStyle(DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.BottomRight)));
+        GUI.Box(new Rect(xLeft, yTop, buttonWidth, buttonHeight), "", ButtonSelectionStyle((ButtonSelection)CameraPanel.DisplayPosition.TopLeft));
+        GUI.Box(new Rect(xRight, yTop, buttonWidth, buttonHeight), "", ButtonSelectionStyle((ButtonSelection)CameraPanel.DisplayPosition.TopRight));
+        GUI.Box(new Rect(xLeft, yBottom, buttonWidth, buttonHeight), "", ButtonSelectionStyle((ButtonSelection)CameraPanel.DisplayPosition.BottomLeft));
+        GUI.Box(new Rect(xRight, yBottom, buttonWidth, buttonHeight), "", ButtonSelectionStyle((ButtonSelection)CameraPanel.DisplayPosition.BottomRight));
 
         InputSystem.Update();
     }
 
     void OnSwitchSelectionVertical(InputAction.CallbackContext context)
 	{
-        switch (ButtonSelectionDisplayPosition(currentSelection))
-        {
-            case CameraPanel.DisplayPosition.TopLeft:
-                currentSelection = DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.BottomLeft);
-                break;
-            case CameraPanel.DisplayPosition.TopRight:
-                currentSelection = DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.BottomRight);
-                break;
-            case CameraPanel.DisplayPosition.BottomLeft:
-                currentSelection = DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.TopLeft);
-                break;
-            case CameraPanel.DisplayPosition.BottomRight:
-                currentSelection = DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.TopRight);
-                break;
-        }
+		currentSelection = (ButtonSelection)CameraPanel.SwitchPositionVertical((CameraPanel.DisplayPosition)currentSelection);
     }
 
     void OnSwitchSelectionHorizontal(InputAction.CallbackContext context)
     {
-        switch (ButtonSelectionDisplayPosition(currentSelection))
-        {
-            case CameraPanel.DisplayPosition.TopLeft:
-                currentSelection = DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.TopRight);
-                break;
-            case CameraPanel.DisplayPosition.TopRight:
-                currentSelection = DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.TopLeft);
-                break;
-            case CameraPanel.DisplayPosition.BottomLeft:
-                currentSelection = DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.BottomRight);
-                break;
-            case CameraPanel.DisplayPosition.BottomRight:
-                currentSelection = DisplayPositionToButtonSelection(CameraPanel.DisplayPosition.BottomLeft);
-                break;
-        }
+		currentSelection = (ButtonSelection)CameraPanel.SwitchPositionHorizontal((CameraPanel.DisplayPosition)currentSelection);
     }
 
     void OnConfirmSelection(InputAction.CallbackContext context)
@@ -192,7 +135,7 @@ public class MenuController : MonoBehaviour
                 inputActions.Disable();
                 SceneManager.LoadScene("MultipleCameras", LoadSceneMode.Single);
                 break;
-            case ButtonSelection.EXIT:
+            case ButtonSelection.LOGO:
                 //Application.Quit();
                 break;
             case ButtonSelection.Placeholder:

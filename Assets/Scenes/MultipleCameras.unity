@@ -985,7 +985,7 @@ MonoBehaviour:
     fastMode: 0
     keepAlpha: 0
   fog:
-    enabled: 1
+    enabled: 0
     excludeSkybox: 1
   debugLayer:
     lightMeter:
