@@ -16,13 +16,23 @@ public class CameraPanel : MonoBehaviour
 	public static DisplayPosition SwitchPositionHorizontal(DisplayPosition position)
 	{
 		int p = (int)position;
-		return (DisplayPosition)(p + (p % 2 == 0 ? 1 : -1)); 
+		int newPos = p + (p % 2 == 0 ? 1 : -1);
+		if (newPos < 0)
+			newPos += 4;
+		else
+			newPos = newPos % 4;
+		return (DisplayPosition)newPos;
 	}
 
 	public static DisplayPosition SwitchPositionVertical(DisplayPosition position)
 	{
 		int p = (int)position;
-		return (DisplayPosition)(p + (p % 2 == 0 ? 2 : -2));
+		int newPos = p + (p % 2 == 0 ? 2 : -2);
+		if (newPos < 0)
+			newPos += 4;
+		else
+			newPos = newPos % 4;
+		return (DisplayPosition)newPos;
 	}
 
 	public CubeController.ControlScheme controlScheme;

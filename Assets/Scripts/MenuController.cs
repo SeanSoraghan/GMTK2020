@@ -38,6 +38,8 @@ public class MenuController : MonoBehaviour
     UIController2 panelController;
     InputActionAsset inputActions;
 
+	CubeController.MovementState lastPanelMovementDirection = CubeController.MovementState.MovingUp;
+
     ButtonSelection _currentSelection;
     ButtonSelection currentSelection
 	{
@@ -45,7 +47,7 @@ public class MenuController : MonoBehaviour
         set
 		{
             _currentSelection = value;
-            panelController.PositionPanelUI((CameraPanel.DisplayPosition)_currentSelection);
+            panelController.PositionPanelUI((CameraPanel.DisplayPosition)_currentSelection, lastPanelMovementDirection);
 		}
 	}
     // Start is called before the first frame update
@@ -65,17 +67,21 @@ public class MenuController : MonoBehaviour
         if (input != null)
             inputActions = input.actions;
         inputActions.actionMaps[0].actions[0].performed += OnConfirmSelection;
-        inputActions.actionMaps[0].actions[1].performed += OnSwitchSelectionVertical;
-        inputActions.actionMaps[0].actions[2].performed += OnSwitchSelectionHorizontal;
-        inputActions.Enable();
+        inputActions.actionMaps[0].actions[1].performed += OnMovePanelUp;
+        inputActions.actionMaps[0].actions[2].performed += OnMovePanelRight;
+		inputActions.actionMaps[0].actions[3].performed += OnMovePanelDown;
+		inputActions.actionMaps[0].actions[4].performed += OnMovePanelLeft;
+		inputActions.Enable();
     }
 
 	private void OnDestroy()
 	{
         inputActions.actionMaps[0].actions[0].performed -= OnConfirmSelection;
-        inputActions.actionMaps[0].actions[1].performed -= OnSwitchSelectionVertical;
-        inputActions.actionMaps[0].actions[2].performed -= OnSwitchSelectionHorizontal;
-    }
+        inputActions.actionMaps[0].actions[1].performed -= OnMovePanelUp;
+        inputActions.actionMaps[0].actions[2].performed -= OnMovePanelRight;
+		inputActions.actionMaps[0].actions[3].performed += OnMovePanelDown;
+		inputActions.actionMaps[0].actions[4].performed += OnMovePanelLeft;
+	}
 
 	GUIStyle ButtonSelectionStyle(ButtonSelection selection)
 	{
@@ -117,12 +123,36 @@ public class MenuController : MonoBehaviour
         InputSystem.Update();
     }
 
-    void OnSwitchSelectionVertical(InputAction.CallbackContext context)
+	public void OnMovePanelUp(InputAction.CallbackContext context)
+	{
+		lastPanelMovementDirection = CubeController.MovementState.MovingUp;
+		SwitchPanelVertical();
+	}
+
+	public void OnMovePanelRight(InputAction.CallbackContext context)
+	{
+		lastPanelMovementDirection = CubeController.MovementState.MovingRight;
+		SwitchPanelHorizontal();
+	}
+
+	public void OnMovePanelDown(InputAction.CallbackContext context)
+	{
+		lastPanelMovementDirection = CubeController.MovementState.MovingDown;
+		SwitchPanelVertical();
+	}
+
+	public void OnMovePanelLeft(InputAction.CallbackContext context)
+	{
+		lastPanelMovementDirection = CubeController.MovementState.MovingLeft;
+		SwitchPanelHorizontal();
+	}
+
+	void SwitchPanelVertical()
 	{
 		currentSelection = (ButtonSelection)CameraPanel.SwitchPositionVertical((CameraPanel.DisplayPosition)currentSelection);
     }
 
-    void OnSwitchSelectionHorizontal(InputAction.CallbackContext context)
+    void SwitchPanelHorizontal()
     {
 		currentSelection = (ButtonSelection)CameraPanel.SwitchPositionHorizontal((CameraPanel.DisplayPosition)currentSelection);
     }

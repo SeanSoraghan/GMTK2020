@@ -59,7 +59,7 @@ public class CubeController : MonoBehaviour
             inputActions.actionMaps[(int)_controlScheme].Disable();
             _controlScheme = value;
             inputActions.actionMaps[(int)_controlScheme].Enable();
-            uiController.PositionPanelUI((CameraPanel.DisplayPosition)_controlScheme);
+            uiController.PositionPanelUI((CameraPanel.DisplayPosition)_controlScheme, lastPanelMovementDirection);
         }
     }
 
@@ -127,6 +127,8 @@ public class CubeController : MonoBehaviour
         }
     }
 
+	MovementState lastPanelMovementDirection = MovementState.MovingUp;
+
     public bool MoveInDirection(MovementState direction)
 	{
         MoveState = direction;
@@ -138,11 +140,13 @@ public class CubeController : MonoBehaviour
         for (int map = 0; map < inputActions.actionMaps.Count; ++map)
         {
             InputActionMap actionMap = inputActions.actionMaps[map];
-            Assert.IsTrue(actionMap.actions.Count == (int)MovementState.Stationary + 2);
-            actionMap.actions[0].performed -= OnSwitchControlsVertical;
-            actionMap.actions[1].performed -= OnSwitchControlsHorizontal;
-            for (int i = 2; i < actionMap.actions.Count; ++i)
-                actionMap.actions[i].performed -= GetResponder((MovementState)(i - 2));
+            Assert.IsTrue(actionMap.actions.Count == (int)MovementState.Stationary + 4);
+            actionMap.actions[0].performed -= OnMovePanelUp;
+            actionMap.actions[1].performed -= OnMovePanelRight;
+			actionMap.actions[2].performed -= OnMovePanelDown;
+			actionMap.actions[3].performed -= OnMovePanelLeft;
+			for (int i = 2; i < actionMap.actions.Count; ++i)
+                actionMap.actions[i].performed -= GetResponder((MovementState)(i - 4));
             actionMap.Disable();
         }
     }
@@ -166,11 +170,13 @@ public class CubeController : MonoBehaviour
         for (int map = 0; map < inputActions.actionMaps.Count; ++map)
         {
             InputActionMap actionMap = inputActions.actionMaps[map];
-            Assert.IsTrue(actionMap.actions.Count == (int)MovementState.Stationary + 2);
-            actionMap.actions[0].performed += OnSwitchControlsVertical;
-            actionMap.actions[1].performed += OnSwitchControlsHorizontal;
-            for (int i = 2; i < actionMap.actions.Count; ++i)
-                actionMap.actions[i].performed += GetResponder((MovementState)(i - 2));
+            Assert.IsTrue(actionMap.actions.Count == (int)MovementState.Stationary + 4);
+            actionMap.actions[0].performed += OnMovePanelUp;
+            actionMap.actions[1].performed += OnMovePanelRight;
+			actionMap.actions[2].performed += OnMovePanelDown;
+			actionMap.actions[3].performed += OnMovePanelLeft;
+			for (int i = 4; i < actionMap.actions.Count; ++i)
+                actionMap.actions[i].performed += GetResponder((MovementState)(i - 4));
             actionMap.Disable();
         }
         controlScheme = ControlScheme.SideScrollLR;
@@ -203,17 +209,31 @@ public class CubeController : MonoBehaviour
 
     public void OnMoveDown(InputAction.CallbackContext context) { MoveState = MovementState.MovingDown; }
 
-    public void OnSwitchControlsVertical(InputAction.CallbackContext context)
+    public void OnMovePanelUp(InputAction.CallbackContext context)
     {
+		lastPanelMovementDirection = MovementState.MovingUp;
         SwitchPanelVertical();
     }
 
-    public void OnSwitchControlsHorizontal(InputAction.CallbackContext context)
+    public void OnMovePanelRight(InputAction.CallbackContext context)
     {
-        SwitchPanelHorizontal();
+		lastPanelMovementDirection = MovementState.MovingRight;
+		SwitchPanelHorizontal();
     }
 
-    void SwitchPanelVertical()
+	public void OnMovePanelDown(InputAction.CallbackContext context)
+	{
+		lastPanelMovementDirection = MovementState.MovingDown;
+		SwitchPanelVertical();
+	}
+
+	public void OnMovePanelLeft(InputAction.CallbackContext context)
+	{
+		lastPanelMovementDirection = MovementState.MovingLeft;
+		SwitchPanelHorizontal();
+	}
+
+	void SwitchPanelVertical()
     {
 		controlScheme = (ControlScheme)CameraPanel.SwitchPositionVertical((CameraPanel.DisplayPosition)controlScheme);
     }

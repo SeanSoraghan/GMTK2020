@@ -6,17 +6,33 @@
             "id": "54061b01-ab05-4abe-aecb-173c4798f718",
             "actions": [
                 {
-                    "name": "SwitchVerticalTD",
+                    "name": "MovePanelUpTD",
                     "type": "Button",
-                    "id": "52317190-b77d-48d8-b1da-fca177a4aef3",
+                    "id": "1dfe77f7-2960-4076-a952-143ac65de961",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "SwitchHorizontalTD",
+                    "name": "MovePanelRightTD",
+                    "type": "Button",
+                    "id": "f20c8549-b6e2-4050-a7ab-a73748a10146",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MovePanelDownTD",
                     "type": "Button",
                     "id": "adfd115d-50dc-416d-aba5-94b574d631d9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MovePanelLeftTD",
+                    "type": "Button",
+                    "id": "52317190-b77d-48d8-b1da-fca177a4aef3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -140,44 +156,44 @@
                 {
                     "name": "",
                     "id": "3c7d9206-3b3b-4c62-a951-52dfc835b258",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchHorizontalTD",
+                    "action": "MovePanelDownTD",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "81d060e5-5f4e-4bc3-878a-b48e2fc1e393",
-                    "path": "<Keyboard>/a",
+                    "id": "d12c46ab-8383-4a02-aa81-6bf141a750e3",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchHorizontalTD",
+                    "action": "MovePanelUpTD",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb838a0b-4edc-4df7-b3a2-1d80eb0b3ac5",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovePanelRightTD",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "d135a57a-8f2f-4d4c-8982-cf8511d88154",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchVerticalTD",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3abb9e0c-baa7-46fd-980a-234124b1bebd",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchVerticalTD",
+                    "action": "MovePanelLeftTD",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -188,17 +204,33 @@
             "id": "0d1b717c-9ad0-49c7-b00c-15e9b07156fd",
             "actions": [
                 {
-                    "name": "SwitchVerticalBU",
+                    "name": "MovePanelUpBU",
                     "type": "Button",
-                    "id": "919204fb-98a4-4d5d-a793-cc785a5003e1",
+                    "id": "d2d3e368-1715-4b7c-9e43-3e8c4856ae85",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "SwitchHorizontalBU",
+                    "name": "MovePanelRightBU",
                     "type": "Button",
-                    "id": "1b48d87f-3690-476c-873f-ee9b7a0a6d17",
+                    "id": "533667b9-6c9a-45cc-b6e3-b5797dc1113a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MovePanelDownBU",
+                    "type": "Button",
+                    "id": "98fba13e-8349-4c40-863d-9209cf9db388",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MovePanelLeftBU",
+                    "type": "Button",
+                    "id": "41c95345-e691-4e38-bc23-e422a6dd42b4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -321,45 +353,45 @@
                 },
                 {
                     "name": "",
-                    "id": "ef2ed613-af80-4410-a64f-9ca4615d8411",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchVerticalBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e3067868-b4f7-4d69-a96d-24353e953c84",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchVerticalBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "12a723d3-f549-421b-a740-d71e8626c4da",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchHorizontalBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "498369bc-996a-431d-9182-1ad692776664",
+                    "id": "b2e89a9d-4ae0-4137-98c9-78aa50ceb9b4",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchHorizontalBU",
+                    "action": "MovePanelLeftBU",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1394a68-e118-428b-aa94-1bba60e89254",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovePanelDownBU",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f02a21b3-5c5f-4520-8cc1-82b9bad08ccc",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovePanelRightBU",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a506c29-0c89-4d9f-8d8a-3f5ea8bd3d85",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovePanelUpBU",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -370,17 +402,33 @@
             "id": "5a2622ba-a890-4940-851f-c4340c579047",
             "actions": [
                 {
-                    "name": "SwitchVerticalSS",
+                    "name": "MovePanelUpSSLR",
                     "type": "Button",
-                    "id": "52b07079-b956-45c7-8b45-a7c69f0c5530",
+                    "id": "4cf6f6b5-3e05-4afc-a2fc-ea112aea79ed",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "SwitchHorizontalSS",
+                    "name": "MovePanelRightSSLR",
                     "type": "Button",
-                    "id": "e975fcb2-5ebd-4d55-a0b9-c7d1aa6d8f8c",
+                    "id": "c65d5663-6b2c-4801-b7f5-2a5ad03660ed",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MovePanelDownSSLR",
+                    "type": "Button",
+                    "id": "1bcc7ed4-1755-4624-852d-4e15a12f7c1d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MovePanelLeftSSLR",
+                    "type": "Button",
+                    "id": "9e66589d-117f-44c8-a496-5f971f8a91f1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -481,45 +529,45 @@
                 },
                 {
                     "name": "",
-                    "id": "6df2a4f8-0cd8-43da-b971-8c19c8827623",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchVerticalSS",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "296dadac-4827-4351-a977-4c563296fb0b",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchVerticalSS",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3992df8c-1752-4e27-af52-0dbef827cee5",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchHorizontalSS",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2a4937fd-6334-4d83-a137-c4981bca8ea5",
+                    "id": "b2a3fe70-e4b3-4159-96ee-1d6c5f9d4136",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchHorizontalSS",
+                    "action": "MovePanelLeftSSLR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "12d2d52e-8c71-4695-b048-3d5945294d7f",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovePanelDownSSLR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "11a7ebe5-097c-417e-8756-2b818926be4d",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovePanelRightSSLR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "468eb071-bc7e-48af-9d0d-6ec16d4fd2fe",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovePanelUpSSLR",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -530,17 +578,33 @@
             "id": "7de7c611-d94f-4b09-88cb-01d0bc545cc1",
             "actions": [
                 {
-                    "name": "SwitchVerticalFPSB",
+                    "name": "MovePanelUpSSRL",
                     "type": "Button",
-                    "id": "fa92d1be-6d2b-4ae1-b563-10b06726da3f",
+                    "id": "0ca437ea-f974-498a-9c7c-4eadc21ea4ea",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "SwitchHorizontalFPSB",
+                    "name": "MovePanelRightSSRL",
                     "type": "Button",
-                    "id": "fea04fc5-35fa-4dca-b12e-380a5d05e821",
+                    "id": "d5366c19-67cc-43c2-8e85-31c2e072c2ce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MovePanelDownSSRL",
+                    "type": "Button",
+                    "id": "473a1a29-7dc1-4486-89f3-eeb871c67875",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MovePanelLeftSSRL",
+                    "type": "Button",
+                    "id": "e722728e-7e76-4e2e-8e1a-440af9f24e53",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -641,45 +705,45 @@
                 },
                 {
                     "name": "",
-                    "id": "4977183f-8ec2-4c51-baf9-5fd9f9d65a65",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchVerticalFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ab855d95-f8d1-4bbc-aab1-30262ea28c32",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchVerticalFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2b416b51-e4f6-434b-9765-f41883b16ca3",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchHorizontalFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1252a600-3542-4e11-ab55-713523d5d2c1",
+                    "id": "7911e265-0c21-4c8a-886a-dc424f7c3a90",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchHorizontalFPSB",
+                    "action": "MovePanelLeftSSRL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "092252c9-3a6e-44ef-a2ff-fa00c347c1e8",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovePanelDownSSRL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a924f8a-aeb0-49b6-875a-37e47fe93ad8",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovePanelRightSSRL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "80af38ec-2066-4cbe-b2d2-d35568718ddc",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovePanelUpSSRL",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
