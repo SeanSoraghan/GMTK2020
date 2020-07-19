@@ -2,11 +2,11 @@
     "name": "Controls",
     "maps": [
         {
-            "name": "TopDown",
+            "name": "Input",
             "id": "54061b01-ab05-4abe-aecb-173c4798f718",
             "actions": [
                 {
-                    "name": "MovePanelUpTD",
+                    "name": "UDLRUp",
                     "type": "Button",
                     "id": "1dfe77f7-2960-4076-a952-143ac65de961",
                     "expectedControlType": "Button",
@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "MovePanelRightTD",
+                    "name": "UDLRDown",
                     "type": "Button",
                     "id": "f20c8549-b6e2-4050-a7ab-a73748a10146",
                     "expectedControlType": "Button",
@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "MovePanelDownTD",
+                    "name": "UDLRLeft",
                     "type": "Button",
                     "id": "adfd115d-50dc-416d-aba5-94b574d631d9",
                     "expectedControlType": "Button",
@@ -30,7 +30,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "MovePanelLeftTD",
+                    "name": "UDLRRight",
                     "type": "Button",
                     "id": "52317190-b77d-48d8-b1da-fca177a4aef3",
                     "expectedControlType": "Button",
@@ -38,49 +38,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "MoveForwardsTD",
+                    "name": "UDLRConfirm",
                     "type": "Button",
-                    "id": "9b648051-4b04-4395-84a0-cb07d3e0e345",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveBackwardsTD",
-                    "type": "Button",
-                    "id": "cf00209d-eac1-450f-a2ab-9b881dae5db7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveRightTD",
-                    "type": "Button",
-                    "id": "a76fcd40-71ce-4929-9c65-4d27ae63957b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveLeftTD",
-                    "type": "Button",
-                    "id": "86b0cd3f-6acd-4a6e-a76a-9d59e83e3ef5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveUpTD",
-                    "type": "Button",
-                    "id": "f8c2ba22-4cdb-4c29-b112-bf80b97ee147",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveDownTD",
-                    "type": "Button",
-                    "id": "a6a3d9d5-2c18-42b1-8b44-92e514bab04e",
+                    "id": "096318f6-7219-463c-b937-8380f2ed225a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -89,56 +49,23 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "6fe605d3-aec3-4a92-a2c3-d111c3881717",
-                    "path": "<Keyboard>/d",
+                    "id": "3c7d9206-3b3b-4c62-a951-52dfc835b258",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveLeftTD",
+                    "action": "UDLRLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "9915a478-3d7e-47d3-ae63-ce72d1d2a98b",
+                    "id": "8c39f5cd-fd9f-4c9c-9135-9c74983d5f63",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveRightTD",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "368933cb-caf4-4419-8ff7-be1b452a223b",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveUpTD",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a782df8c-1bf4-44a8-883a-957a8125dec9",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveDownTD",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3c7d9206-3b3b-4c62-a951-52dfc835b258",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelDownTD",
+                    "action": "UDLRLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -149,557 +76,84 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MovePanelUpTD",
+                    "action": "UDLRUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82e60cc0-69df-4dd4-80cf-fc973437aa00",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UDLRUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "cb838a0b-4edc-4df7-b3a2-1d80eb0b3ac5",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MovePanelRightTD",
+                    "action": "UDLRDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "efdfa7cd-859a-4ec2-ad59-ea4e10eb4632",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UDLRDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "d135a57a-8f2f-4d4c-8982-cf8511d88154",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MovePanelLeftTD",
+                    "action": "UDLRRight",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "BottomUp",
-            "id": "0d1b717c-9ad0-49c7-b00c-15e9b07156fd",
-            "actions": [
-                {
-                    "name": "MovePanelUpBU",
-                    "type": "Button",
-                    "id": "d2d3e368-1715-4b7c-9e43-3e8c4856ae85",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
                 },
-                {
-                    "name": "MovePanelRightBU",
-                    "type": "Button",
-                    "id": "533667b9-6c9a-45cc-b6e3-b5797dc1113a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MovePanelDownBU",
-                    "type": "Button",
-                    "id": "98fba13e-8349-4c40-863d-9209cf9db388",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MovePanelLeftBU",
-                    "type": "Button",
-                    "id": "41c95345-e691-4e38-bc23-e422a6dd42b4",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveForwardsBU",
-                    "type": "Button",
-                    "id": "81cf834b-f30c-4b1f-84cb-a07907ab9c0e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveBackwardsBU",
-                    "type": "Button",
-                    "id": "b571e1b6-cc3c-4213-94b5-1ec77e679887",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveRightBU",
-                    "type": "Button",
-                    "id": "77c3dff3-b4e2-48ed-b92b-b09185ec93bb",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveLeftBU",
-                    "type": "Button",
-                    "id": "53a8172f-3a41-45e0-8d20-25a8d2f210cf",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveUpBU",
-                    "type": "Button",
-                    "id": "62f0f721-94ce-4020-8b7d-955c612af710",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveDownBU",
-                    "type": "Button",
-                    "id": "8f98c71d-a34b-4350-84de-66bd7868cc30",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
                 {
                     "name": "",
-                    "id": "308296f2-c240-4d8f-b87c-92f87ba4e04d",
+                    "id": "eef22b90-0e91-4d6f-b861-44c07f550348",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveRightBU",
+                    "action": "UDLRRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "dbb6693d-ea68-46a7-80f0-babc90025c0b",
-                    "path": "<Keyboard>/a",
+                    "id": "4478e38e-8792-4e14-9135-dca5c1cfceb5",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveLeftBU",
+                    "action": "UDLRConfirm",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "491e9e4a-f25f-4be2-9595-95ca60eb509f",
-                    "path": "<Keyboard>/w",
+                    "id": "985a00e4-f0e8-4583-86fd-489d8c6f4f19",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveDownBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4312fb0c-72b0-497d-becd-5f2c66ec8511",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveUpBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b2e89a9d-4ae0-4137-98c9-78aa50ceb9b4",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelLeftBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a1394a68-e118-428b-aa94-1bba60e89254",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelDownBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f02a21b3-5c5f-4520-8cc1-82b9bad08ccc",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelRightBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6a506c29-0c89-4d9f-8d8a-3f5ea8bd3d85",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelUpBU",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "SideScrollerLR",
-            "id": "5a2622ba-a890-4940-851f-c4340c579047",
-            "actions": [
-                {
-                    "name": "MovePanelUpSSLR",
-                    "type": "Button",
-                    "id": "4cf6f6b5-3e05-4afc-a2fc-ea112aea79ed",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MovePanelRightSSLR",
-                    "type": "Button",
-                    "id": "c65d5663-6b2c-4801-b7f5-2a5ad03660ed",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MovePanelDownSSLR",
-                    "type": "Button",
-                    "id": "1bcc7ed4-1755-4624-852d-4e15a12f7c1d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MovePanelLeftSSLR",
-                    "type": "Button",
-                    "id": "9e66589d-117f-44c8-a496-5f971f8a91f1",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveForwardsSS",
-                    "type": "Button",
-                    "id": "83b82b65-2aa4-44ce-ac3b-7c98142d35f6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveBackwardsSS",
-                    "type": "Button",
-                    "id": "9f458826-2a74-4439-8dd5-e4b9374dee80",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveRightSS",
-                    "type": "Button",
-                    "id": "e7e98ce1-780d-4525-8ce8-2db0fef05d5a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveLeftSS",
-                    "type": "Button",
-                    "id": "9c2672e2-910e-4c86-b348-66417a414e9f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveUpSS",
-                    "type": "Button",
-                    "id": "ebe96f88-6925-4e51-935d-8ccb24284e3e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveDownSS",
-                    "type": "Button",
-                    "id": "e5be641f-18d3-4333-8250-b3f652001af8",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "9b649523-1233-46fd-aec9-99d5110fd92a",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveUpSS",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "87da9c63-8c54-4ab8-a758-05621299a5ff",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveForwardsSS",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e07408b4-0bbf-42e8-b5e1-c22c7210451e",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveBackwardsSS",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2be5caa6-d58b-48c5-aa69-4b54c16d0a1b",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveDownSS",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b2a3fe70-e4b3-4159-96ee-1d6c5f9d4136",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelLeftSSLR",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "12d2d52e-8c71-4695-b048-3d5945294d7f",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelDownSSLR",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "11a7ebe5-097c-417e-8756-2b818926be4d",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelRightSSLR",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "468eb071-bc7e-48af-9d0d-6ec16d4fd2fe",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelUpSSLR",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "SideScrollerRL",
-            "id": "7de7c611-d94f-4b09-88cb-01d0bc545cc1",
-            "actions": [
-                {
-                    "name": "MovePanelUpSSRL",
-                    "type": "Button",
-                    "id": "0ca437ea-f974-498a-9c7c-4eadc21ea4ea",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MovePanelRightSSRL",
-                    "type": "Button",
-                    "id": "d5366c19-67cc-43c2-8e85-31c2e072c2ce",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MovePanelDownSSRL",
-                    "type": "Button",
-                    "id": "473a1a29-7dc1-4486-89f3-eeb871c67875",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MovePanelLeftSSRL",
-                    "type": "Button",
-                    "id": "e722728e-7e76-4e2e-8e1a-440af9f24e53",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveForwardsFPSB",
-                    "type": "Button",
-                    "id": "9b1ef52d-b71f-451d-83ae-8fba8c8f261c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveBackwardsFPSB",
-                    "type": "Button",
-                    "id": "708d07ff-c0b9-4f0a-91af-30a1bb1d0b84",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveRightFPSB",
-                    "type": "Button",
-                    "id": "54745018-56ad-4800-9019-08077b78aad8",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveLeftFPSB",
-                    "type": "Button",
-                    "id": "8bcf5c56-cf36-45ed-bb6a-f2a8d7579f40",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveUpFPSB",
-                    "type": "Button",
-                    "id": "25bf2c47-d7b9-4b97-9799-48e0579bca6b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MoveDownFPSB",
-                    "type": "Button",
-                    "id": "74c3a154-ee6f-4ffb-9627-1d4a12f35006",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "9e51b6f7-2307-4781-9601-3a9f8db62afd",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveForwardsFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "faf78953-1d05-4725-b13b-0304a6ea7212",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveBackwardsFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d21c1cf3-9caf-43a2-9989-a2be432e7c15",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveDownFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9548be2d-7651-47fd-a062-a4f9d1931243",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveUpFPSB",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7911e265-0c21-4c8a-886a-dc424f7c3a90",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelLeftSSRL",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "092252c9-3a6e-44ef-a2ff-fa00c347c1e8",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelDownSSRL",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0a924f8a-aeb0-49b6-875a-37e47fe93ad8",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelRightSSRL",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "80af38ec-2066-4cbe-b2d2-d35568718ddc",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MovePanelUpSSRL",
+                    "action": "UDLRConfirm",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

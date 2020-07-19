@@ -4,8 +4,16 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-public class UIController2 : MonoBehaviour
+public class UIPanel : MonoBehaviour
 {
+	public enum MovementDirection
+	{
+		Up = 0,
+		Down,
+		Left,
+		Right
+	};
+
     public float panelThickness = 20.0f;
     public float panelHeightRatio = 0.75f;
     public float panelAnimationTimeSeconds = 0.2f;
@@ -34,21 +42,26 @@ public class UIController2 : MonoBehaviour
     void Start()
     {
         Assert.IsNotNull(guiSkin);
-        UpdateDisplay(CubeController.MovementState.MovingUp/*<- doesnt matter, since we're teleporting*/, true);
     }
 
-    public void PositionPanelUI(CameraPanel.DisplayPosition displayPosition, CubeController.MovementState movementDirection)
+    public void PositionPanel(CameraPanel.DisplayPosition displayPosition, MovementDirection movementDirection)
     {
         displayPos = displayPosition;
         UpdateDisplay(movementDirection, false);
     }
+
+	public void PositionPanelImmediate(CameraPanel.DisplayPosition displayPosition)
+	{
+		displayPos = displayPosition;
+		UpdateDisplay(MovementDirection.Up/* <- Doesnt matter, since we're teleporting the panel */, true);
+	}
 
 	public void TeleportPanel()
 	{
         panelFrameCentre = targetPos;
 	}
 
-    void UpdateDisplay(CubeController.MovementState movementDirection, bool teleport)
+    void UpdateDisplay(MovementDirection direction, bool teleport)
 	{
         switch (displayPos)
         {
@@ -66,19 +79,19 @@ public class UIController2 : MonoBehaviour
                 break;
         }
 		movementTarget = targetPos;
-		if (movementDirection == CubeController.MovementState.MovingUp && panelFrameCentre.y == 0.25f)
+		if (direction == MovementDirection.Up && panelFrameCentre.y == 0.25f)
 		{
 			movementTarget = new Vector2(movementTarget.x, -0.25f);
 		}
-		if (movementDirection == CubeController.MovementState.MovingDown && panelFrameCentre.y == 0.75f)
+		if (direction == MovementDirection.Down && panelFrameCentre.y == 0.75f)
 		{
 			movementTarget = new Vector2(movementTarget.x, 1.25f);
 		}
-		if (movementDirection == CubeController.MovementState.MovingLeft && panelFrameCentre.x == 0.25f)
+		if (direction == MovementDirection.Left && panelFrameCentre.x == 0.25f)
 		{
 			movementTarget = new Vector2(-0.25f, movementTarget.y);
 		}
-		if (movementDirection == CubeController.MovementState.MovingRight && panelFrameCentre.x == 0.75f)
+		if (direction == MovementDirection.Right && panelFrameCentre.x == 0.75f)
 		{
 			movementTarget = new Vector2(1.25f, movementTarget.y);
 		}

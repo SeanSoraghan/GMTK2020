@@ -35,8 +35,21 @@ public class CameraPanel : MonoBehaviour
 		return (DisplayPosition)newPos;
 	}
 
-	public CubeController.ControlScheme controlScheme;
     public Camera cam;
+	public DisplayPosition camPosition;
+
+	bool _isInControl = false;
+	public bool IsSelected
+	{
+		get
+		{
+			return _isInControl;
+		}
+		set
+		{
+			_isInControl = value;
+		}
+	}
 
     // Start is called before the first frame update
     void Awake()
@@ -44,7 +57,6 @@ public class CameraPanel : MonoBehaviour
         cam = gameObject.GetComponent<Camera>();
         if (cam == null)
             cam = gameObject.AddComponent<Camera>();
-        DisplayPosition camPosition = (CameraPanel.DisplayPosition)controlScheme;
         switch (camPosition)
         {
             case DisplayPosition.TopLeft:
@@ -67,11 +79,5 @@ public class CameraPanel : MonoBehaviour
 
         if (cam != null && cam.orthographic)
             cam.orthographicSize = (CubeController.WORLD_CUBE_LIMIT + 2) * (Screen.height / (float)Screen.width); // sizeToFillDisplay * aspect * 0.5. We want to fit 2 * (WORLD_CUBE_LIMIT + 1) on screen.
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
