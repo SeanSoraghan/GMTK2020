@@ -51,6 +51,8 @@ public class CameraPanel : MonoBehaviour
 		}
 	}
 
+	
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -79,5 +81,5 @@ public class CameraPanel : MonoBehaviour
 
         if (cam != null && cam.orthographic)
             cam.orthographicSize = (CubeController.WORLD_CUBE_LIMIT + 2) * (Screen.height / (float)Screen.width); // sizeToFillDisplay * aspect * 0.5. We want to fit 2 * (WORLD_CUBE_LIMIT + 1) on screen.
-    }
+	}
 }

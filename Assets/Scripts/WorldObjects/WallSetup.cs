@@ -15,6 +15,38 @@ public class WallSetup : MonoBehaviour
 		Back
 	};
 
+	public static void GetCamPositionRotationForWall(WallPosition wallPosition, ref Vector3 position, ref Quaternion rotation, float offset)
+	{
+		float p = CubeController.WORLD_CUBE_LIMIT + 2 + offset;
+		switch (wallPosition)
+		{
+			case WallPosition.Front:
+				position = new Vector3(0.0f, 0.0f, p);
+				rotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
+				break;
+			case WallPosition.Back:
+				position = new Vector3(0.0f, 0.0f, -p);
+				rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+				break;
+			case WallPosition.Up:
+				position = new Vector3(0.0f, p, 0.0f);
+				rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+				break;
+			case WallPosition.Down:
+				position = new Vector3(0.0f, -p, 0.0f);
+				rotation = Quaternion.Euler(-90.0f, 0.0f, 0.0f);
+				break;
+			case WallPosition.Left:
+				position = new Vector3(-p, 0.0f, 0.0f);
+				rotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
+				break;
+			case WallPosition.Right:
+				position = new Vector3(p, 0.0f, 0.0f);
+				rotation = Quaternion.Euler(0.0f, -90.0f, 0.0f);
+				break;
+		}
+	}
+
     public WallPosition direction;
     public float offset = 0.0f;
     // Start is called before the first frame update

@@ -20,14 +20,18 @@ public class CubeController : MonoBehaviour
         None
 	}
 
-    static float SMALL_DISTANCE = 0.2f;
+    public static float SMALL_DISTANCE = 0.2f;
     public static int WORLD_CUBE_LIMIT = 2;
 
-    public float unitMovementTimeSeconds = 0.2f;
+	public CamAnimator camimator;
 
-    bool shouldReset = false;
-    bool goalReached = false;
+	public float unitMovementTimeSeconds = 0.2f;
 
+    public bool shouldReset = false;
+    public bool goalReached = false;
+
+	public delegate void MovementEnded();
+	public event MovementEnded OnMovementEnded;
 
     CharacterController controller;
     Vector3 moveTargetPos;
@@ -46,6 +50,7 @@ public class CubeController : MonoBehaviour
                 {
                     shouldReset = true;
                 }
+				OnMovementEnded?.Invoke();
 			}
             _moveState = value;
         }
@@ -83,12 +88,6 @@ public class CubeController : MonoBehaviour
 		return !(Mathf.Abs(target.x) > limit || Mathf.Abs(target.y) > limit || Mathf.Abs(target.z) > limit);
 	}
 
-	private void OnTriggerEnter(Collider other)
-	{
-        if (other.tag == "Goal")
-            goalReached = true;
-    }
-
 	void FixedUpdate()
     {
         if (MoveState != MovementState.Stationary)
@@ -110,7 +109,7 @@ public class CubeController : MonoBehaviour
             transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
             goalReached = false;
             shouldReset = false;
-            SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
+            //SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
         }
     }
 }
