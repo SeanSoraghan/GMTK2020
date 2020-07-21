@@ -23,7 +23,7 @@ public class CubeController : MonoBehaviour
     public static float SMALL_DISTANCE = 0.2f;
     public static int WORLD_CUBE_LIMIT = 2;
 
-	public CamAnimator camimator;
+	public UDLRCameraController camController;
 
 	public float unitMovementTimeSeconds = 0.2f;
 
@@ -63,6 +63,7 @@ public class CubeController : MonoBehaviour
         moveTargetPos = transform.position;
         controller = GetComponent<CharacterController>();
         Assert.IsNotNull(controller);
+		Assert.IsNotNull(camController);
 
         moveTargetPos = transform.position;
         moveVec = Vector3.zero;

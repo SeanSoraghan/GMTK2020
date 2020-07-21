@@ -7,6 +7,6 @@ public class CameraRotatorTrigger : PlayerTrigger
 	public override void PlayerEnteredTrigger(CubeController player)
 	{
 		if (player != null)
-			player.camimator.StartMovement();
+			player.camController.GetSelectedCameraAnimator().StartMovement();
 	}
 }

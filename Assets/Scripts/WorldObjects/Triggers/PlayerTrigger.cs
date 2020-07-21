@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerTrigger : MonoBehaviour
 {
 	CubeController playerController;
+	bool triggered = false;
     public virtual void PlayerEnteredTrigger(CubeController player)
 	{
 
@@ -12,8 +13,11 @@ public class PlayerTrigger : MonoBehaviour
 
 	void OnPlayerMovementEnded()
 	{
-		if (playerController != null)
+		if (playerController != null && !triggered)
+		{
 			PlayerEnteredTrigger(playerController);
+			triggered = true;
+		}
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -33,6 +37,7 @@ public class PlayerTrigger : MonoBehaviour
 		{
 			player.OnMovementEnded -= OnPlayerMovementEnded;
 			playerController = null;
+			triggered = false;
 		}
 	}
 }

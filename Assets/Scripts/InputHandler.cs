@@ -49,7 +49,7 @@ public class InputHandler : MonoBehaviour
 	public void OnUp(InputAction.CallbackContext context)
 	{
 		//move cube according to selected camera
-		Vector3 movementVec = camController.GetSelectedCamera().transform.up;
+		Vector3 movementVec = camController.GetSelectedCameraAnimator().transform.up;
 		movementVec.Normalize();
 		if (cubeController.MoveInDirection(movementVec))
 			camController.SwitchCameraVertical(UIPanel.MovementDirection.Up);
@@ -58,7 +58,7 @@ public class InputHandler : MonoBehaviour
 	public void OnDown(InputAction.CallbackContext context)
 	{
 		//move cube according to selected camera
-		Vector3 movementVec = -camController.GetSelectedCamera().transform.up;
+		Vector3 movementVec = -camController.GetSelectedCameraAnimator().transform.up;
 		movementVec.Normalize();
 		if (cubeController.MoveInDirection(movementVec))
 			camController.SwitchCameraVertical(UIPanel.MovementDirection.Down);
@@ -67,7 +67,7 @@ public class InputHandler : MonoBehaviour
 	public void OnLeft(InputAction.CallbackContext context)
 	{
 		//move cube according to selected camera
-		Vector3 movementVec = -camController.GetSelectedCamera().transform.right ;
+		Vector3 movementVec = -camController.GetSelectedCameraAnimator().transform.right ;
 		movementVec.Normalize();
 		if (cubeController.MoveInDirection(movementVec))
 			camController.SwitchCameraHorizontal(UIPanel.MovementDirection.Left);
@@ -76,7 +76,7 @@ public class InputHandler : MonoBehaviour
 	public void OnRight(InputAction.CallbackContext context)
 	{
 		//move cube according to selected camera
-		Vector3 movementVec = camController.GetSelectedCamera().transform.right;
+		Vector3 movementVec = camController.GetSelectedCameraAnimator().transform.right;
 		movementVec.Normalize();
 		if (cubeController.MoveInDirection(movementVec))
 			camController.SwitchCameraHorizontal(UIPanel.MovementDirection.Right);

@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 public class UDLRCameraController : MonoBehaviour
 {
-	public CameraPanel[] cameraPanels;
+	public CamAnimator[] cameraAnimators;
 	UIPanel panelController;
 	CameraPanel.DisplayPosition _selectedPosition = CameraPanel.DisplayPosition.TopLeft;
 	public CameraPanel.DisplayPosition selectedPosition
@@ -13,11 +13,12 @@ public class UDLRCameraController : MonoBehaviour
 		get { return _selectedPosition; }
 		private set
 		{
-			foreach (CameraPanel cam in cameraPanels)
+			foreach (CamAnimator cam in cameraAnimators)
 			{
-				cam.IsSelected = false;
-				if (cam.camPosition == value)
-					cam.IsSelected = true;
+				CameraPanel panel = cam.CameraPanel;
+				panel.IsSelected = false;
+				if (panel.camPosition == value)
+					panel.IsSelected = true;
 			}
 			_selectedPosition = value;
 		}
@@ -28,19 +29,20 @@ public class UDLRCameraController : MonoBehaviour
     {
 		panelController = GetComponent<UIPanel>();
 		Assert.IsNotNull(panelController);
-		Assert.IsTrue(cameraPanels.Length == 4);
+		Assert.IsTrue(cameraAnimators.Length == 4);
 		SelectCameraImmediate(CameraPanel.DisplayPosition.TopLeft);
     }
 
-	public CameraPanel GetSelectedCamera()
+	public CamAnimator GetSelectedCameraAnimator()
 	{
-		foreach (CameraPanel cam in cameraPanels)
+		foreach (CamAnimator cam in cameraAnimators)
 		{
-			if (cam.camPosition == selectedPosition)
+			CameraPanel panel = cam.CameraPanel;
+			if (panel.camPosition == selectedPosition)
 				return cam;
 		}
 		Assert.IsTrue(false /* Found no selected camera! */);
-		return cameraPanels[0];
+		return cameraAnimators[0];
 	}
 
 	public void SelectCameraImmediate(CameraPanel.DisplayPosition camPosition)

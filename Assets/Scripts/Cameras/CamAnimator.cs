@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class CamAnimator : MonoBehaviour
 {
@@ -13,12 +14,8 @@ public class CamAnimator : MonoBehaviour
 
 	public WallSetup.WallPosition initialWallAttach = WallSetup.WallPosition.Back;
 
-	// technically, this should always be CubeController.WORLD_CUBE_LIMIT + 2 + offset (see p in GetCamPositionRotationForWall).
-	// we'll use a slightly more general implementation here, but we still assume the camera will be aligned on one particular axis, and 0 on the others.
-	float distToCentre = 0.0f;
 	float lerpIter = 0.0f;
-	Vector3 forwardAtArcStart = Vector3.zero;
-	Vector3 orthogonalDirectionAtArcStart = Vector3.zero;
+	Vector3 rotationAxis = Vector3.zero;
 
 	AnimationState _animationState = AnimationState.Stationary;
 	AnimationState animationState
@@ -33,9 +30,12 @@ public class CamAnimator : MonoBehaviour
 			_animationState = value;
 		}
 	}
+	public CameraPanel CameraPanel { get; private set; }
 
 	private void Start()
 	{
+		CameraPanel = GetComponentInChildren<CameraPanel>();
+		Assert.IsNotNull(CameraPanel);
 		MoveCameraToWall(initialWallAttach);
 	}
 
@@ -52,9 +52,7 @@ public class CamAnimator : MonoBehaviour
 	{
 		// assumes camera is always aligned with one axis and 0 on the others.
 		// StartMovement() and FixedUpdate() implement an arc between one axis and the other.
-		forwardAtArcStart = transform.forward;
-		orthogonalDirectionAtArcStart = transform.up;
-		distToCentre = Vector3.Magnitude(transform.position);
+		rotationAxis = transform.right;
 		lerpIter = 0.0f;
 		animationState = AnimationState.Moving;
 	}
@@ -63,18 +61,13 @@ public class CamAnimator : MonoBehaviour
 	{
 		if (animationState == AnimationState.Moving)
 		{
-			// lerp along one axis, from distToCentre to 0.0
-			// calculate the orthogonal axis value to follow an arc, given the arc follows a circle of radius distToCentre.
 			lerpIter += Time.deltaTime;
-			float newDist = Mathf.Lerp(distToCentre, 0.0f, lerpIter);
-			float orth = Mathf.Sqrt(Mathf.Pow(distToCentre, 2.0f) - Mathf.Pow(newDist, 2.0f));
-			transform.position = newDist * -forwardAtArcStart + orth * orthogonalDirectionAtArcStart;
-			if (newDist < CubeController.SMALL_DISTANCE)
+			float rotDelta = Mathf.Lerp(0.0f, 90.0f, lerpIter);
+			transform.RotateAround(Vector3.zero, rotationAxis, 90.0f * Time.deltaTime);
+			if (/*newDist < CubeController.SMALL_DISTANCE*/lerpIter >= 1.0f)
 			{
-				transform.position = distToCentre * orthogonalDirectionAtArcStart;
 				animationState = AnimationState.Stationary;
 			}
-			transform.LookAt(Vector3.zero);
 		}
 	}
 }
