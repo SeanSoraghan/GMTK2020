@@ -24,11 +24,15 @@ public class UDLRCameraController : MonoBehaviour
 		}
 	}
 
-    // Start is called before the first frame update
-    void Start()
-    {
+	private void Awake()
+	{
 		panelController = GetComponent<UIPanel>();
 		Assert.IsNotNull(panelController);
+	}
+
+	// Start is called before the first frame update
+	void Start()
+    {
 		Assert.IsTrue(cameraAnimators.Length == 4);
 		SelectCameraImmediate(CameraPanel.DisplayPosition.TopLeft);
     }

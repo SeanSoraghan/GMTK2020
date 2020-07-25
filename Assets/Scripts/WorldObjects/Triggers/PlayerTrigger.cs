@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerTrigger : MonoBehaviour
 {
+	public bool RemoveOnTrigger = false;
+
 	CubeController playerController;
 	bool triggered = false;
     public virtual void PlayerEnteredTrigger(CubeController player)
@@ -17,6 +19,11 @@ public class PlayerTrigger : MonoBehaviour
 		{
 			PlayerEnteredTrigger(playerController);
 			triggered = true;
+			if (RemoveOnTrigger)
+			{
+				playerController.OnMovementEnded -= OnPlayerMovementEnded;
+				Destroy(gameObject);
+			}
 		}
 	}
 

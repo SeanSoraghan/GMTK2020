@@ -20,13 +20,17 @@ public class InputHandler : MonoBehaviour
 		actionMap.actions[3].performed -= OnRight;
 	}
 
-	void Start()
+	private void Awake()
 	{
 		PlayerInput input = GetComponent<PlayerInput>();
 		Assert.IsNotNull(input);
 		if (input != null)
 			inputActions = input.actions;
 		Assert.IsNotNull(inputActions);
+	}
+
+	void Start()
+	{
 		Assert.IsNotNull(camController);
 		Assert.IsNotNull(cubeController);
 

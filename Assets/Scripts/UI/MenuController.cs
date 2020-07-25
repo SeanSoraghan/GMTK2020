@@ -49,22 +49,27 @@ public class MenuController : MonoBehaviour
             panelController.PositionPanel((CameraPanel.DisplayPosition)_currentSelection, UIPanel.MovementDirection.Up);
 		}
 	}
-    // Start is called before the first frame update
-    void Start()
+
+	private void Awake()
+	{
+		panelController = GetComponent<UIPanel>();
+		Assert.IsNotNull(panelController);
+		panelController.TeleportPanel();
+		PlayerInput input = GetComponent<PlayerInput>();
+		Assert.IsNotNull(input);
+		if (input != null)
+			inputActions = input.actions;
+	}
+
+	// Start is called before the first frame update
+	void Start()
     {
         Assert.IsNotNull(guiSkin);
         Assert.IsNotNull(guiStylePLAY);
         Assert.IsNotNull(guiStyleLOGO);
         Assert.IsNotNull(guiStyleINFO);
         Assert.IsNotNull(guiStyleCONF);
-        panelController = GetComponent<UIPanel>();
-        Assert.IsNotNull(panelController);
         currentSelection = ButtonSelection.LOGO;
-        panelController.TeleportPanel();
-        PlayerInput input = GetComponent<PlayerInput>();
-        Assert.IsNotNull(input);
-        if (input != null)
-            inputActions = input.actions;
         inputActions.actionMaps[0].actions[0].performed += OnUp;
         inputActions.actionMaps[0].actions[1].performed += OnDown;
 		inputActions.actionMaps[0].actions[2].performed += OnLeft;

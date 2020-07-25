@@ -713,6 +713,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c82cd2ce9e771f4f8ce9233cf457ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RemoveOnTrigger: 1
+  arcType: 2
 --- !u!65 &308931067
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1508,6 +1510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc130231edef5141a7b892276868eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RemoveOnTrigger: 0
 --- !u!1 &706193213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,7 +1790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3246038f0b5b6ff4eb76e7a9615c0d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialWallAttach: 2
+  initialWallAttach: 5
 --- !u!1 &958844836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2966,6 +2969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7026b942a0e2a9c44b07e7098392394a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RemoveOnTrigger: 0
 --- !u!1 &1592929980
 GameObject:
   m_ObjectHideFlags: 0

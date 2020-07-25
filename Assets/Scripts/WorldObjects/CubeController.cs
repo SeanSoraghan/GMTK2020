@@ -56,13 +56,17 @@ public class CubeController : MonoBehaviour
         }
     }
 
+	private void Awake()
+	{
+		controller = GetComponent<CharacterController>();
+		Assert.IsNotNull(controller);
+	}
+
 	// Start is called before the first frame update
 	void Start()
     {
         transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
         moveTargetPos = transform.position;
-        controller = GetComponent<CharacterController>();
-        Assert.IsNotNull(controller);
 		Assert.IsNotNull(camController);
 
         moveTargetPos = transform.position;
