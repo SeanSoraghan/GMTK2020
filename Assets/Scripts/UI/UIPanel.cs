@@ -15,7 +15,7 @@ public class UIPanel : MonoBehaviour
 	};
 
     public float panelThickness = 20.0f;
-    public float panelHeightRatio = 0.75f;
+    public float sideLengthRatio = 0.75f;
     public float panelAnimationTimeSeconds = 0.2f;
     public GUISkin guiSkin;
 
@@ -66,16 +66,16 @@ public class UIPanel : MonoBehaviour
         switch (displayPos)
         {
             case CameraPanel.DisplayPosition.BottomLeft:
-				targetPos = new Vector2(0.25f, 0.75f);
+				targetPos = new Vector2(0.25f + CameraPanel.widthMargin * 0.5f, 0.75f);
                 break;
             case CameraPanel.DisplayPosition.BottomRight:
 				targetPos = new Vector2(0.75f, 0.75f);
                 break;
             case CameraPanel.DisplayPosition.TopLeft:
-				targetPos = new Vector2(0.25f, 0.25f);
+				targetPos = new Vector2(0.25f + CameraPanel.widthMargin * 0.5f, 0.25f + CameraPanel.heightMargin * 0.5f);
                 break;
             case CameraPanel.DisplayPosition.TopRight:
-				targetPos = new Vector2(0.75f, 0.25f);
+				targetPos = new Vector2(0.75f, 0.25f + CameraPanel.heightMargin * 0.5f);
                 break;
         }
 		movementTarget = targetPos;
@@ -110,7 +110,7 @@ public class UIPanel : MonoBehaviour
             panelFrameCentre = Vector2.Lerp(movementStartPos, movementTarget, lerpX);
             if (Vector2.Distance(panelFrameCentre, movementTarget) < 0.05f)
             {
-				panelFrameCentre = targetPos;// movementTarget;
+				panelFrameCentre = targetPos;
             }
         }
         DrawPanel();
@@ -149,24 +149,25 @@ public class UIPanel : MonoBehaviour
 		float h = Screen.height;
 		Vector2 centre = frameCenter * new Vector2(w, h);
 
-		float fullLength = h * 0.5f;
-		float length = panelHeightRatio * fullLength;
-		float offset = (1.0f - panelHeightRatio) * fullLength * 0.5f;
+		float sideLength = CameraPanel.sideLength;
+		float length = sideLengthRatio * sideLength;
+		float halfSide = sideLength * 0.5f;
+		float offset = (1.0f - sideLengthRatio) * halfSide;
 
-		Vector2 leftBarXY = new Vector2(centre.x - 0.25f * w, centre.y - 0.25f * h);
+		Vector2 leftBarXY = new Vector2(centre.x - halfSide, centre.y - halfSide);
 		GUI.Box(new Rect(leftBarXY.x, leftBarXY.y + offset, panelThickness, length), "");
 
-		Vector2 rightBarXY = new Vector2(centre.x + 0.25f * w - panelThickness, centre.y - 0.25f * h);
+		Vector2 rightBarXY = new Vector2(centre.x + halfSide - panelThickness, centre.y - halfSide);
 		GUI.Box(new Rect(rightBarXY.x, rightBarXY.y + offset, panelThickness, length), "");
 
-		fullLength = w * 0.5f;
-		length = panelHeightRatio * fullLength;
-		offset = (1.0f - panelHeightRatio) * fullLength * 0.5f;
+		//fullLength = w * 0.5f;
+		//length = panelHeightRatio * fullLength;
+		//offset = (1.0f - panelHeightRatio) * fullLength * 0.5f;
 
-		Vector2 topBarXY = new Vector2(centre.x - 0.25f * w, centre.y - 0.25f * h);
+		Vector2 topBarXY = new Vector2(centre.x - halfSide, centre.y - halfSide);
 		GUI.Box(new Rect(topBarXY.x + offset, topBarXY.y, length, panelThickness), "");
 
-		Vector2 bottomBarXY = new Vector2(centre.x - 0.25f * w, centre.y + 0.25f * h - panelThickness);
+		Vector2 bottomBarXY = new Vector2(centre.x - halfSide, centre.y + halfSide - panelThickness);
 		GUI.Box(new Rect(bottomBarXY.x + offset, bottomBarXY.y, length, panelThickness), "");
 	}
 }

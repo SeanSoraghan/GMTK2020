@@ -38,6 +38,12 @@ public class CameraPanel : MonoBehaviour
     public Camera cam;
 	public DisplayPosition camPosition;
 
+	public static float widthMargin { get; private set; }
+	public static float heightMargin { get; private set; }
+	public static float normedWidth { get; private set; }
+	public static float normedHeight { get; private set; }
+	public static float sideLength { get; private set; }
+
 	bool _isInControl = false;
 	public bool IsSelected
 	{
@@ -56,26 +62,36 @@ public class CameraPanel : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        cam = gameObject.GetComponent<Camera>();
+		float w = Screen.width;
+		float h = Screen.height;
+
+		float minDimension = w < h ? w : h;
+		sideLength = 0.5f * minDimension;
+		normedWidth = minDimension == w ? 0.5f : (sideLength / w);
+		normedHeight = minDimension == h ? 0.5f : (sideLength / h);
+		widthMargin = 0.5f - normedWidth;
+		heightMargin = 0.5f - normedHeight;
+
+		cam = gameObject.GetComponent<Camera>();
         if (cam == null)
             cam = gameObject.AddComponent<Camera>();
         switch (camPosition)
         {
             case DisplayPosition.TopLeft:
                 if (cam != null)
-                    cam.rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
+                    cam.rect = new Rect(widthMargin, 0.5f, normedWidth, normedHeight);
                 break;
             case DisplayPosition.TopRight:
                 if (cam != null)
-                    cam.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                    cam.rect = new Rect(0.5f, 0.5f, normedWidth, normedHeight);
                 break;
             case DisplayPosition.BottomLeft:
                 if (cam != null)
-                    cam.rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
+                    cam.rect = new Rect(widthMargin, heightMargin, normedWidth, normedHeight);
                 break;
             case DisplayPosition.BottomRight:
                 if (cam != null)
-                    cam.rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
+                    cam.rect = new Rect(0.5f, heightMargin, normedWidth, normedHeight);
                 break;
         }
 
