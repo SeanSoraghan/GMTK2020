@@ -28,7 +28,19 @@ public class CubeController : MonoBehaviour
 	public float unitMovementTimeSeconds = 0.2f;
 
     public bool shouldReset = false;
-    public bool goalReached = false;
+	bool _goalReached = false;
+    public bool goalReached
+	{
+		get { return _goalReached; }
+		set
+		{
+			_goalReached = value;
+			if (MoveState == MovementState.Stationary && _goalReached)
+			{
+				shouldReset = true;
+			}
+		}
+	}
 
 	public delegate void MovementEnded();
 	public event MovementEnded OnMovementEnded;
@@ -43,7 +55,9 @@ public class CubeController : MonoBehaviour
         get { return _moveState; }
         set
         {
-            if (_moveState == MovementState.Moving && value == MovementState.Stationary)
+			MovementState prev = _moveState;
+            _moveState = value;
+            if (prev == MovementState.Moving && _moveState == MovementState.Stationary)
 			{
                 moveVec = Vector3.zero;
                 if (goalReached)
@@ -52,7 +66,6 @@ public class CubeController : MonoBehaviour
                 }
 				OnMovementEnded?.Invoke();
 			}
-            _moveState = value;
         }
     }
 
@@ -65,7 +78,7 @@ public class CubeController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
+        //transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
         moveTargetPos = transform.position;
 		Assert.IsNotNull(camController);
 
@@ -88,9 +101,11 @@ public class CubeController : MonoBehaviour
 
 	bool CheckMovement(Vector3 direction)
 	{
-		float limit = WORLD_CUBE_LIMIT;
+		// quick fix to get around seeming inaccuracies in float comparison
+		float eps = 0.05f;
+		float limit = WORLD_CUBE_LIMIT + eps;
 		Vector3 target = transform.position + direction;
-		return !(Mathf.Abs(target.x) > limit || Mathf.Abs(target.y) > limit || Mathf.Abs(target.z) > limit);
+		return !(Mathf.Abs(target.x) >= limit || Mathf.Abs(target.y) >= limit || Mathf.Abs(target.z) >= limit);
 	}
 
 	void FixedUpdate()
@@ -111,7 +126,7 @@ public class CubeController : MonoBehaviour
 		}
         if (shouldReset) // Ideally the player would be animated back to starting position.
 		{
-            transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
+            //transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
             goalReached = false;
             shouldReset = false;
             //SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);

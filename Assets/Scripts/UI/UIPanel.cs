@@ -63,19 +63,21 @@ public class UIPanel : MonoBehaviour
 
     void UpdateDisplay(MovementDirection direction, bool teleport)
 	{
+		float marginW = CameraPanel.widthMargin * 0.5f;
+		float marginH = CameraPanel.heightMargin * 0.5f;
         switch (displayPos)
         {
             case CameraPanel.DisplayPosition.BottomLeft:
-				targetPos = new Vector2(0.25f + CameraPanel.widthMargin * 0.5f, 0.75f);
+				targetPos = new Vector2(0.25f + marginW, 0.75f - marginH);
                 break;
             case CameraPanel.DisplayPosition.BottomRight:
-				targetPos = new Vector2(0.75f, 0.75f);
+				targetPos = new Vector2(0.75f - marginW, 0.75f - marginH);
                 break;
             case CameraPanel.DisplayPosition.TopLeft:
-				targetPos = new Vector2(0.25f + CameraPanel.widthMargin * 0.5f, 0.25f + CameraPanel.heightMargin * 0.5f);
+				targetPos = new Vector2(0.25f + marginW, 0.25f + marginH);
                 break;
             case CameraPanel.DisplayPosition.TopRight:
-				targetPos = new Vector2(0.75f, 0.25f + CameraPanel.heightMargin * 0.5f);
+				targetPos = new Vector2(0.75f - marginW, 0.25f + marginH);
                 break;
         }
 		movementTarget = targetPos;
