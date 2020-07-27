@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 public class UDLRCameraController : MonoBehaviour
 {
-	public CamAnimator[] cameraAnimators;
+	CamAnimator[] cameraAnimators;
 	UIPanel panelController;
 	CameraPanel.DisplayPosition _selectedPosition = CameraPanel.DisplayPosition.TopLeft;
 	public CameraPanel.DisplayPosition selectedPosition
@@ -28,6 +28,7 @@ public class UDLRCameraController : MonoBehaviour
 	{
 		panelController = GetComponent<UIPanel>();
 		Assert.IsNotNull(panelController);
+		cameraAnimators = GetComponentsInChildren<CamAnimator>();
 	}
 
 	// Start is called before the first frame update
