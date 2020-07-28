@@ -23,14 +23,19 @@ public class LineCubeController : MonoBehaviour
 		set
 		{
 			animationLerpIter = 0.0f;
+			AnimationState prevState = _animationState;
 			_animationState = value;
 			if (_animationState != AnimationState.Stationary)
 			{
 				animationStartTime = Time.time;
 			}
-			else if (LevelController.IsMazeCompleted())
+			else if (LevelController.GetMazeState() == LevelController.MazeState.Finishing && prevState == AnimationState.Shrinking)
 			{
-				LevelController.PostMazeCompleteWorkDone(this);
+				LevelController.MazeFinishingWorkerDone(this);
+			}
+			else if (LevelController.GetMazeState() == LevelController.MazeState.Starting && prevState == AnimationState.Growing)
+			{
+				LevelController.MazeStartingWorkerDone(this);
 			}
 		}
 	}
@@ -54,13 +59,25 @@ public class LineCubeController : MonoBehaviour
 	private void Start()
 	{
 		animationState = AnimationState.Growing;
-		LevelController.RegisterPostMazeCompleteWorker(this);
-		LevelController.Instance.OnMazeCompleted += MazeCompleted;
+		// shrink here and wait for update from level controller before we start growing.
+		transform.localScale = Vector3.zero;
+		LevelController.RegisterMazeFinishingWorker(this);
+		LevelController.RegisterMazeStartingWorker(this);
+		if (LevelController.Instance != null)
+		{
+			LevelController.Instance.OnMazeCompleted += MazeCompleted;
+			LevelController.Instance.OnMazeStarted += MazeStarted;
+		}
 	}
 
 	public void MazeCompleted()
 	{
 		animationState = AnimationState.Shrinking;
+	}
+
+	public void MazeStarted()
+	{
+		animationState = AnimationState.Growing;
 	}
 
 	private void FixedUpdate()

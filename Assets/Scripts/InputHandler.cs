@@ -44,7 +44,7 @@ public class InputHandler : MonoBehaviour
 
 	void Update()
 	{
-		if (cubeController.MoveState == CubeController.MovementState.Stationary)
+		if (cubeController.MoveState == CubeController.MovementState.Stationary && LevelController.GetMazeState() == LevelController.MazeState.InProgress)
 		{
 			InputSystem.Update();
 		}
