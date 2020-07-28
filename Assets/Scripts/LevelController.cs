@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
@@ -9,38 +10,38 @@ public class LevelController : MonoBehaviour
 		Starting = 0,
 		InProgress,
 		Finishing,
-		LoadingLevel
+		LoadingLevel,
+		NumStates
 	}
 
 	public static LevelController Instance;
 
-	public delegate void MazeCompleted();
-	public event MazeCompleted OnMazeCompleted;
+	public delegate void MazeStateChanged(MazeState state);
+	public event MazeStateChanged OnMazeStateChanged;
 
-	public delegate void MazeStarted();
-	public event MazeStarted OnMazeStarted;
+	// A collection of components who have work to do during a maze state (e.g. animations and such).
+	// Mainly used with Starting and Finishing.
 
-	// A collection of components who have work to do after the maze is completed (e.g. animations and such).
-	// When the last one is flagged as complete, the next level will load.
-	Dictionary<Component, bool> mazeFinishingWorkerFlags = new Dictionary<Component, bool>();
-	// A collection of components who have work to do while the maze is starting
-	Dictionary<Component, bool> mazeStartingWorkerFlags = new Dictionary<Component, bool>();
+	Dictionary<Component, bool>[] workerFlags = 
+	{
+		new Dictionary<Component, bool>(),
+		new Dictionary<Component, bool>(),
+		new Dictionary<Component, bool>(),
+		new Dictionary<Component, bool>()
+	};
 
-	MazeState _mazeState = MazeState.Starting;
+	MazeState _mazeState = MazeState.LoadingLevel;
 	MazeState mazeState
 	{
 		get { return _mazeState; }
 		set
 		{
 			_mazeState = value;
-			if (_mazeState == MazeState.Finishing)
+			if (_mazeState == MazeState.LoadingLevel)
 			{
-				OnMazeCompleted?.Invoke();
+				LoadNextLevel();
 			}
-			else if (_mazeState == MazeState.Starting)
-			{
-				OnMazeStarted?.Invoke();
-			}
+			OnMazeStateChanged?.Invoke(_mazeState);
 		}
 	}
 
@@ -55,15 +56,30 @@ public class LevelController : MonoBehaviour
 			Instance = this;
 			DontDestroyOnLoad(this);
 		}
+	}
+
+	private void Start()
+	{
 		mazeState = MazeState.Starting;
 	}
 
-	void LoadLevel()
+	void LoadNextLevel()
 	{
-		mazeState = MazeState.LoadingLevel;
-		mazeStartingWorkerFlags.Clear();
-		mazeFinishingWorkerFlags.Clear();
+		for (int i = 0; i < (int)MazeState.NumStates; ++i)
+		{
+			workerFlags[i].Clear();
+		}
 		Debug.Log("This is where I'd load a new level");
+		SceneManager.sceneLoaded += SceneLoaded;
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+	}
+
+	void SceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		// This happens before Start() is called on some components, so we have to force their 
+		// MazeStateChanged callback whenever they register themselves. Which isn't ideal.
+		mazeState = MazeState.Starting;
+		SceneManager.sceneLoaded -= SceneLoaded;
 	}
 
 	public static bool IsMazeCompleted()
@@ -85,45 +101,24 @@ public class LevelController : MonoBehaviour
 		}
 	}
 
-	public static void RegisterMazeFinishingWorker(Component component)
+	public static void RegisterMazeStateWorker(MazeState state, Component component)
 	{
 		if (Instance == null)
 			return;
-		if (!Instance.mazeFinishingWorkerFlags.ContainsKey(component))
-			Instance.mazeFinishingWorkerFlags[component] = false;
+		if (!Instance.workerFlags[(int)state].ContainsKey(component))
+			Instance.workerFlags[(int)state][component] = false;
 	}
 
-	public static void RegisterMazeStartingWorker(Component component)
+	public static void MazeStateWorkerComplete(MazeState state, Component component)
 	{
 		if (Instance == null)
 			return;
-		if (!Instance.mazeStartingWorkerFlags.ContainsKey(component))
-			Instance.mazeStartingWorkerFlags[component] = false;
-	}
-
-	public static void MazeFinishingWorkerDone(Component component)
-	{
-		if (Instance == null)
-			return;
-		Instance.mazeFinishingWorkerFlags[component] = true;
-		foreach(var pair in Instance.mazeFinishingWorkerFlags)
+		Instance.workerFlags[(int)state][component] = true;
+		foreach(var pair in Instance.workerFlags[(int)state])
 		{
 			if (!pair.Value)
 				return;
 		}
-		Instance.LoadLevel();
-	}
-
-	public static void MazeStartingWorkerDone(Component component)
-	{
-		if (Instance == null)
-			return;
-		Instance.mazeStartingWorkerFlags[component] = true;
-		foreach (var pair in Instance.mazeStartingWorkerFlags)
-		{
-			if (!pair.Value)
-				return;
-		}
-		Instance.mazeState = MazeState.InProgress;
+		Instance.mazeState = (MazeState)(((int)Instance.mazeState + 1) % (int)MazeState.NumStates);
 	}
 }

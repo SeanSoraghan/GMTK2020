@@ -31,11 +31,12 @@ public class LineCubeController : MonoBehaviour
 			}
 			else if (LevelController.GetMazeState() == LevelController.MazeState.Finishing && prevState == AnimationState.Shrinking)
 			{
-				LevelController.MazeFinishingWorkerDone(this);
+				LevelController.MazeStateWorkerComplete(LevelController.MazeState.Finishing, this);
 			}
 			else if (LevelController.GetMazeState() == LevelController.MazeState.Starting && prevState == AnimationState.Growing)
 			{
-				LevelController.MazeStartingWorkerDone(this);
+				LevelController.MazeStateWorkerComplete(LevelController.MazeState.Starting, this);
+
 			}
 		}
 	}
@@ -58,26 +59,37 @@ public class LineCubeController : MonoBehaviour
 
 	private void Start()
 	{
-		animationState = AnimationState.Growing;
+		animationState = AnimationState.Stationary;
 		// shrink here and wait for update from level controller before we start growing.
 		transform.localScale = Vector3.zero;
-		LevelController.RegisterMazeFinishingWorker(this);
-		LevelController.RegisterMazeStartingWorker(this);
+		LevelController.RegisterMazeStateWorker(LevelController.MazeState.Starting, this);
+		LevelController.RegisterMazeStateWorker(LevelController.MazeState.Finishing, this);
 		if (LevelController.Instance != null)
 		{
-			LevelController.Instance.OnMazeCompleted += MazeCompleted;
-			LevelController.Instance.OnMazeStarted += MazeStarted;
+			LevelController.Instance.OnMazeStateChanged += MazeStateChanged;
+			// Force update to the current maze state ... (a bit untidy).
+			MazeStateChanged(LevelController.GetMazeState());
 		}
 	}
 
-	public void MazeCompleted()
+	private void OnDestroy()
 	{
-		animationState = AnimationState.Shrinking;
+		if (LevelController.Instance != null)
+			LevelController.Instance.OnMazeStateChanged -= MazeStateChanged;
 	}
 
-	public void MazeStarted()
+	public void MazeStateChanged(LevelController.MazeState state)
 	{
-		animationState = AnimationState.Growing;
+		switch (state)
+		{
+			case LevelController.MazeState.Starting:
+				animationState = AnimationState.Growing;
+				break;
+			case LevelController.MazeState.Finishing:
+				animationState = AnimationState.Shrinking;
+				break;
+			default: break;
+		}
 	}
 
 	private void FixedUpdate()
