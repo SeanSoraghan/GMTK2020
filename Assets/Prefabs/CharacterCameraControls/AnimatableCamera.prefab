@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3245047372192223675}
   - component: {fileID: 3245047372192223674}
+  - component: {fileID: 1325923108929567167}
   m_Layer: 0
   m_Name: AnimatableCamera
   m_TagString: Untagged
@@ -45,6 +46,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialWallAttach: 5
+--- !u!114 &1325923108929567167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3245047372192223672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca3a880054ebe644cb9592188d5c0f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationTimeSeconds: 0.5
 --- !u!1001 &4505230863168039973
 PrefabInstance:
   m_ObjectHideFlags: 0
