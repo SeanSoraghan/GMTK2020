@@ -7,17 +7,24 @@ public class CameraRotatorTrigger : PlayerTrigger
 {
 	public Rotator.ArcType arcType;
 	public float secondsBetweenRotations = 0.1f;
+	/* temporary hack for testing rotations. Probably should make UDLRCameraController a singleton ... or soemthing */
+	public UDLRCameraController camControllerREMOVEME;
 
 	public Rotator rotator { get; private set; }
 
 	float timeSinceLastRotationStart = 0.0f;
+	bool needsStartRotation = false;
 
-	private void Start()
+	private void Awake()
 	{
 		rotator = GetComponent<Rotator>();
 		Assert.IsNotNull(rotator);
+	}
 
-		StartRotation();
+	private void Start()
+	{
+		Assert.IsNotNull(camControllerREMOVEME);
+		TryStartRotation();
 	}
 
 	// since this trigger will cause the camera to arc around in the given direction (arcType), we should rotate it
@@ -35,16 +42,24 @@ public class CameraRotatorTrigger : PlayerTrigger
 		return arcType;
 	}
 
-	void StartRotation()
+	void TryStartRotation()
 	{
-		rotator.StartArc(GetRotationDirection(), transform.position, Rotator.MotionType.Exponential);
-		timeSinceLastRotationStart = 0.0f;
+		CamAnimator camAnim = camControllerREMOVEME.GetSelectedCameraAnimator();
+		if (camAnim != null && camAnim.rotator.animationState == Rotator.AnimationState.Stationary)
+		{
+			rotator.StartArc(camAnim.transform, GetRotationDirection(), transform.position, Rotator.MotionType.Exponential);
+			timeSinceLastRotationStart = 0.0f;
+			needsStartRotation = false;
+		}
 	}
 
 	public override void PlayerEnteredTrigger(CubeController player)
 	{
 		if (player != null)
-			player.camController.GetSelectedCameraAnimator().rotator.StartArc(arcType, Vector3.zero, Rotator.MotionType.Linear);
+		{
+			CamAnimator camAnim = player.camController.GetSelectedCameraAnimator();
+			camAnim.rotator.StartArc(camAnim.transform, arcType, Vector3.zero, Rotator.MotionType.Linear);
+		}
 	}
 
 	private void Update()
@@ -52,7 +67,11 @@ public class CameraRotatorTrigger : PlayerTrigger
 		timeSinceLastRotationStart += Time.deltaTime;
 		if (timeSinceLastRotationStart >= rotator.RotationTimeSeconds + secondsBetweenRotations)
 		{
-			StartRotation();
+			needsStartRotation = true;
+		}
+		if (needsStartRotation)
+		{
+			TryStartRotation();
 		}
 	}
 }

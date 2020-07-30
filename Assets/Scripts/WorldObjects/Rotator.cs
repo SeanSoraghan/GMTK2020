@@ -39,14 +39,14 @@ public class Rotator : MonoBehaviour
 	MotionType currentMotionType = MotionType.Linear;
 
 	AnimationState _animationState = AnimationState.Stationary;
-	AnimationState animationState
+	public AnimationState animationState
 	{
 		get
 		{
 			return _animationState;
 		}
 
-		set
+		private set
 		{
 			_animationState = value;
 			if (_animationState == AnimationState.Stationary)
@@ -64,7 +64,10 @@ public class Rotator : MonoBehaviour
 		RotationSpeed = 1.0f / RotationTimeSeconds;
 	}
 
-	public void StartArc(ArcType arcDirection, Vector3 _arcPoint, MotionType motionType)
+	// referenceTransform controls the 'perspective' of the rotation.
+	// pass a gameObjects own transform to rotate that object up, down, left, right in the world.
+	// pass a camera's transform to rotate up, down, left, right from the perspective of that camera.
+	public void StartArc(Transform referenceTransform, ArcType arcDirection, Vector3 _arcPoint, MotionType motionType)
 	{
 		arcPoint = _arcPoint;
 		currentMotionType = motionType;
@@ -73,19 +76,19 @@ public class Rotator : MonoBehaviour
 		switch (arcDirection)
 		{
 			case ArcType.Up:
-				rotationAxis = transform.right;
+				rotationAxis = referenceTransform.right;
 				rotAngle = 90.0f;
 				break;
 			case ArcType.Down:
-				rotationAxis = transform.right;
+				rotationAxis = referenceTransform.right;
 				rotAngle = -90.0f;
 				break;
 			case ArcType.Left:
-				rotationAxis = transform.up;
+				rotationAxis = referenceTransform.up;
 				rotAngle = 90.0f;
 				break;
 			case ArcType.Right:
-				rotationAxis = transform.up;
+				rotationAxis = referenceTransform.up;
 				rotAngle = -90.0f;
 				break;
 		}

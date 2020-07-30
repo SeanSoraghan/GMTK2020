@@ -15,12 +15,12 @@ public class CamAnimator : MonoBehaviour
 	{
 		CameraPanel = GetComponentInChildren<CameraPanel>();
 		Assert.IsNotNull(CameraPanel);
+		rotator = GetComponent<Rotator>();
+		Assert.IsNotNull(rotator);
 	}
 
 	private void Start()
 	{
-		rotator = GetComponent<Rotator>();
-		Assert.IsNotNull(rotator);
 		MoveCameraToWall(initialWallAttach);
 	}
 
