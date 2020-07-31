@@ -14,6 +14,7 @@ public class CameraRotatorTrigger : PlayerTrigger
 
 	float timeSinceLastRotationStart = 0.0f;
 	bool needsStartRotation = false;
+	Transform startingTransform;
 
 	private void Awake()
 	{
@@ -24,6 +25,7 @@ public class CameraRotatorTrigger : PlayerTrigger
 	private void Start()
 	{
 		Assert.IsNotNull(camControllerREMOVEME);
+		startingTransform = transform;
 		TryStartRotation();
 	}
 
@@ -58,6 +60,9 @@ public class CameraRotatorTrigger : PlayerTrigger
 		if (player != null)
 		{
 			CamAnimator camAnim = player.camController.GetSelectedCameraAnimator();
+			//transform.position = startingTransform.position;
+			//transform.rotation = startingTransform.rotation;
+			//transform.localScale = startingTransform.localScale;
 			camAnim.rotator.StartArc(camAnim.transform, arcType, Vector3.zero, Rotator.MotionType.Linear);
 		}
 	}

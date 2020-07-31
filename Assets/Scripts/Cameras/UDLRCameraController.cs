@@ -56,6 +56,21 @@ public class UDLRCameraController : MonoBehaviour
 		panelController.PositionPanelImmediate(selectedPosition);
 	}
 
+	public void SwitchCamera(UIPanel.MovementDirection direction)
+	{
+		switch (direction)
+		{
+			case UIPanel.MovementDirection.Up:
+			case UIPanel.MovementDirection.Down:
+				SwitchCameraVertical(direction);
+				break;
+			case UIPanel.MovementDirection.Left:
+			case UIPanel.MovementDirection.Right:
+				SwitchCameraHorizontal(direction);
+				break;
+		}
+	}
+
 	public void SwitchCameraVertical(UIPanel.MovementDirection direction)
 	{
 		Assert.IsTrue(direction == UIPanel.MovementDirection.Up || direction == UIPanel.MovementDirection.Down);

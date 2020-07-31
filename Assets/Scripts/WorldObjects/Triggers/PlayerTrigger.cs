@@ -13,6 +13,12 @@ public class PlayerTrigger : MonoBehaviour
 
 	}
 
+	private void OnDestroy()
+	{
+		if (playerController != null)
+			playerController.isInTrigger = false;
+	}
+
 	void OnPlayerMovementEnded()
 	{
 		if (playerController != null && !triggered)
@@ -32,6 +38,7 @@ public class PlayerTrigger : MonoBehaviour
 		CubeController player = other.GetComponent<CubeController>();
 		if (player != null)
 		{
+			player.isInTrigger = true;
 			playerController = player;
 			player.OnMovementEnded += OnPlayerMovementEnded;
 		}
@@ -42,6 +49,7 @@ public class PlayerTrigger : MonoBehaviour
 		CubeController player = other.GetComponent<CubeController>();
 		if (player != null)
 		{
+			player.isInTrigger = false;
 			player.OnMovementEnded -= OnPlayerMovementEnded;
 			playerController = null;
 			triggered = false;

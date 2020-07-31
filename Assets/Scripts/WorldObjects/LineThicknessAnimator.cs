@@ -25,7 +25,7 @@ public class LineThicknessAnimator : MonoBehaviour
     void Update()
     {
 
-		lineRenderer.startWidth = centre + Mathf.Sin(Time.time * 3.0f) * centre;
-		lineRenderer.endWidth = centre + Mathf.Cos(Time.time * 5.0f) * centre;
+		lineRenderer.startWidth = centre + Mathf.Sin(Time.time * 1.0f) * centre;
+		lineRenderer.endWidth = centre - Mathf.Sin(Time.time * 1.0f) * centre;
     }
 }

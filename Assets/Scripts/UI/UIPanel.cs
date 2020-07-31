@@ -63,23 +63,7 @@ public class UIPanel : MonoBehaviour
 
     void UpdateDisplay(MovementDirection direction, bool teleport)
 	{
-		float marginW = CameraPanel.widthMargin * 0.5f;
-		float marginH = CameraPanel.heightMargin * 0.5f;
-        switch (displayPos)
-        {
-            case CameraPanel.DisplayPosition.BottomLeft:
-				targetPos = new Vector2(0.25f + marginW, 0.75f - marginH);
-                break;
-            case CameraPanel.DisplayPosition.BottomRight:
-				targetPos = new Vector2(0.75f - marginW, 0.75f - marginH);
-                break;
-            case CameraPanel.DisplayPosition.TopLeft:
-				targetPos = new Vector2(0.25f + marginW, 0.25f + marginH);
-                break;
-            case CameraPanel.DisplayPosition.TopRight:
-				targetPos = new Vector2(0.75f - marginW, 0.25f + marginH);
-                break;
-        }
+		GetTargetPosForCornersLayout();
 		movementTarget = targetPos;
 		if (direction == MovementDirection.Up && panelFrameCentre.y == 0.25f)
 		{
@@ -103,6 +87,48 @@ public class UIPanel : MonoBehaviour
         }
         movementStartPos = panelFrameCentre;
     }
+
+	void GetTargetPosForCornersLayout()
+	{
+		float marginW = CameraPanel.widthMargin * 0.5f;
+		float marginH = CameraPanel.heightMargin * 0.5f;
+		switch (displayPos)
+		{
+			case CameraPanel.DisplayPosition.BottomLeft:
+				targetPos = new Vector2(CameraPanel.normedWidth * 0.5f, 1.0f - CameraPanel.normedHeight * 0.5f);
+				break;
+			case CameraPanel.DisplayPosition.BottomRight:
+				targetPos = new Vector2(1.0f - CameraPanel.normedWidth * 0.5f, 1.0f - CameraPanel.normedHeight * 0.5f);
+				break;
+			case CameraPanel.DisplayPosition.TopLeft:
+				targetPos = new Vector2(CameraPanel.normedWidth * 0.5f, CameraPanel.normedHeight * 0.5f);
+				break;
+			case CameraPanel.DisplayPosition.TopRight:
+				targetPos = new Vector2(1.0f - CameraPanel.normedWidth * 0.5f, CameraPanel.normedHeight * 0.5f);
+				break;
+		}
+	}
+
+	void GetTargetPosForCentredLayout()
+	{
+		float marginW = CameraPanel.widthMargin * 0.5f;
+		float marginH = CameraPanel.heightMargin * 0.5f;
+		switch (displayPos)
+		{
+			case CameraPanel.DisplayPosition.BottomLeft:
+				targetPos = new Vector2(0.25f + marginW, 0.75f - marginH);
+				break;
+			case CameraPanel.DisplayPosition.BottomRight:
+				targetPos = new Vector2(0.75f - marginW, 0.75f - marginH);
+				break;
+			case CameraPanel.DisplayPosition.TopLeft:
+				targetPos = new Vector2(0.25f + marginW, 0.25f + marginH);
+				break;
+			case CameraPanel.DisplayPosition.TopRight:
+				targetPos = new Vector2(0.75f - marginW, 0.25f + marginH);
+				break;
+		}
+	}
 
     void OnGUI()
     {
