@@ -63,24 +63,8 @@ public class UIPanel : MonoBehaviour
 
     void UpdateDisplay(MovementDirection direction, bool teleport)
 	{
-		GetTargetPosForCornersLayout();
-		movementTarget = targetPos;
-		if (direction == MovementDirection.Up && panelFrameCentre.y == 0.25f)
-		{
-			movementTarget = new Vector2(movementTarget.x, -0.25f);
-		}
-		if (direction == MovementDirection.Down && panelFrameCentre.y == 0.75f)
-		{
-			movementTarget = new Vector2(movementTarget.x, 1.25f);
-		}
-		if (direction == MovementDirection.Left && panelFrameCentre.x == 0.25f)
-		{
-			movementTarget = new Vector2(-0.25f, movementTarget.y);
-		}
-		if (direction == MovementDirection.Right && panelFrameCentre.x == 0.75f)
-		{
-			movementTarget = new Vector2(1.25f, movementTarget.y);
-		}
+		GetTargetPosForCornersLayout(direction);
+		
 		if (teleport)
         {
             panelFrameCentre = movementTarget;
@@ -88,28 +72,45 @@ public class UIPanel : MonoBehaviour
         movementStartPos = panelFrameCentre;
     }
 
-	void GetTargetPosForCornersLayout()
+	void GetTargetPosForCornersLayout(MovementDirection direction)
 	{
-		float marginW = CameraPanel.widthMargin * 0.5f;
-		float marginH = CameraPanel.heightMargin * 0.5f;
+		float w = CameraPanel.normedWidth * 0.5f;
+		float h = CameraPanel.normedHeight * 0.5f;
 		switch (displayPos)
 		{
 			case CameraPanel.DisplayPosition.BottomLeft:
-				targetPos = new Vector2(CameraPanel.normedWidth * 0.5f, 1.0f - CameraPanel.normedHeight * 0.5f);
+				targetPos = new Vector2(w, 1.0f - h);
 				break;
 			case CameraPanel.DisplayPosition.BottomRight:
-				targetPos = new Vector2(1.0f - CameraPanel.normedWidth * 0.5f, 1.0f - CameraPanel.normedHeight * 0.5f);
+				targetPos = new Vector2(1.0f - w, 1.0f - h);
 				break;
 			case CameraPanel.DisplayPosition.TopLeft:
-				targetPos = new Vector2(CameraPanel.normedWidth * 0.5f, CameraPanel.normedHeight * 0.5f);
+				targetPos = new Vector2(w, h);
 				break;
 			case CameraPanel.DisplayPosition.TopRight:
-				targetPos = new Vector2(1.0f - CameraPanel.normedWidth * 0.5f, CameraPanel.normedHeight * 0.5f);
+				targetPos = new Vector2(1.0f - w, h);
 				break;
+		}
+		movementTarget = targetPos;
+		if ((direction == MovementDirection.Up) && Mathf.Approximately(panelFrameCentre.y, h))
+		{
+			movementTarget = new Vector2(movementTarget.x, -h);
+		}
+		if ((direction == MovementDirection.Down) && Mathf.Approximately(panelFrameCentre.y, 1.0f - h))
+		{
+			movementTarget = new Vector2(movementTarget.x, 1.0f + h);
+		}
+		if ((direction == MovementDirection.Left) && Mathf.Approximately(panelFrameCentre.x, w))
+		{
+			movementTarget = new Vector2(-w, movementTarget.y);
+		}
+		if ((direction == MovementDirection.Right) && Mathf.Approximately(panelFrameCentre.x, 1.0f - w))
+		{
+			movementTarget = new Vector2(1.0f + w, movementTarget.y);
 		}
 	}
 
-	void GetTargetPosForCentredLayout()
+	void GetTargetPosForCentredLayout(MovementDirection direction)
 	{
 		float marginW = CameraPanel.widthMargin * 0.5f;
 		float marginH = CameraPanel.heightMargin * 0.5f;
@@ -127,6 +128,23 @@ public class UIPanel : MonoBehaviour
 			case CameraPanel.DisplayPosition.TopRight:
 				targetPos = new Vector2(0.75f - marginW, 0.25f + marginH);
 				break;
+		}
+		movementTarget = targetPos;
+		if (direction == MovementDirection.Up && panelFrameCentre.y == 0.25f)
+		{
+			movementTarget = new Vector2(movementTarget.x, -0.25f);
+		}
+		if (direction == MovementDirection.Down && panelFrameCentre.y == 0.75f)
+		{
+			movementTarget = new Vector2(movementTarget.x, 1.25f);
+		}
+		if (direction == MovementDirection.Left && panelFrameCentre.x == 0.25f)
+		{
+			movementTarget = new Vector2(-0.25f, movementTarget.y);
+		}
+		if (direction == MovementDirection.Right && panelFrameCentre.x == 0.75f)
+		{
+			movementTarget = new Vector2(1.25f, movementTarget.y);
 		}
 	}
 
@@ -150,6 +168,36 @@ public class UIPanel : MonoBehaviour
             GUI.skin = guiSkin;
 
 		DrawPanelWithFrameCenter(panelFrameCentre);
+		DrawOffscreenPanelForCornerLayout();
+    }
+
+	void DrawOffscreenPanelForCornerLayout()
+	{
+		Vector2 virtualCentre = panelFrameCentre;
+		float w = CameraPanel.normedWidth * 0.5f;
+		float h = CameraPanel.normedHeight * 0.5f;
+		if (!Mathf.Approximately(panelFrameCentre.x, 1.0f - w) && panelFrameCentre.x > 1.0f - w)
+		{
+			virtualCentre.x = -(1.0f - panelFrameCentre.x);
+		}
+		else if (!Mathf.Approximately(panelFrameCentre.x, w) && panelFrameCentre.x < w)
+		{
+			virtualCentre.x = (1.0f + panelFrameCentre.x);
+		}
+		if (!Mathf.Approximately(panelFrameCentre.y, 1.0f - h) && panelFrameCentre.y > 1.0f - h)
+		{
+			virtualCentre.y = -(1.0f - panelFrameCentre.y);
+		}
+		else if (!Mathf.Approximately(panelFrameCentre.y, w) && panelFrameCentre.y < h)
+		{
+			virtualCentre.y = (1.0f + panelFrameCentre.y);
+		}
+		if (virtualCentre != panelFrameCentre)
+			DrawPanelWithFrameCenter(virtualCentre);
+	}
+
+	void DrawOffscreenPanelForCentredLayout()
+	{
 		Vector2 virtualCentre = panelFrameCentre;
 		if (panelFrameCentre.x > 0.75f)
 		{
@@ -169,7 +217,7 @@ public class UIPanel : MonoBehaviour
 		}
 		if (virtualCentre != panelFrameCentre)
 			DrawPanelWithFrameCenter(virtualCentre);
-    }
+	}
 
 	void DrawPanelWithFrameCenter(Vector2 frameCenter)
 	{

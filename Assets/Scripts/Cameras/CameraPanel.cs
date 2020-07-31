@@ -45,7 +45,7 @@ public class CameraPanel : MonoBehaviour
 	public static float normedWidth { get; private set; }
 	public static float normedHeight { get; private set; }
 	public static float sideLength { get; private set; }
-
+	public static float normedSideLength() { return Mathf.Min(normedHeight, normedWidth); }
 	bool _isInControl = false;
 	public bool IsSelected
 	{

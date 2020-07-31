@@ -46,12 +46,15 @@ public class CameraRotatorTrigger : PlayerTrigger
 
 	void TryStartRotation()
 	{
-		CamAnimator camAnim = camControllerREMOVEME.GetSelectedCameraAnimator();
-		if (camAnim != null && camAnim.rotator.animationState == Rotator.AnimationState.Stationary)
+		if (LevelController.GetMazeState() == LevelController.MazeState.InProgress)
 		{
-			rotator.StartArc(camAnim.transform, GetRotationDirection(), transform.position, Rotator.MotionType.Exponential);
-			timeSinceLastRotationStart = 0.0f;
-			needsStartRotation = false;
+			CamAnimator camAnim = camControllerREMOVEME.GetSelectedCameraAnimator();
+			if (camAnim != null && camAnim.rotator.animationState == Rotator.AnimationState.Stationary)
+			{
+				rotator.StartArc(camAnim.transform, GetRotationDirection(), transform.position, Rotator.MotionType.Exponential);
+				timeSinceLastRotationStart = 0.0f;
+				needsStartRotation = false;
+			}
 		}
 	}
 

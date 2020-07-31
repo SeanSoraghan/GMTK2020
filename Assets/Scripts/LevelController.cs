@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
@@ -8,27 +9,29 @@ public class LevelController : MonoBehaviour
 	public enum MazeState
 	{
 		Starting = 0,
+		Revealing,
 		InProgress,
 		Finishing,
 		LoadingLevel,
 		NumStates
 	}
 
+	static float initialRevealTime = 0.2f;
+	static float revealDelayGrowth = 1.6f;
+
 	public static LevelController Instance;
 
 	public delegate void MazeStateChanged(MazeState state);
 	public event MazeStateChanged OnMazeStateChanged;
 
+	List<GameObject> objectsToReveal = new List<GameObject>();
+	float timeUntilNextReveal = initialRevealTime;
+	float timeSinceLastReveal = 0.0f;
+
 	// A collection of components who have work to do during a maze state (e.g. animations and such).
 	// Mainly used with Starting and Finishing.
 
-	Dictionary<Component, bool>[] workerFlags = 
-	{
-		new Dictionary<Component, bool>(),
-		new Dictionary<Component, bool>(),
-		new Dictionary<Component, bool>(),
-		new Dictionary<Component, bool>()
-	};
+	List<Dictionary<Component, bool>> workerFlags = new List<Dictionary<Component, bool>>();
 
 	MazeState _mazeState = MazeState.LoadingLevel;
 	MazeState mazeState
@@ -36,17 +39,40 @@ public class LevelController : MonoBehaviour
 		get { return _mazeState; }
 		set
 		{
-			_mazeState = value;
-			if (_mazeState == MazeState.LoadingLevel)
+			if (_mazeState != value)
 			{
-				LoadNextLevel();
+				_mazeState = value;
+				if (_mazeState == MazeState.LoadingLevel)
+				{
+					LoadNextLevel();
+				}
+				if (_mazeState == MazeState.Starting)
+				{
+					timeSinceLastReveal = 0.0f;
+					timeUntilNextReveal = initialRevealTime;
+					foreach (PlayerTrigger trigger in FindObjectsOfType<PlayerTrigger>())
+					{
+						trigger.gameObject.SetActive(false);
+						objectsToReveal.Add(trigger.gameObject);
+					}
+					foreach (CubeController player in FindObjectsOfType<CubeController>())
+					{
+						player.gameObject.SetActive(false);
+						objectsToReveal.Add(player.gameObject);
+					}
+				}
+				OnMazeStateChanged?.Invoke(_mazeState);
 			}
-			OnMazeStateChanged?.Invoke(_mazeState);
 		}
 	}
 
 	private void Awake()
 	{
+		for (int i = 0; i < (int)MazeState.NumStates; ++i)
+		{
+			workerFlags.Add(new Dictionary<Component, bool>());
+		}
+
 		if (Instance != null)
 		{
 			Destroy(gameObject);
@@ -61,6 +87,27 @@ public class LevelController : MonoBehaviour
 	private void Start()
 	{
 		mazeState = MazeState.Starting;
+	}
+
+	private void Update()
+	{
+		if (mazeState == MazeState.Revealing && objectsToReveal.Count > 0)
+		{
+			timeSinceLastReveal += Time.deltaTime;
+			if (timeSinceLastReveal >= timeUntilNextReveal)
+			{
+				timeSinceLastReveal = 0.0f;
+				timeUntilNextReveal *= revealDelayGrowth;
+				objectsToReveal[0].SetActive(true);
+				objectsToReveal.RemoveAt(0);
+
+				if (objectsToReveal.Count == 0)
+				{
+					if (AreAllWorkersComplete(mazeState))
+						IncrementMazeState();
+				}
+			}
+		}
 	}
 
 	void LoadNextLevel()
@@ -113,12 +160,25 @@ public class LevelController : MonoBehaviour
 	{
 		if (Instance == null)
 			return;
+		Assert.IsTrue(state == Instance.mazeState);
 		Instance.workerFlags[(int)state][component] = true;
-		foreach(var pair in Instance.workerFlags[(int)state])
+
+		if (state == MazeState.Revealing && Instance.objectsToReveal.Count > 0)
+			return;
+
+		if (Instance.AreAllWorkersComplete(state))
+			Instance.IncrementMazeState();
+	}
+
+	bool AreAllWorkersComplete(MazeState state)
+	{
+		foreach (var pair in Instance.workerFlags[(int)state])
 		{
 			if (!pair.Value)
-				return;
+				return false;
 		}
-		Instance.mazeState = (MazeState)(((int)Instance.mazeState + 1) % (int)MazeState.NumStates);
+		return true;
 	}
+
+	void IncrementMazeState() { mazeState = (MazeState)(((int)mazeState + 1) % (int)MazeState.NumStates); }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3299260755511506526}
   - component: {fileID: 3299260755511506521}
   - component: {fileID: 3299260755511506520}
+  - component: {fileID: -3460557426576965750}
   m_Layer: 0
   m_Name: CameraRotatorCube
   m_TagString: Goal
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3299260755511506523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1, y: 0, z: -2}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -92,7 +93,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3299260755511506520
 MonoBehaviour:
@@ -108,3 +109,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RemoveOnTrigger: 1
   arcType: 2
+  secondsBetweenRotations: 0.1
+  camControllerREMOVEME: {fileID: 0}
+--- !u!114 &-3460557426576965750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3299260755511506523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca3a880054ebe644cb9592188d5c0f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationTimeSeconds: 0.5
