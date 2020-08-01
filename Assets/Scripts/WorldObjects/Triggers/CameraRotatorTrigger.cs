@@ -7,8 +7,6 @@ public class CameraRotatorTrigger : PlayerTrigger
 {
 	public Rotator.ArcType arcType;
 	public float secondsBetweenRotations = 0.1f;
-	/* temporary hack for testing rotations. Probably should make UDLRCameraController a singleton ... or soemthing */
-	public UDLRCameraController camControllerREMOVEME;
 
 	public Rotator rotator { get; private set; }
 
@@ -24,7 +22,6 @@ public class CameraRotatorTrigger : PlayerTrigger
 
 	private void Start()
 	{
-		Assert.IsNotNull(camControllerREMOVEME);
 		startingTransform = transform;
 		TryStartRotation();
 	}
@@ -48,7 +45,7 @@ public class CameraRotatorTrigger : PlayerTrigger
 	{
 		if (LevelController.GetMazeState() == LevelController.MazeState.InProgress)
 		{
-			CamAnimator camAnim = camControllerREMOVEME.GetSelectedCameraAnimator();
+			CamAnimator camAnim = UDLRCameraController.GetSelectedCameraAnimator();
 			if (camAnim != null && camAnim.rotator.animationState == Rotator.AnimationState.Stationary)
 			{
 				rotator.StartArc(camAnim.transform, GetRotationDirection(), transform.position, Rotator.MotionType.Exponential);
@@ -62,11 +59,12 @@ public class CameraRotatorTrigger : PlayerTrigger
 	{
 		if (player != null)
 		{
-			CamAnimator camAnim = player.camController.GetSelectedCameraAnimator();
+			CamAnimator camAnim = UDLRCameraController.GetSelectedCameraAnimator();
 			//transform.position = startingTransform.position;
 			//transform.rotation = startingTransform.rotation;
 			//transform.localScale = startingTransform.localScale;
-			camAnim.rotator.StartArc(camAnim.transform, arcType, Vector3.zero, Rotator.MotionType.Linear);
+			if (camAnim != null)
+				camAnim.rotator.StartArc(camAnim.transform, arcType, Vector3.zero, Rotator.MotionType.Linear);
 		}
 	}
 

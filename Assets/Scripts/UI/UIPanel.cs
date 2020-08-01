@@ -63,7 +63,15 @@ public class UIPanel : MonoBehaviour
 
     void UpdateDisplay(MovementDirection direction, bool teleport)
 	{
-		GetTargetPosForCornersLayout(direction);
+		switch (LevelController.layout)
+		{
+			case LevelController.LayoutMode.CentredPanels:
+				GetTargetPosForCentredLayout(direction);
+				break;
+			case LevelController.LayoutMode.PerspectiveCentre:
+				GetTargetPosForCornersLayout(direction);
+				break;
+		}
 		
 		if (teleport)
         {
@@ -168,6 +176,15 @@ public class UIPanel : MonoBehaviour
             GUI.skin = guiSkin;
 
 		DrawPanelWithFrameCenter(panelFrameCentre);
+		switch (LevelController.layout)
+		{
+			case LevelController.LayoutMode.CentredPanels:
+				DrawOffscreenPanelForCentredLayout();
+				break;
+			case LevelController.LayoutMode.PerspectiveCentre:
+				DrawOffscreenPanelForCornerLayout();
+				break;
+		}
 		DrawOffscreenPanelForCornerLayout();
     }
 

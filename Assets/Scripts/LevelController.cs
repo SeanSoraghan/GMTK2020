@@ -6,6 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
+	public enum LayoutMode
+	{
+		CentredPanels,
+		PerspectiveCentre
+	}
+
 	public enum MazeState
 	{
 		Starting = 0,
@@ -16,10 +22,18 @@ public class LevelController : MonoBehaviour
 		NumStates
 	}
 
+	public static LayoutMode layout = LayoutMode.CentredPanels;
+	public static int WORLD_CUBE_LIMIT = 2;
+
 	static float initialRevealTime = 0.2f;
 	static float revealDelayGrowth = 1.6f;
 
 	public static LevelController Instance;
+
+	public GameObject inputHandlerPrefab;
+	public GameObject udlrCamControllerPrefab;
+	public GameObject mazeLineCube;
+	public GameObject goalCube;
 
 	public delegate void MazeStateChanged(MazeState state);
 	public event MazeStateChanged OnMazeStateChanged;
@@ -68,11 +82,6 @@ public class LevelController : MonoBehaviour
 
 	private void Awake()
 	{
-		for (int i = 0; i < (int)MazeState.NumStates; ++i)
-		{
-			workerFlags.Add(new Dictionary<Component, bool>());
-		}
-
 		if (Instance != null)
 		{
 			Destroy(gameObject);
@@ -81,6 +90,16 @@ public class LevelController : MonoBehaviour
 		{
 			Instance = this;
 			DontDestroyOnLoad(this);
+		}
+
+		Instantiate(inputHandlerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+		Instantiate(udlrCamControllerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+		Instantiate(mazeLineCube, new Vector3(0, 0, 0), Quaternion.identity);
+		Instantiate(goalCube, new Vector3(0, 0, 0), Quaternion.identity);
+
+		for (int i = 0; i < (int)MazeState.NumStates; ++i)
+		{
+			workerFlags.Add(new Dictionary<Component, bool>());
 		}
 	}
 
@@ -181,4 +200,19 @@ public class LevelController : MonoBehaviour
 	}
 
 	void IncrementMazeState() { mazeState = (MazeState)(((int)mazeState + 1) % (int)MazeState.NumStates); }
+
+	public void SerializeLevel(string path, string levelName)
+	{
+		//MazeLevel level = new MazeLevel();
+		//CubeController playerCube = FindObjectOfType<CubeController>();
+		//if (playerCube != null)
+		//	level.playerStart = playerCube.transform.position;
+		//foreach(CameraRotatorTrigger trigger in FindObjectsOfType<CameraRotatorTrigger>())
+		//{
+		//	level.rotators.Add(RotatorTriggerData.FromCameraRotatorTrigger(trigger));
+		//}
+		//string json = JsonUtility.ToJson(level);
+		//string filePath = System.IO.Path.Combine(path, levelName + ".json");
+		//System.IO.File.WriteAllText(filePath, json);
+	}
 }

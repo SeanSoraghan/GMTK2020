@@ -5,6 +5,8 @@ using UnityEngine.Assertions;
 
 public class UDLRCameraController : MonoBehaviour
 {
+	public static UDLRCameraController Instance;
+
 	CamAnimator[] cameraAnimators;
 	UIPanel panelController;
 	CameraPanel.DisplayPosition _selectedPosition = CameraPanel.DisplayPosition.TopLeft;
@@ -26,6 +28,16 @@ public class UDLRCameraController : MonoBehaviour
 
 	private void Awake()
 	{
+		if (Instance != null)
+		{
+			Destroy(gameObject);
+		}
+		else
+		{
+			Instance = this;
+			DontDestroyOnLoad(this);
+		}
+
 		panelController = GetComponent<UIPanel>();
 		Assert.IsNotNull(panelController);
 		cameraAnimators = GetComponentsInChildren<CamAnimator>();
@@ -38,16 +50,19 @@ public class UDLRCameraController : MonoBehaviour
 		SelectCameraImmediate(CameraPanel.DisplayPosition.TopLeft);
     }
 
-	public CamAnimator GetSelectedCameraAnimator()
+	public static CamAnimator GetSelectedCameraAnimator()
 	{
-		foreach (CamAnimator cam in cameraAnimators)
+		if (Instance == null)
+			return null;
+
+		foreach (CamAnimator cam in Instance.cameraAnimators)
 		{
 			CameraPanel panel = cam.CameraPanel;
-			if (panel.camPosition == selectedPosition)
+			if (panel.camPosition == Instance.selectedPosition)
 				return cam;
 		}
 		Assert.IsTrue(false /* Found no selected camera! */);
-		return cameraAnimators[0];
+		return Instance.cameraAnimators[0];
 	}
 
 	public void SelectCameraImmediate(CameraPanel.DisplayPosition camPosition)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [ExecuteInEditMode]
 public class WallSetup : MonoBehaviour
@@ -15,9 +16,16 @@ public class WallSetup : MonoBehaviour
 		Back
 	};
 
-	public static void GetCamPositionRotationForWall(WallPosition wallPosition, ref Vector3 position, ref Quaternion rotation, float offset)
+	public static void GetCamPositionRotationForWall(WallPosition wallPosition, float offset, float fov, ref Vector3 position, ref Quaternion rotation)
 	{
-		float p = CubeController.WORLD_CUBE_LIMIT + 2 + offset;
+		float f = fov * 0.5f;
+		float angle = 180.0f - (f + 90.0f);
+		float sinAngle = Mathf.Sin(Mathf.Deg2Rad * angle);
+		float upOverSinF = (LevelController.WORLD_CUBE_LIMIT * 2.0f + 1) / Mathf.Sin(Mathf.Deg2Rad * f);
+		float length = sinAngle * upOverSinF;
+		Assert.IsTrue(Mathf.Approximately(upOverSinF, (length / sinAngle)));
+
+		float p = length;
 		switch (wallPosition)
 		{
 			case WallPosition.Front:
@@ -53,7 +61,7 @@ public class WallSetup : MonoBehaviour
     void Awake()
     {
         Vector3 pos = transform.position;
-        float worldExtent = CubeController.WORLD_CUBE_LIMIT + 2 + offset;
+        float worldExtent = LevelController.WORLD_CUBE_LIMIT * 2 + offset;
         switch (direction)
 		{
             case WallPosition.Up:

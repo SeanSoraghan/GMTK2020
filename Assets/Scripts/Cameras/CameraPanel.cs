@@ -64,10 +64,18 @@ public class CameraPanel : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-		SetupCorners();
+		switch (LevelController.layout)
+		{
+			case LevelController.LayoutMode.CentredPanels:
+				SetupCentred();
+				break;
+			case LevelController.LayoutMode.PerspectiveCentre:
+				SetupCorners();
+				break;
+		}
 
         if (cam != null && cam.orthographic)
-            cam.orthographicSize = (CubeController.WORLD_CUBE_LIMIT + 2) * (Screen.height / (float)Screen.width); // sizeToFillDisplay * aspect * 0.5. We want to fit 2 * (WORLD_CUBE_LIMIT + 1) on screen.
+            cam.orthographicSize = (LevelController.WORLD_CUBE_LIMIT + 2) * (Screen.height / (float)Screen.width); // sizeToFillDisplay * aspect * 0.5. We want to fit 2 * (WORLD_CUBE_LIMIT + 1) on screen.
 	}
 
 	void SetupCorners()

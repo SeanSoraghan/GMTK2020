@@ -28,7 +28,7 @@ public class CamAnimator : MonoBehaviour
 	{
 		Vector3 newPos = transform.position;
 		Quaternion newRot = transform.rotation;
-		WallSetup.GetCamPositionRotationForWall(wallPos, ref newPos, ref newRot, 2.0f);
+		WallSetup.GetCamPositionRotationForWall(wallPos, 0.0f, CameraPanel.cam.fieldOfView, ref newPos, ref newRot);
 		transform.position = newPos;
 		transform.rotation = newRot;
 	}

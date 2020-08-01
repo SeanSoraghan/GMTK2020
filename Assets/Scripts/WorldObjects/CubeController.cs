@@ -21,9 +21,6 @@ public class CubeController : MonoBehaviour
 	}
 
     public static float SMALL_DISTANCE = 0.2f;
-    public static int WORLD_CUBE_LIMIT = 2;
-
-	public UDLRCameraController camController;
 
 	public float unitMovementTimeSeconds = 0.2f;
 
@@ -80,13 +77,14 @@ public class CubeController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        //transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
         moveTargetPos = transform.position;
-		Assert.IsNotNull(camController);
 
         moveTargetPos = transform.position;
         moveVec = Vector3.zero;
-    }
+
+		if (InputHandler.Instance != null)
+			InputHandler.Instance.cubeController = this;
+	}
 
 	public bool MoveInDirection(Vector3 direction)
 	{
@@ -105,7 +103,7 @@ public class CubeController : MonoBehaviour
 	{
 		// quick fix to get around seeming inaccuracies in float comparison
 		float eps = 0.05f;
-		float limit = WORLD_CUBE_LIMIT + eps;
+		float limit = LevelController.WORLD_CUBE_LIMIT + eps;
 		Vector3 target = transform.position + direction;
 		return !(Mathf.Abs(target.x) >= limit || Mathf.Abs(target.y) >= limit || Mathf.Abs(target.z) >= limit);
 	}
@@ -128,10 +126,8 @@ public class CubeController : MonoBehaviour
 		}
         if (shouldReset) // Ideally the player would be animated back to starting position.
 		{
-            //transform.position = new Vector3(-WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT, -WORLD_CUBE_LIMIT);
             goalReached = false;
             shouldReset = false;
-            //SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
         }
     }
 }
