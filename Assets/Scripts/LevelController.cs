@@ -4,6 +4,16 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
+[CreateAssetMenu(menuName = "Maze Assets/World Settings")]
+public class WorldSettings : ScriptableObject
+{
+	[SerializeField] private LevelController.LayoutMode LayoutMode = LevelController.LayoutMode.CentredPanels;
+	[SerializeField] private int WorldExtent = 2;
+
+	public LevelController.LayoutMode layoutMode => LayoutMode;
+	public int worldExtent => WorldExtent;
+}
+
 public class LevelController : MonoBehaviour
 {
 	public enum LayoutMode
@@ -30,13 +40,19 @@ public class LevelController : MonoBehaviour
 
 	public static LevelController Instance;
 
+	public MazeLevelCollection LevelCollection;
+	public WorldSettings worldSettings;
 	public GameObject inputHandlerPrefab;
 	public GameObject udlrCamControllerPrefab;
-	public GameObject mazeLineCube;
-	public GameObject goalCube;
+	public GameObject mazeLineCubePrefab;
+	public GameObject goalCubePrefab;
+	public GameObject playerCubePrefab;
+	public GameObject rotatorCubePrefab;
 
 	public delegate void MazeStateChanged(MazeState state);
 	public event MazeStateChanged OnMazeStateChanged;
+
+	int levelIndex = 0;
 
 	List<GameObject> objectsToReveal = new List<GameObject>();
 	float timeUntilNextReveal = initialRevealTime;
@@ -64,16 +80,6 @@ public class LevelController : MonoBehaviour
 				{
 					timeSinceLastReveal = 0.0f;
 					timeUntilNextReveal = initialRevealTime;
-					foreach (PlayerTrigger trigger in FindObjectsOfType<PlayerTrigger>())
-					{
-						trigger.gameObject.SetActive(false);
-						objectsToReveal.Add(trigger.gameObject);
-					}
-					foreach (CubeController player in FindObjectsOfType<CubeController>())
-					{
-						player.gameObject.SetActive(false);
-						objectsToReveal.Add(player.gameObject);
-					}
 				}
 				OnMazeStateChanged?.Invoke(_mazeState);
 			}
@@ -92,10 +98,11 @@ public class LevelController : MonoBehaviour
 			DontDestroyOnLoad(this);
 		}
 
+		WORLD_CUBE_LIMIT = worldSettings.worldExtent;
+		layout = worldSettings.layoutMode;
 		Instantiate(inputHandlerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 		Instantiate(udlrCamControllerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-		Instantiate(mazeLineCube, new Vector3(0, 0, 0), Quaternion.identity);
-		Instantiate(goalCube, new Vector3(0, 0, 0), Quaternion.identity);
+		Instantiate(mazeLineCubePrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
 		for (int i = 0; i < (int)MazeState.NumStates; ++i)
 		{
@@ -105,7 +112,7 @@ public class LevelController : MonoBehaviour
 
 	private void Start()
 	{
-		mazeState = MazeState.Starting;
+		LoadNextLevel();
 	}
 
 	private void Update()
@@ -131,21 +138,60 @@ public class LevelController : MonoBehaviour
 
 	void LoadNextLevel()
 	{
-		for (int i = 0; i < (int)MazeState.NumStates; ++i)
+		ClearLevel();
+		if (levelIndex < LevelCollection.levels.Count)
 		{
-			workerFlags[i].Clear();
+			LoadLevel();
+
+			// This happens before Start() is called on some components, so we have to force their 
+			// MazeStateChanged callback whenever they register themselves. Which isn't ideal.
+			mazeState = MazeState.Starting;
 		}
-		Debug.Log("This is where I'd load a new level");
-		SceneManager.sceneLoaded += SceneLoaded;
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}
 
-	void SceneLoaded(Scene scene, LoadSceneMode mode)
+	void ClearLevel()
 	{
-		// This happens before Start() is called on some components, so we have to force their 
-		// MazeStateChanged callback whenever they register themselves. Which isn't ideal.
-		mazeState = MazeState.Starting;
-		SceneManager.sceneLoaded -= SceneLoaded;
+		for (int i = 0; i < (int)MazeState.NumStates; ++i)
+		{
+			List<Component> keys = new List<Component>(workerFlags[i].Keys);
+			foreach(Component key in keys)
+			{
+				workerFlags[i][key] = false;
+			}
+		}
+		foreach (PlayerTrigger trigger in FindObjectsOfType<PlayerTrigger>())
+		{
+			Destroy(trigger.gameObject);
+		}
+		foreach (CubeController player in FindObjectsOfType<CubeController>())
+		{
+			Destroy(player.gameObject);
+		}
+	}
+
+	void LoadLevel()
+	{
+		MazeLevel level = LevelCollection.levels[levelIndex];
+		AddObjectToRevealList(Instantiate(goalCubePrefab, new Vector3(0, 0, 0), Quaternion.identity));
+		foreach (RotatorTriggerData rotator in level.rotators)
+		{
+			GameObject rotatorTriggerObj = Instantiate(rotatorCubePrefab, rotator.position, Quaternion.identity);
+			CameraRotatorTrigger rotatorTrigger = rotatorTriggerObj.GetComponent<CameraRotatorTrigger>();
+			if (rotatorTrigger != null)
+				rotatorTrigger.arcType = rotator.arcType;
+			AddObjectToRevealList(rotatorTriggerObj);
+		}
+		AddObjectToRevealList(Instantiate(playerCubePrefab, level.playerStart, Quaternion.identity));
+		++levelIndex;
+	}
+
+	void AddObjectToRevealList(GameObject obj)
+	{
+		if (obj != null)
+		{
+			obj.SetActive(false);
+			objectsToReveal.Add(obj);
+		}
 	}
 
 	public static bool IsMazeCompleted()
@@ -200,19 +246,4 @@ public class LevelController : MonoBehaviour
 	}
 
 	void IncrementMazeState() { mazeState = (MazeState)(((int)mazeState + 1) % (int)MazeState.NumStates); }
-
-	public void SerializeLevel(string path, string levelName)
-	{
-		//MazeLevel level = new MazeLevel();
-		//CubeController playerCube = FindObjectOfType<CubeController>();
-		//if (playerCube != null)
-		//	level.playerStart = playerCube.transform.position;
-		//foreach(CameraRotatorTrigger trigger in FindObjectsOfType<CameraRotatorTrigger>())
-		//{
-		//	level.rotators.Add(RotatorTriggerData.FromCameraRotatorTrigger(trigger));
-		//}
-		//string json = JsonUtility.ToJson(level);
-		//string filePath = System.IO.Path.Combine(path, levelName + ".json");
-		//System.IO.File.WriteAllText(filePath, json);
-	}
 }

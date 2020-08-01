@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3246038f0b5b6ff4eb76e7a9615c0d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialWallAttach: 2
+  initialWallAttach: 5
 --- !u!114 &4792615435810381838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +215,7 @@ PrefabInstance:
     - target: {fileID: 1408908693666131669, guid: 2c2e54dee93854c4c8125e99891e124a,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.5
+      value: 0.81106246
       objectReference: {fileID: 0}
     - target: {fileID: 1408908693666131669, guid: 2c2e54dee93854c4c8125e99891e124a,
         type: 3}
@@ -231,6 +231,11 @@ PrefabInstance:
         type: 3}
       propertyPath: field of view
       value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408908693666131669, guid: 2c2e54dee93854c4c8125e99891e124a,
+        type: 3}
+      propertyPath: orthographic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1408908693666131670, guid: 2c2e54dee93854c4c8125e99891e124a,
         type: 3}

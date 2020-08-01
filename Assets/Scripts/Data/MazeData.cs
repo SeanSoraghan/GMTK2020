@@ -21,3 +21,10 @@ public class MazeLevel : ScriptableObject
 	public Vector3 playerStart => PlayerStart;
 	public List<RotatorTriggerData> rotators => Rotators;
 }
+
+[CreateAssetMenu(menuName = "Maze Assets/Level Collection")]
+public class MazeLevelCollection : ScriptableObject
+{
+	[SerializeField] private List<MazeLevel> Levels = new List<MazeLevel>();
+	public List<MazeLevel> levels => Levels;
+}

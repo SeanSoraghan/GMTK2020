@@ -15,12 +15,12 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - LeftWall
-  - RightWall
-  - TopWall
-  - BottomWall
-  - FrontWall
-  - BackWall
+  - CamObj
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

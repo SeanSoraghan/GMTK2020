@@ -35,7 +35,7 @@ public class CameraPanel : MonoBehaviour
 		return (DisplayPosition)newPos;
 	}
 
-	public static float sideLengthRatio = 0.8f;
+	public static float sideLengthRatio = 1.0f;
 
     public Camera cam;
 	public DisplayPosition camPosition;

@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9850a0db838909c4ebb9f24fd6ef55c9, type: 2}
+  - {fileID: 2100000, guid: 8a52f1fe8b6840c40bb50ad1d552423b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,7 +110,6 @@ MonoBehaviour:
   RemoveOnTrigger: 1
   arcType: 2
   secondsBetweenRotations: 0.1
-  camControllerREMOVEME: {fileID: 0}
 --- !u!114 &-3460557426576965750
 MonoBehaviour:
   m_ObjectHideFlags: 0

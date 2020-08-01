@@ -168,6 +168,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5818678454779528364}
     m_Modifications:
+    - target: {fileID: 20644882176184198, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 311
+      objectReference: {fileID: 0}
     - target: {fileID: 20644882350841037, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -228,6 +233,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cam_BR
       objectReference: {fileID: 0}
+    - target: {fileID: 337910857417310912, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2610994863610686417, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
         type: 3}
       propertyPath: m_Mesh
@@ -237,6 +247,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265558675820238313, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a1fda1350d9ce2429cea5bced6b6fab, type: 3}
@@ -253,6 +268,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5818678454779528364}
     m_Modifications:
+    - target: {fileID: 1833519484805120302, guid: fbfd02f7399769447884a46be3d21681,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2697914151441978300, guid: fbfd02f7399769447884a46be3d21681,
         type: 3}
       propertyPath: m_Mesh
@@ -262,6 +282,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8724892486168712711, guid: fbfd02f7399769447884a46be3d21681,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073859578245831489, guid: fbfd02f7399769447884a46be3d21681,
+        type: 3}
+      propertyPath: orthographic size
+      value: 10.585507
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073859578245831489, guid: fbfd02f7399769447884a46be3d21681,
+        type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073859578245831489, guid: fbfd02f7399769447884a46be3d21681,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 7479
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073859578245831494, guid: fbfd02f7399769447884a46be3d21681,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9073859578351273993, guid: fbfd02f7399769447884a46be3d21681,
         type: 3}
@@ -343,6 +388,21 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2905853753207942786, guid: 266df90be2ddaaf4ea5566793eb02826,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5203726486098377131, guid: 266df90be2ddaaf4ea5566793eb02826,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534503793082676461, guid: 266df90be2ddaaf4ea5566793eb02826,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 311
+      objectReference: {fileID: 0}
     - target: {fileID: 5534503793183926181, guid: 266df90be2ddaaf4ea5566793eb02826,
         type: 3}
       propertyPath: m_Name
@@ -423,6 +483,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5818678454779528364}
     m_Modifications:
+    - target: {fileID: 1752458881013683092, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064940399807258322, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
+        type: 3}
+      propertyPath: orthographic size
+      value: 10.585507
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064940399807258322, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
+        type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064940399807258322, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 311
+      objectReference: {fileID: 0}
     - target: {fileID: 2064940399971290521, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -492,6 +572,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661846147206350013, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e8e109f4fb48954bbd7bd15288b3de0, type: 3}

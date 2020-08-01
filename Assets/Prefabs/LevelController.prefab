@@ -43,11 +43,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe54aa5d9ee33b418a0f0706d5bf7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LevelCollection: {fileID: 11400000, guid: a6d387a241591704e832fd215b07ff0e, type: 2}
+  worldSettings: {fileID: 11400000, guid: 64bd46a3f325e984ba8a2ca6d7b08961, type: 2}
   inputHandlerPrefab: {fileID: 7358183079344923782, guid: 6e45b09cd391db14dad311ba73f7645c,
     type: 3}
   udlrCamControllerPrefab: {fileID: 5818678454779528401, guid: 0709cbdc004863a4a818198ca1cfe3f0,
     type: 3}
-  mazeLineCube: {fileID: 4635258746213430416, guid: 31d477c463df77340adbbe56e04f450a,
+  mazeLineCubePrefab: {fileID: 4635258746213430416, guid: 31d477c463df77340adbbe56e04f450a,
     type: 3}
-  goalCube: {fileID: 6130463442458217897, guid: 980b0b1b15ffdd04a8822e4e4e8e7994,
+  goalCubePrefab: {fileID: 6130463442458217897, guid: 980b0b1b15ffdd04a8822e4e4e8e7994,
+    type: 3}
+  playerCubePrefab: {fileID: 3902165926124535534, guid: 59fe38617d2615c49a0d8ec14f99c2b0,
+    type: 3}
+  rotatorCubePrefab: {fileID: 3299260755511506523, guid: 1214d63ebd52e5c4192839bcd1758f37,
     type: 3}
