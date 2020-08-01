@@ -20,6 +20,15 @@ public class UDLRCameraController : MonoBehaviour
 		get { return _selectedPosition; }
 		private set
 		{
+			Vector3 selectedCamPosition = Vector3.zero;
+			foreach (CamAnimator cam in cameraAnimators)
+			{
+				CameraPanel panel = cam.CameraPanel;
+				if (panel.camPosition == value)
+				{
+					selectedCamPosition = cam.transform.position;
+				}
+			}
 			foreach (CamAnimator cam in cameraAnimators)
 			{
 				CameraPanel panel = cam.CameraPanel;
@@ -29,9 +38,10 @@ public class UDLRCameraController : MonoBehaviour
 					panel.IsSelected = true;
 				if (camObjRenderer != null)
 				{
-					camObjRenderer.enabled = panel.IsSelected;
+					//camObjRenderer.enabled = panel.IsSelected;
 					if (panel.IsSelected)
 					{
+						camObjRenderer.enabled = true;
 						Color fillColor = camObjRenderer.material.GetColor("_EmissionColor");
 						var fillColorArray = frameTexture.GetPixels();
 						for (var i = 0; i < fillColorArray.Length; ++i)
@@ -40,6 +50,10 @@ public class UDLRCameraController : MonoBehaviour
 						}
 						frameTexture.SetPixels(fillColorArray);
 						frameTexture.Apply();
+					}
+					else if (Vector3.Distance(cam.transform.position, selectedCamPosition) < 0.1f)
+					{
+						camObjRenderer.enabled = false;
 					}
 				}
 				

@@ -29,8 +29,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5534503793082676460}
   - {fileID: 2905853753207942786}
+  - {fileID: 5534503793082676460}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -125,7 +125,7 @@ PrefabInstance:
     - target: {fileID: 9020338732464728544, guid: 4b9d3024699c2f348900d40bc8c8df09,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9020338732464728544, guid: 4b9d3024699c2f348900d40bc8c8df09,
         type: 3}
@@ -205,7 +205,7 @@ PrefabInstance:
     - target: {fileID: 1408908693666131668, guid: 2c2e54dee93854c4c8125e99891e124a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1408908693666131668, guid: 2c2e54dee93854c4c8125e99891e124a,
         type: 3}
@@ -240,7 +240,7 @@ PrefabInstance:
     - target: {fileID: 1408908693666131669, guid: 2c2e54dee93854c4c8125e99891e124a,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 0.18893757
+      value: 0.21826087
       objectReference: {fileID: 0}
     - target: {fileID: 1408908693666131669, guid: 2c2e54dee93854c4c8125e99891e124a,
         type: 3}
