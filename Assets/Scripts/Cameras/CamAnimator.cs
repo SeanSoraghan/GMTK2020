@@ -32,4 +32,17 @@ public class CamAnimator : MonoBehaviour
 		transform.position = newPos;
 		transform.rotation = newRot;
 	}
+
+	public Color GetCamObjColour()
+	{
+		MeshRenderer renderer = GetComponentInChildren<MeshRenderer>();
+		if (renderer != null)
+			return renderer.material.GetColor("_EmissionColor");
+		return Color.grey;
+	}
+
+	public MeshRenderer GetCameraObjectRenderer()
+	{
+		return GetComponentInChildren<MeshRenderer>();
+	}
 }

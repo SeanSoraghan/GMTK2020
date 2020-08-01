@@ -84,6 +84,26 @@ public class CubeController : MonoBehaviour
 
 		if (InputHandler.Instance != null)
 			InputHandler.Instance.cubeController = this;
+
+		if (UDLRCameraController.Instance != null)
+			UDLRCameraController.Instance.OnSelectedCameraChanged += SelectedCameraChanged;
+		SelectedCameraChanged(UDLRCameraController.GetSelectedCameraAnimator());
+	}
+
+	private void OnDestroy()
+	{
+		if (UDLRCameraController.Instance != null)
+			UDLRCameraController.Instance.OnSelectedCameraChanged -= SelectedCameraChanged;
+	}
+
+	public void SelectedCameraChanged(CamAnimator camAnimator)
+	{
+		if (camAnimator != null)
+		{
+			MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+			if (meshRenderer != null)
+				meshRenderer.material.SetColor("_EmissionColor", camAnimator.GetCamObjColour());
+		}
 	}
 
 	public bool MoveInDirection(Vector3 direction)

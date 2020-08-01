@@ -7,6 +7,11 @@ public class UDLRCameraController : MonoBehaviour
 {
 	public static UDLRCameraController Instance;
 
+	public Texture2D frameTexture;
+
+	public delegate void SelectedCameraChanged(CamAnimator selectedCamera);
+	public event SelectedCameraChanged OnSelectedCameraChanged;
+
 	CamAnimator[] cameraAnimators;
 	UIPanel panelController;
 	CameraPanel.DisplayPosition _selectedPosition = CameraPanel.DisplayPosition.TopLeft;
@@ -18,11 +23,29 @@ public class UDLRCameraController : MonoBehaviour
 			foreach (CamAnimator cam in cameraAnimators)
 			{
 				CameraPanel panel = cam.CameraPanel;
+				MeshRenderer camObjRenderer = cam.GetCameraObjectRenderer();
 				panel.IsSelected = false;
 				if (panel.camPosition == value)
 					panel.IsSelected = true;
+				if (camObjRenderer != null)
+				{
+					camObjRenderer.enabled = panel.IsSelected;
+					if (panel.IsSelected)
+					{
+						Color fillColor = camObjRenderer.material.GetColor("_EmissionColor");
+						var fillColorArray = frameTexture.GetPixels();
+						for (var i = 0; i < fillColorArray.Length; ++i)
+						{
+							fillColorArray[i] = fillColor;
+						}
+						frameTexture.SetPixels(fillColorArray);
+						frameTexture.Apply();
+					}
+				}
+				
 			}
 			_selectedPosition = value;
+			OnSelectedCameraChanged?.Invoke(GetSelectedCameraAnimator());
 		}
 	}
 
@@ -48,7 +71,7 @@ public class UDLRCameraController : MonoBehaviour
     {
 		Assert.IsTrue(cameraAnimators.Length == 4);
 		SelectCameraImmediate(CameraPanel.DisplayPosition.TopLeft);
-    }
+	}
 
 	public static CamAnimator GetSelectedCameraAnimator()
 	{
