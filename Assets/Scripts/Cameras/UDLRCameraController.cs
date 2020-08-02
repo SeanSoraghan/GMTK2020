@@ -32,16 +32,21 @@ public class UDLRCameraController : MonoBehaviour
 			foreach (CamAnimator cam in cameraAnimators)
 			{
 				CameraPanel panel = cam.CameraPanel;
+				ScalePulser pulser = cam.GetCameraPulser();
+				if (pulser != null)
+					pulser.StopLooping();
 				MeshRenderer camObjRenderer = cam.GetCameraObjectRenderer();
 				panel.IsSelected = false;
 				if (panel.camPosition == value)
+				{
 					panel.IsSelected = true;
+					if (pulser != null)
+						pulser.StartLooping();
+				}
 				if (camObjRenderer != null)
 				{
-					//camObjRenderer.enabled = panel.IsSelected;
 					if (panel.IsSelected)
 					{
-						//camObjRenderer.enabled = true;
 						Color fillColor = camObjRenderer.material.GetColor("_EmissionColor");
 						var fillColorArray = frameTexture.GetPixels();
 						for (var i = 0; i < fillColorArray.Length; ++i)
@@ -51,10 +56,6 @@ public class UDLRCameraController : MonoBehaviour
 						frameTexture.SetPixels(fillColorArray);
 						frameTexture.Apply();
 					}
-					//else if (Vector3.Distance(cam.transform.position, selectedCamPosition) < 0.1f)
-					//{
-					//	camObjRenderer.enabled = false;
-					//}
 				}
 				
 			}

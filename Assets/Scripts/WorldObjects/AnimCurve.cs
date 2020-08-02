@@ -26,7 +26,7 @@ public class AnimCurve
 	}
 	public float portionThisFrame { get; private set; } = 0.0f;
 	public float animLinearCounter { get; private set; } = 0.0f;
-
+	public float animCurveCounter { get; private set; } = 0.0f;
 	float prevAnimCurveCounter = 0.0f;
 
 	public void Reset()
@@ -39,7 +39,7 @@ public class AnimCurve
 	public void UpdateCurve(float deltaTime)
     {
 		animLinearCounter += Time.deltaTime * animationSpeed;
-		float animCurveCounter = animLinearCounter;
+		animCurveCounter = animLinearCounter;
 		if (currentMotionType == MotionType.Exponential)
 			animCurveCounter = (Mathf.Pow(2.0f, animLinearCounter * 4.0f) - 1.0f) / 15.0f;
 		else if (currentMotionType == MotionType.Logarithmic)

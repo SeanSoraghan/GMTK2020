@@ -45,4 +45,9 @@ public class CamAnimator : MonoBehaviour
 	{
 		return GetComponentInChildren<MeshRenderer>();
 	}
+
+	public ScalePulser GetCameraPulser()
+	{
+		return GetComponentInChildren<ScalePulser>();
+	}
 }
