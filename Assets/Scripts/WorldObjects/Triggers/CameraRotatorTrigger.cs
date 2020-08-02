@@ -48,7 +48,7 @@ public class CameraRotatorTrigger : PlayerTrigger
 			CamAnimator camAnim = UDLRCameraController.GetSelectedCameraAnimator();
 			if (camAnim != null && camAnim.rotator.animationState == Rotator.AnimationState.Stationary)
 			{
-				rotator.StartArc(camAnim.transform, GetRotationDirection(), transform.position, Rotator.MotionType.Exponential);
+				rotator.StartArc(camAnim.transform, GetRotationDirection(), transform.position, AnimCurve.MotionType.Exponential);
 				timeSinceLastRotationStart = 0.0f;
 				needsStartRotation = false;
 			}
@@ -64,7 +64,7 @@ public class CameraRotatorTrigger : PlayerTrigger
 			//transform.rotation = startingTransform.rotation;
 			//transform.localScale = startingTransform.localScale;
 			if (camAnim != null)
-				camAnim.rotator.StartArc(camAnim.transform, arcType, Vector3.zero, Rotator.MotionType.Linear);
+				camAnim.rotator.StartArc(camAnim.transform, arcType, Vector3.zero, AnimCurve.MotionType.Linear);
 		}
 	}
 

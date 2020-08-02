@@ -127,8 +127,8 @@ Transform:
   m_Children:
   - {fileID: 4042176926773624691}
   - {fileID: 4713771241889207854}
-  - {fileID: 663305378846734838}
   - {fileID: 2567707084650633284}
+  - {fileID: 663305378846734838}
   - {fileID: 38395814}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -177,7 +177,7 @@ PrefabInstance:
     - target: {fileID: 20644882176184198, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.31106243
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 20644882350841036, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
         type: 3}
@@ -222,7 +222,7 @@ PrefabInstance:
     - target: {fileID: 20644882350841037, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 20644882350841037, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
         type: 3}
@@ -317,7 +317,7 @@ PrefabInstance:
     - target: {fileID: 9073859578245831489, guid: fbfd02f7399769447884a46be3d21681,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.5
+      value: 0.81106246
       objectReference: {fileID: 0}
     - target: {fileID: 9073859578245831489, guid: fbfd02f7399769447884a46be3d21681,
         type: 3}
@@ -432,7 +432,7 @@ PrefabInstance:
     - target: {fileID: 5534503793082676461, guid: 266df90be2ddaaf4ea5566793eb02826,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.31106243
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5534503793082676461, guid: 266df90be2ddaaf4ea5566793eb02826,
         type: 3}
@@ -482,7 +482,7 @@ PrefabInstance:
     - target: {fileID: 5534503793183926182, guid: 266df90be2ddaaf4ea5566793eb02826,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5534503793183926182, guid: 266df90be2ddaaf4ea5566793eb02826,
         type: 3}
@@ -542,7 +542,7 @@ PrefabInstance:
     - target: {fileID: 2064940399807258322, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.5
+      value: 0.81106246
       objectReference: {fileID: 0}
     - target: {fileID: 2064940399807258322, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
         type: 3}

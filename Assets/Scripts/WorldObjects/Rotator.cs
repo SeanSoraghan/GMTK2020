@@ -18,25 +18,15 @@ public class Rotator : MonoBehaviour
 		Stationary
 	}
 
-	public enum MotionType
-	{
-		Linear,
-		Exponential,
-		Logarithmic
-	}
-
 	public float RotationTimeSeconds = 0.5f;
-	float RotationSpeed = 0.0f;
+	AnimCurve animCurve = new AnimCurve();
 
-	float animLinearCounter = 0.0f;
-	float prevAnimCurveCounter = 0.0f;
 	float rotAngle = 0.0f;
 	float angleLeftToRotate = 0.0f;
 	Vector3 arcPoint = Vector3.zero; // this is the point around which the object arcs.
 	Vector3 rotationAxis = Vector3.zero;
 	Vector3 targetEuler = Vector3.zero;
 	Vector3 targetPos = Vector3.zero;
-	MotionType currentMotionType = MotionType.Linear;
 
 	AnimationState _animationState = AnimationState.Stationary;
 	public AnimationState animationState
@@ -51,8 +41,7 @@ public class Rotator : MonoBehaviour
 			_animationState = value;
 			if (_animationState == AnimationState.Stationary)
 			{
-				animLinearCounter = 0.0f;
-				prevAnimCurveCounter = 0.0f;
+				animCurve.Reset();
 				rotAngle = 0.0f;
 			}
 		}
@@ -61,16 +50,16 @@ public class Rotator : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		RotationSpeed = 1.0f / RotationTimeSeconds;
+		animCurve.animationTimeSeconds = RotationTimeSeconds;
 	}
 
 	// referenceTransform controls the 'perspective' of the rotation.
 	// pass a gameObjects own transform to rotate that object up, down, left, right in the world.
 	// pass a camera's transform to rotate up, down, left, right from the perspective of that camera.
-	public void StartArc(Transform referenceTransform, ArcType arcDirection, Vector3 _arcPoint, MotionType motionType)
+	public void StartArc(Transform referenceTransform, ArcType arcDirection, Vector3 _arcPoint, AnimCurve.MotionType motionType)
 	{
 		arcPoint = _arcPoint;
-		currentMotionType = motionType;
+		animCurve.currentMotionType = motionType;
 		// assumes camera is always aligned with one axis and 0 on the others.
 		// StartMovement() and FixedUpdate() implement an arc between one axis and the other.
 		switch (arcDirection)
@@ -105,21 +94,12 @@ public class Rotator : MonoBehaviour
 	{
 		if (animationState == AnimationState.Moving)
 		{
-			animLinearCounter += Time.deltaTime * RotationSpeed;
-			float animCurveCounter = animLinearCounter;
-			if (currentMotionType == MotionType.Exponential)
-				animCurveCounter = (Mathf.Pow(2.0f, animLinearCounter * 4.0f) - 1.0f) / 15.0f;
-			else if (currentMotionType == MotionType.Logarithmic)
-				animCurveCounter = Mathf.Log10(9.0f * animLinearCounter + 1.0f);
-
-			float remaining = 1.0f - prevAnimCurveCounter;
-			float portionThisFrame = (animCurveCounter - prevAnimCurveCounter) / remaining;
-			float angle = angleLeftToRotate * portionThisFrame;
+			animCurve.UpdateCurve(Time.deltaTime);
+			float angle = angleLeftToRotate * animCurve.portionThisFrame;
 			transform.RotateAround(arcPoint, rotationAxis, angle);
 			angleLeftToRotate -= angle;
-			prevAnimCurveCounter = animCurveCounter;
 
-			if (animLinearCounter >= 1.0f)
+			if (animCurve.animLinearCounter >= 1.0f)
 			{
 				animationState = AnimationState.Stationary;
 				transform.position = targetPos;
