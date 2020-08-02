@@ -8,9 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PerspectiveCentreScenes/GoalTest.unity
     guid: 3c5866b83175da549ac4a30a640145a1
-  - enabled: 1
-    path: Assets/Scenes/PerspectiveCentreScenes/LevelIteration.unity
-    guid: ab36022392a84c14f8c245d6e932dff2
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b9c261636fc0a4549bd8a7a7af6a9398,
       type: 2}

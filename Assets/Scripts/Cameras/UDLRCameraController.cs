@@ -40,7 +40,7 @@ public class UDLRCameraController : MonoBehaviour
 				if (panel.camPosition == value)
 				{
 					panel.IsSelected = true;
-					if (pulser != null)
+					if (pulser != null && LevelController.AreAllObjectsRevealed())
 						pulser.StartLooping();
 				}
 				if (camObjRenderer != null)
@@ -91,6 +91,13 @@ public class UDLRCameraController : MonoBehaviour
     {
 		Assert.IsTrue(cameraAnimators.Length == 4);
 		SelectCameraImmediate(CameraPanel.DisplayPosition.TopLeft);
+	}
+
+	public static void StartPulsingSelectedCamera()
+	{
+		ScalePulser pulser = GetSelectedCameraAnimator().GetCameraPulser();
+		if (pulser != null)
+			pulser.StartLooping();
 	}
 
 	public static CamAnimator GetSelectedCameraAnimator()

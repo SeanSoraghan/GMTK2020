@@ -98,12 +98,12 @@ public class CubeController : MonoBehaviour
 
 	public void SelectedCameraChanged(CamAnimator camAnimator)
 	{
-		if (camAnimator != null)
-		{
-			MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-			if (meshRenderer != null)
-				meshRenderer.material.SetColor("_EmissionColor", camAnimator.GetCamObjColour());
-		}
+		//if (camAnimator != null)
+		//{
+		//	MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+		//	if (meshRenderer != null)
+		//		meshRenderer.material.SetColor("_EmissionColor", camAnimator.GetCamObjColour());
+		//}
 	}
 
 	public bool MoveInDirection(Vector3 direction)

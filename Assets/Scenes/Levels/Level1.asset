@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Level1
   m_EditorClassIdentifier: Assembly-CSharp::MazeLevel
-  PlayerStart: {x: 0, y: 0, z: 0}
+  PlayerStart: {x: -2, y: 0, z: 0}
   Rotators: []

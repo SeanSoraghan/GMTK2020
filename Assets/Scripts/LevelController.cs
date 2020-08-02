@@ -72,6 +72,10 @@ public class LevelController : MonoBehaviour
 				{
 					visibilityController.BeginObjectsReveal();
 				}
+				if (_mazeState == MazeState.InProgress)
+				{
+					UDLRCameraController.StartPulsingSelectedCamera();
+				}
 				OnMazeStateChanged?.Invoke(_mazeState);
 			}
 		}
@@ -115,6 +119,13 @@ public class LevelController : MonoBehaviour
 		visibilityController.OnObjectsRevealed -= OnObjectsRevealed;
 	}
 
+	public static bool AreAllObjectsRevealed()
+	{
+		if (Instance != null)
+			return Instance.visibilityController.AreObjectsRevealed();
+		return false;
+	}
+
 	void OnObjectsRevealed()
 	{
 		if (AreAllWorkersComplete(mazeState))
@@ -128,7 +139,7 @@ public class LevelController : MonoBehaviour
 		{
 			MazeLevel level = LevelCollection.levels[levelIndex];
 			visibilityController.SetupLevel(level);
-			++levelIndex;
+			levelIndex = levelIndex + 1 % LevelCollection.levels.Count;
 
 			// This happens before Start() is called on some components, so we have to force their 
 			// MazeStateChanged callback whenever they register themselves. Which isn't ideal.
