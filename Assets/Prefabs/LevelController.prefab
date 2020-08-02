@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2967556620854917921}
   - component: {fileID: 6135733225253770757}
+  - component: {fileID: 7171768124150075131}
   m_Layer: 0
   m_Name: LevelController
   m_TagString: Untagged
@@ -51,6 +52,18 @@ MonoBehaviour:
     type: 3}
   mazeLineCubePrefab: {fileID: 4635258746213430416, guid: 31d477c463df77340adbbe56e04f450a,
     type: 3}
+--- !u!114 &7171768124150075131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119650629642279117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abb332d508534014abb98fba90b938bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   goalCubePrefab: {fileID: 6130463442458217897, guid: 980b0b1b15ffdd04a8822e4e4e8e7994,
     type: 3}
   playerCubePrefab: {fileID: 3902165926124535534, guid: 59fe38617d2615c49a0d8ec14f99c2b0,

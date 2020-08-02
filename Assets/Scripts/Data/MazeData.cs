@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class RotatorTriggerData
+public class RotatorTriggerData : ScriptableObject
 {
 	[SerializeField] private Vector3 Position;
 	[SerializeField] private Rotator.ArcType ArcType;

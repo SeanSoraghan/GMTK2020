@@ -35,9 +35,6 @@ public class LevelController : MonoBehaviour
 	public static LayoutMode layout = LayoutMode.CentredPanels;
 	public static int WORLD_CUBE_LIMIT = 2;
 
-	static float initialRevealTime = 0.2f;
-	static float revealDelayGrowth = 1.6f;
-
 	public static LevelController Instance;
 
 	public MazeLevelCollection LevelCollection;
@@ -45,18 +42,13 @@ public class LevelController : MonoBehaviour
 	public GameObject inputHandlerPrefab;
 	public GameObject udlrCamControllerPrefab;
 	public GameObject mazeLineCubePrefab;
-	public GameObject goalCubePrefab;
-	public GameObject playerCubePrefab;
-	public GameObject rotatorCubePrefab;
 
 	public delegate void MazeStateChanged(MazeState state);
 	public event MazeStateChanged OnMazeStateChanged;
 
-	int levelIndex = 0;
+	ObjectVisibilityController visibilityController;
 
-	List<GameObject> objectsToReveal = new List<GameObject>();
-	float timeUntilNextReveal = initialRevealTime;
-	float timeSinceLastReveal = 0.0f;
+	int levelIndex = 0;
 
 	// A collection of components who have work to do during a maze state (e.g. animations and such).
 	// Mainly used with Starting and Finishing.
@@ -78,8 +70,7 @@ public class LevelController : MonoBehaviour
 				}
 				if (_mazeState == MazeState.Starting)
 				{
-					timeSinceLastReveal = 0.0f;
-					timeUntilNextReveal = initialRevealTime;
+					visibilityController.BeginObjectsReveal();
 				}
 				OnMazeStateChanged?.Invoke(_mazeState);
 			}
@@ -98,6 +89,9 @@ public class LevelController : MonoBehaviour
 			DontDestroyOnLoad(this);
 		}
 
+		visibilityController = GetComponent<ObjectVisibilityController>();
+		Assert.IsNotNull(visibilityController);
+
 		WORLD_CUBE_LIMIT = worldSettings.worldExtent;
 		layout = worldSettings.layoutMode;
 		Instantiate(inputHandlerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -113,27 +107,18 @@ public class LevelController : MonoBehaviour
 	private void Start()
 	{
 		LoadNextLevel();
+		visibilityController.OnObjectsRevealed += OnObjectsRevealed;
 	}
 
-	private void Update()
+	private void OnDestroy()
 	{
-		if (mazeState == MazeState.Revealing && objectsToReveal.Count > 0)
-		{
-			timeSinceLastReveal += Time.deltaTime;
-			if (timeSinceLastReveal >= timeUntilNextReveal)
-			{
-				timeSinceLastReveal = 0.0f;
-				timeUntilNextReveal *= revealDelayGrowth;
-				objectsToReveal[0].SetActive(true);
-				objectsToReveal.RemoveAt(0);
+		visibilityController.OnObjectsRevealed -= OnObjectsRevealed;
+	}
 
-				if (objectsToReveal.Count == 0)
-				{
-					if (AreAllWorkersComplete(mazeState))
-						IncrementMazeState();
-				}
-			}
-		}
+	void OnObjectsRevealed()
+	{
+		if (AreAllWorkersComplete(mazeState))
+			IncrementMazeState();
 	}
 
 	void LoadNextLevel()
@@ -141,7 +126,9 @@ public class LevelController : MonoBehaviour
 		ClearLevel();
 		if (levelIndex < LevelCollection.levels.Count)
 		{
-			LoadLevel();
+			MazeLevel level = LevelCollection.levels[levelIndex];
+			visibilityController.SetupLevel(level);
+			++levelIndex;
 
 			// This happens before Start() is called on some components, so we have to force their 
 			// MazeStateChanged callback whenever they register themselves. Which isn't ideal.
@@ -166,31 +153,6 @@ public class LevelController : MonoBehaviour
 		foreach (CubeController player in FindObjectsOfType<CubeController>())
 		{
 			Destroy(player.gameObject);
-		}
-	}
-
-	void LoadLevel()
-	{
-		MazeLevel level = LevelCollection.levels[levelIndex];
-		AddObjectToRevealList(Instantiate(goalCubePrefab, new Vector3(0, 0, 0), Quaternion.identity));
-		foreach (RotatorTriggerData rotator in level.rotators)
-		{
-			GameObject rotatorTriggerObj = Instantiate(rotatorCubePrefab, rotator.position, Quaternion.identity);
-			CameraRotatorTrigger rotatorTrigger = rotatorTriggerObj.GetComponent<CameraRotatorTrigger>();
-			if (rotatorTrigger != null)
-				rotatorTrigger.arcType = rotator.arcType;
-			AddObjectToRevealList(rotatorTriggerObj);
-		}
-		AddObjectToRevealList(Instantiate(playerCubePrefab, level.playerStart, Quaternion.identity));
-		++levelIndex;
-	}
-
-	void AddObjectToRevealList(GameObject obj)
-	{
-		if (obj != null)
-		{
-			obj.SetActive(false);
-			objectsToReveal.Add(obj);
 		}
 	}
 
@@ -228,7 +190,7 @@ public class LevelController : MonoBehaviour
 		Assert.IsTrue(state == Instance.mazeState);
 		Instance.workerFlags[(int)state][component] = true;
 
-		if (state == MazeState.Revealing && Instance.objectsToReveal.Count > 0)
+		if (state == MazeState.Revealing && Instance.visibilityController.AreObjectsRevealed())
 			return;
 
 		if (Instance.AreAllWorkersComplete(state))

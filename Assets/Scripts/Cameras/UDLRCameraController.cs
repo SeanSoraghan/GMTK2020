@@ -13,8 +13,8 @@ public class UDLRCameraController : MonoBehaviour
 	public event SelectedCameraChanged OnSelectedCameraChanged;
 
 	CamAnimator[] cameraAnimators;
-	UIPanel panelController;
 	CameraPanel.DisplayPosition _selectedPosition = CameraPanel.DisplayPosition.TopLeft;
+	public UIPanel panelController { get; private set; }
 	public CameraPanel.DisplayPosition selectedPosition
 	{
 		get { return _selectedPosition; }
@@ -41,7 +41,7 @@ public class UDLRCameraController : MonoBehaviour
 					//camObjRenderer.enabled = panel.IsSelected;
 					if (panel.IsSelected)
 					{
-						camObjRenderer.enabled = true;
+						//camObjRenderer.enabled = true;
 						Color fillColor = camObjRenderer.material.GetColor("_EmissionColor");
 						var fillColorArray = frameTexture.GetPixels();
 						for (var i = 0; i < fillColorArray.Length; ++i)
@@ -51,16 +51,21 @@ public class UDLRCameraController : MonoBehaviour
 						frameTexture.SetPixels(fillColorArray);
 						frameTexture.Apply();
 					}
-					else if (Vector3.Distance(cam.transform.position, selectedCamPosition) < 0.1f)
-					{
-						camObjRenderer.enabled = false;
-					}
+					//else if (Vector3.Distance(cam.transform.position, selectedCamPosition) < 0.1f)
+					//{
+					//	camObjRenderer.enabled = false;
+					//}
 				}
 				
 			}
 			_selectedPosition = value;
 			OnSelectedCameraChanged?.Invoke(GetSelectedCameraAnimator());
 		}
+	}
+
+	public CamAnimator[] GetCameraAnimators()
+	{
+		return cameraAnimators;
 	}
 
 	private void Awake()

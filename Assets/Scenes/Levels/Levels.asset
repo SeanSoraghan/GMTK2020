@@ -13,6 +13,4 @@ MonoBehaviour:
   m_Name: Levels
   m_EditorClassIdentifier: Assembly-CSharp::MazeLevelCollection
   Levels:
-  - {fileID: 11400000, guid: 3072bba9ebe0330458bee8caef5b9518, type: 2}
-  - {fileID: 11400000, guid: 0f2315f32e0304247bb3379c7e269da1, type: 2}
-  - {fileID: 11400000, guid: 1389c2a8696f53a46a490e6b3fe459d2, type: 2}
+  - {fileID: 11400000, guid: 232eb496cffc2f64cb97003809c29112, type: 2}

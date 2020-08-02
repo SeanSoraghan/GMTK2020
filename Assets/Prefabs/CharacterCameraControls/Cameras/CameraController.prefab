@@ -58,7 +58,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 100
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -178,6 +178,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NormalizedViewPortRect.y
       value: 0.31106243
+      objectReference: {fileID: 0}
+    - target: {fileID: 20644882350841036, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
+        type: 3}
+      propertyPath: initialWallAttach
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 20644882350841037, guid: 2a1fda1350d9ce2429cea5bced6b6fab,
         type: 3}
@@ -314,6 +319,11 @@ PrefabInstance:
       propertyPath: m_NormalizedViewPortRect.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9073859578245831489, guid: fbfd02f7399769447884a46be3d21681,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 0.18893757
+      objectReference: {fileID: 0}
     - target: {fileID: 9073859578245831494, guid: fbfd02f7399769447884a46be3d21681,
         type: 3}
       propertyPath: m_Layer
@@ -379,6 +389,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 9073859578351273995, guid: fbfd02f7399769447884a46be3d21681,
+        type: 3}
+      propertyPath: initialWallAttach
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbfd02f7399769447884a46be3d21681, type: 3}
 --- !u!4 &4042176926773624691 stripped
@@ -418,6 +433,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NormalizedViewPortRect.y
       value: 0.31106243
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534503793082676461, guid: 266df90be2ddaaf4ea5566793eb02826,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 0.18893757
       objectReference: {fileID: 0}
     - target: {fileID: 5534503793183926181, guid: 266df90be2ddaaf4ea5566793eb02826,
         type: 3}
@@ -523,6 +543,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NormalizedViewPortRect.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064940399807258322, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 0.18893757
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064940399971290520, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
+        type: 3}
+      propertyPath: initialWallAttach
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2064940399971290521, guid: 2e8e109f4fb48954bbd7bd15288b3de0,
         type: 3}
