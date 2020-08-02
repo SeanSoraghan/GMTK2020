@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class CameraPanel : MonoBehaviour
 {
     public enum DisplayPosition : int
@@ -46,6 +45,9 @@ public class CameraPanel : MonoBehaviour
 	public static float normedHeight { get; private set; }
 	public static float sideLength { get; private set; }
 	public static float normedSideLength() { return Mathf.Min(normedHeight, normedWidth); }
+	static bool dimensionsSetup = false;
+
+	bool layoutInitialized = false;
 	bool _isInControl = false;
 	public bool IsSelected
 	{
@@ -62,7 +64,7 @@ public class CameraPanel : MonoBehaviour
 	
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
 		switch (LevelController.layout)
 		{
@@ -73,81 +75,117 @@ public class CameraPanel : MonoBehaviour
 				SetupCorners();
 				break;
 		}
+	}
 
-        if (cam != null && cam.orthographic)
-            cam.orthographicSize = (LevelController.WORLD_CUBE_LIMIT + 2) * (Screen.height / (float)Screen.width); // sizeToFillDisplay * aspect * 0.5. We want to fit 2 * (WORLD_CUBE_LIMIT + 1) on screen.
+	public void PostActivate()
+	{
+		switch (LevelController.layout)
+		{
+			case LevelController.LayoutMode.CentredPanels:
+				SetupCentred();
+				break;
+			case LevelController.LayoutMode.PerspectiveCentre:
+				SetupCorners();
+				break;
+		}
+	}
+
+	static void SetupDimensionsCorners()
+	{
+		if (!dimensionsSetup)
+		{
+			float w = Screen.width;
+			float h = Screen.height;
+
+			float minDimension = w < h ? w : h;
+			float maxNormedLength = 0.5f * sideLengthRatio;
+			sideLength = maxNormedLength * minDimension;
+			normedWidth = minDimension == w ? maxNormedLength : (sideLength / w);
+			normedHeight = minDimension == h ? maxNormedLength : (sideLength / h);
+			widthMargin = 0.5f - normedWidth;
+			heightMargin = 0.5f - normedHeight;
+
+			dimensionsSetup = true;
+		}
 	}
 
 	void SetupCorners()
 	{
-		float w = Screen.width;
-		float h = Screen.height;
-
-		float minDimension = w < h ? w : h;
-		float maxNormedLength = 0.5f * sideLengthRatio;
-		sideLength = maxNormedLength * minDimension;
-		normedWidth = minDimension == w ? maxNormedLength : (sideLength / w);
-		normedHeight = minDimension == h ? maxNormedLength : (sideLength / h);
-		widthMargin = 0.5f - normedWidth;
-		heightMargin = 0.5f - normedHeight;
-
-		cam = gameObject.GetComponent<Camera>();
-		if (cam == null)
-			cam = gameObject.AddComponent<Camera>();
-		switch (camPosition)
+		SetupDimensionsCorners();
+		if (!layoutInitialized)
 		{
-			case DisplayPosition.TopLeft:
-				if (cam != null)
-					cam.rect = new Rect(0.0f, 0.5f + heightMargin, normedWidth, normedHeight);
-				break;
-			case DisplayPosition.TopRight:
-				if (cam != null)
-					cam.rect = new Rect(0.5f + widthMargin, 0.5f + heightMargin, normedWidth, normedHeight);
-				break;
-			case DisplayPosition.BottomLeft:
-				if (cam != null)
-					cam.rect = new Rect(0.0f, 0.0f, normedWidth, normedHeight);
-				break;
-			case DisplayPosition.BottomRight:
-				if (cam != null)
-					cam.rect = new Rect(0.5f + widthMargin, 0.0f, normedWidth, normedHeight);
-				break;
+			cam = gameObject.GetComponent<Camera>();
+			if (cam == null)
+				cam = gameObject.AddComponent<Camera>();
+			switch (camPosition)
+			{
+				case DisplayPosition.TopLeft:
+					if (cam != null)
+						cam.rect = new Rect(0.0f, 0.5f + heightMargin, normedWidth, normedHeight);
+					break;
+				case DisplayPosition.TopRight:
+					if (cam != null)
+						cam.rect = new Rect(0.5f + widthMargin, 0.5f + heightMargin, normedWidth, normedHeight);
+					break;
+				case DisplayPosition.BottomLeft:
+					if (cam != null)
+						cam.rect = new Rect(0.0f, 0.0f, normedWidth, normedHeight);
+					break;
+				case DisplayPosition.BottomRight:
+					if (cam != null)
+						cam.rect = new Rect(0.5f + widthMargin, 0.0f, normedWidth, normedHeight);
+					break;
+			}
+			layoutInitialized = true;
+		}
+	}
+
+	void SetupDimensionsCentred()
+	{
+		if (!dimensionsSetup)
+		{
+			float w = Screen.width;
+			float h = Screen.height;
+
+			float minDimension = w < h ? w : h;
+			sideLength = 0.5f * minDimension;
+			normedWidth = minDimension == w ? 0.5f : (sideLength / w);
+			normedHeight = minDimension == h ? 0.5f : (sideLength / h);
+			widthMargin = 0.5f - normedWidth;
+			heightMargin = 0.5f - normedHeight;
+
+			dimensionsSetup = true;
 		}
 	}
 
 	void SetupCentred()
 	{
-		float w = Screen.width;
-		float h = Screen.height;
-
-		float minDimension = w < h ? w : h;
-		sideLength = 0.5f * minDimension;
-		normedWidth = minDimension == w ? 0.5f : (sideLength / w);
-		normedHeight = minDimension == h ? 0.5f : (sideLength / h);
-		widthMargin = 0.5f - normedWidth;
-		heightMargin = 0.5f - normedHeight;
-
-		cam = gameObject.GetComponent<Camera>();
-		if (cam == null)
-			cam = gameObject.AddComponent<Camera>();
-		switch (camPosition)
+		SetupDimensionsCentred();
+		if (!layoutInitialized)
 		{
-			case DisplayPosition.TopLeft:
-				if (cam != null)
-					cam.rect = new Rect(widthMargin, 0.5f, normedWidth, normedHeight);
-				break;
-			case DisplayPosition.TopRight:
-				if (cam != null)
-					cam.rect = new Rect(0.5f, 0.5f, normedWidth, normedHeight);
-				break;
-			case DisplayPosition.BottomLeft:
-				if (cam != null)
-					cam.rect = new Rect(widthMargin, heightMargin, normedWidth, normedHeight);
-				break;
-			case DisplayPosition.BottomRight:
-				if (cam != null)
-					cam.rect = new Rect(0.5f, heightMargin, normedWidth, normedHeight);
-				break;
+			cam = gameObject.GetComponent<Camera>();
+			if (cam == null)
+				cam = gameObject.AddComponent<Camera>();
+			switch (camPosition)
+			{
+				case DisplayPosition.TopLeft:
+					if (cam != null)
+						cam.rect = new Rect(widthMargin, 0.5f, normedWidth, normedHeight);
+					break;
+				case DisplayPosition.TopRight:
+					if (cam != null)
+						cam.rect = new Rect(0.5f, 0.5f, normedWidth, normedHeight);
+					break;
+				case DisplayPosition.BottomLeft:
+					if (cam != null)
+						cam.rect = new Rect(widthMargin, heightMargin, normedWidth, normedHeight);
+					break;
+				case DisplayPosition.BottomRight:
+					if (cam != null)
+						cam.rect = new Rect(0.5f, heightMargin, normedWidth, normedHeight);
+					break;
+			}
+			layoutInitialized = true;
 		}
 	}
 }

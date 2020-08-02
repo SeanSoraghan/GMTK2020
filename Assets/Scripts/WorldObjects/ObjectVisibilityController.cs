@@ -117,6 +117,9 @@ public class ObjectVisibilityController : MonoBehaviour
 			{
 				timeSinceLastReveal = 0.0f;
 				camerasToReveal[0].SetActive(true);
+				CameraPanel camPanel = camerasToReveal[0].GetComponentInChildren<CameraPanel>();
+				if (camPanel != null)
+					camPanel.PostActivate();
 				camerasToReveal.RemoveAt(0);
 
 				if (camerasToReveal.Count == 0)

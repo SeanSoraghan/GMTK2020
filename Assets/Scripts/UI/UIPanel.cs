@@ -44,7 +44,15 @@ public class UIPanel : MonoBehaviour
         Assert.IsNotNull(guiSkin);
     }
 
-    public void PositionPanel(CameraPanel.DisplayPosition displayPosition, MovementDirection movementDirection)
+	private void OnEnable()
+	{
+		CameraPanel.DisplayPosition pos = CameraPanel.DisplayPosition.TopLeft;
+		if (UDLRCameraController.Instance != null)
+			pos = UDLRCameraController.Instance.selectedPosition;
+		PositionPanelImmediate(pos);	
+	}
+
+	public void PositionPanel(CameraPanel.DisplayPosition displayPosition, MovementDirection movementDirection)
     {
         displayPos = displayPosition;
         UpdateDisplay(movementDirection, false);
