@@ -10,11 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: Level3
+  m_Name: New Maze Level
   m_EditorClassIdentifier: Assembly-CSharp::MazeLevel
-  PlayerStart: {x: -1, y: 1, z: 1}
-  Rotators:
-  - Position: {x: 1, y: -1, z: 1}
-    ArcType: 1
-  - Position: {x: -1, y: 0, z: 0}
-    ArcType: 3
+  PlayerStart: {x: 0, y: 0, z: 0}
+  Rotators: []
