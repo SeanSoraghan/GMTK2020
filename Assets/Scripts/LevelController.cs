@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
-[CreateAssetMenu(menuName = "Maze Assets/World Settings")]
-public class WorldSettings : ScriptableObject
-{
-	[SerializeField] private LevelController.LayoutMode LayoutMode = LevelController.LayoutMode.CentredPanels;
-	[SerializeField] private int WorldExtent = 2;
+//[CreateAssetMenu(menuName = "Maze Assets/World Settings")]
+//public class WorldSettings : ScriptableObject
+//{
+//	[SerializeField] private LevelController.LayoutMode LayoutMode = LevelController.LayoutMode.CentredPanels;
+//	[SerializeField] private int WorldExtent = 2;
 
-	public LevelController.LayoutMode layoutMode => LayoutMode;
-	public int worldExtent => WorldExtent;
-}
+//	public LevelController.LayoutMode layoutMode => LayoutMode;
+//	public int worldExtent => WorldExtent;
+//}
 
 public class LevelController : MonoBehaviour
 {
@@ -32,13 +32,13 @@ public class LevelController : MonoBehaviour
 		NumStates
 	}
 
-	public static LayoutMode layout = LayoutMode.CentredPanels;
+	public static LayoutMode layout = LayoutMode.PerspectiveCentre;
 	public static int WORLD_CUBE_LIMIT = 2;
 
 	public static LevelController Instance;
 
-	public MazeLevelCollection LevelCollection;
-	public WorldSettings worldSettings;
+	//public MazeLevelCollection LevelCollection;
+	//public WorldSettings worldSettings;
 	public GameObject inputHandlerPrefab;
 	public GameObject udlrCamControllerPrefab;
 	public GameObject mazeLineCubePrefab;
@@ -96,8 +96,8 @@ public class LevelController : MonoBehaviour
 		visibilityController = GetComponent<ObjectVisibilityController>();
 		Assert.IsNotNull(visibilityController);
 
-		WORLD_CUBE_LIMIT = worldSettings.worldExtent;
-		layout = worldSettings.layoutMode;
+		//WORLD_CUBE_LIMIT = worldSettings.worldExtent;
+		//layout = worldSettings.layoutMode;
 		Instantiate(inputHandlerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 		Instantiate(udlrCamControllerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 		Instantiate(mazeLineCubePrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -135,16 +135,16 @@ public class LevelController : MonoBehaviour
 	void LoadNextLevel()
 	{
 		ClearLevel();
-		if (levelIndex < LevelCollection.levels.Count)
-		{
-			MazeLevel level = LevelCollection.levels[levelIndex];
-			visibilityController.SetupLevel(level);
-			levelIndex = levelIndex + 1 % LevelCollection.levels.Count;
+		//if (levelIndex < LevelCollection.levels.Count)
+		//{
+			//MazeLevel level = LevelCollection.levels[levelIndex];
+			visibilityController.SetupLevel(/*level*/);
+			//levelIndex = levelIndex + 1 % LevelCollection.levels.Count;
 
 			// This happens before Start() is called on some components, so we have to force their 
 			// MazeStateChanged callback whenever they register themselves. Which isn't ideal.
 			mazeState = MazeState.Starting;
-		}
+		//}
 	}
 
 	void ClearLevel()
