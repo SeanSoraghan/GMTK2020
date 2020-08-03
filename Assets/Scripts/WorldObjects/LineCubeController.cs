@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[ExecuteInEditMode]
 public class LineCubeController : MonoBehaviour
 {
 	public enum AnimationState

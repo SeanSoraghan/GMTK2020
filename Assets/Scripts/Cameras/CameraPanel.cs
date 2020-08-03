@@ -68,10 +68,10 @@ public class CameraPanel : MonoBehaviour
     {
 		switch (LevelController.layout)
 		{
-			case LevelController.LayoutMode.CentredPanels:
+			case LayoutMode.CentredPanels:
 				SetupCentred();
 				break;
-			case LevelController.LayoutMode.PerspectiveCentre:
+			case LayoutMode.PerspectiveCentre:
 				SetupCorners();
 				break;
 		}
@@ -81,10 +81,10 @@ public class CameraPanel : MonoBehaviour
 	{
 		switch (LevelController.layout)
 		{
-			case LevelController.LayoutMode.CentredPanels:
+			case LayoutMode.CentredPanels:
 				SetupCentred();
 				break;
-			case LevelController.LayoutMode.PerspectiveCentre:
+			case LayoutMode.PerspectiveCentre:
 				SetupCorners();
 				break;
 		}

@@ -9,10 +9,10 @@ public class OverviewCameraController : MonoBehaviour
     {
 		switch (LevelController.layout)
 		{
-			case LevelController.LayoutMode.CentredPanels:
+			case LayoutMode.CentredPanels:
 				transform.position = new Vector3(0.0f, 0.0f, 3.0f) * LevelController.WORLD_CUBE_LIMIT;
 				break;
-			case LevelController.LayoutMode.PerspectiveCentre:
+			case LayoutMode.PerspectiveCentre:
 				transform.position = new Vector3(5.0f, 8.5f, -5.0f) * LevelController.WORLD_CUBE_LIMIT;
 				transform.rotation = Quaternion.Euler(50.0f, -45.0f, 0.0f);
 				break;

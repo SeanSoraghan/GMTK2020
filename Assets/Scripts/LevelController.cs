@@ -4,24 +4,24 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
-//[CreateAssetMenu(menuName = "Maze Assets/World Settings")]
-//public class WorldSettings : ScriptableObject
-//{
+public enum LayoutMode
+{
+	CentredPanels,
+	PerspectiveCentre
+};
+
+[CreateAssetMenu(menuName = "Maze Assets/World Settings")]
+public class WorldSettings : ScriptableObject
+{
 //	[SerializeField] private LevelController.LayoutMode LayoutMode = LevelController.LayoutMode.CentredPanels;
 //	[SerializeField] private int WorldExtent = 2;
 
-//	public LevelController.LayoutMode layoutMode => LayoutMode;
-//	public int worldExtent => WorldExtent;
-//}
+	public LayoutMode layoutMode;
+	public int worldExtent;
+}
 
 public class LevelController : MonoBehaviour
 {
-	public enum LayoutMode
-	{
-		CentredPanels,
-		PerspectiveCentre
-	}
-
 	public enum MazeState
 	{
 		Starting = 0,

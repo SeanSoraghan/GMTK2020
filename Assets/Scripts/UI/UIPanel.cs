@@ -73,10 +73,10 @@ public class UIPanel : MonoBehaviour
 	{
 		switch (LevelController.layout)
 		{
-			case LevelController.LayoutMode.CentredPanels:
+			case LayoutMode.CentredPanels:
 				GetTargetPosForCentredLayout(direction);
 				break;
-			case LevelController.LayoutMode.PerspectiveCentre:
+			case LayoutMode.PerspectiveCentre:
 				GetTargetPosForCornersLayout(direction);
 				break;
 		}
@@ -186,10 +186,10 @@ public class UIPanel : MonoBehaviour
 		DrawPanelWithFrameCenter(panelFrameCentre);
 		switch (LevelController.layout)
 		{
-			case LevelController.LayoutMode.CentredPanels:
+			case LayoutMode.CentredPanels:
 				DrawOffscreenPanelForCentredLayout();
 				break;
-			case LevelController.LayoutMode.PerspectiveCentre:
+			case LayoutMode.PerspectiveCentre:
 				DrawOffscreenPanelForCornerLayout();
 				break;
 		}
