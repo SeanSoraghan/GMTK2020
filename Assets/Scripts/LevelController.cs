@@ -27,7 +27,7 @@ public class LevelController : MonoBehaviour
 
 	public static LevelController Instance;
 
-	//public MazeLevelCollection LevelCollection;
+	public MazeLevelCollection LevelCollection;
 	public WorldSettings worldSettings;
 	public GameObject inputHandlerPrefab;
 	public GameObject udlrCamControllerPrefab;
@@ -125,8 +125,8 @@ public class LevelController : MonoBehaviour
 	void LoadNextLevel()
 	{
 		ClearLevel();
-		//if (levelIndex < LevelCollection.levels.Count)
-		//{
+		if (levelIndex < LevelCollection.levels.Count)
+		{
 			//MazeLevel level = LevelCollection.levels[levelIndex];
 			visibilityController.SetupLevel(/*level*/);
 			//levelIndex = levelIndex + 1 % LevelCollection.levels.Count;
@@ -134,7 +134,7 @@ public class LevelController : MonoBehaviour
 			// This happens before Start() is called on some components, so we have to force their 
 			// MazeStateChanged callback whenever they register themselves. Which isn't ideal.
 			mazeState = MazeState.Starting;
-		//}
+		}
 	}
 
 	void ClearLevel()

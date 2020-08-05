@@ -192,13 +192,13 @@ PrefabInstance:
         type: 3}
       propertyPath: LevelCollection
       value: 
-      objectReference: {fileID: 11400000, guid: c2ac3665f25bf7341979145bd7f28747,
+      objectReference: {fileID: 11400000, guid: 543067e81fab4c84bb0217009aa9300a,
         type: 2}
     - target: {fileID: 6135733225253770757, guid: 7928161b632f4be43afb4ed05adc1211,
         type: 3}
       propertyPath: worldSettings
       value: 
-      objectReference: {fileID: 11400000, guid: 44df8ae632816284f99f3b625dce2948,
+      objectReference: {fileID: 11400000, guid: d0439952683397e4692e356d9ba54249,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7928161b632f4be43afb4ed05adc1211, type: 3}
