@@ -10,16 +10,6 @@ public enum LayoutMode
 	PerspectiveCentre
 };
 
-[CreateAssetMenu(menuName = "Maze Assets/World Settings")]
-public class WorldSettings : ScriptableObject
-{
-//	[SerializeField] private LevelController.LayoutMode LayoutMode = LevelController.LayoutMode.CentredPanels;
-//	[SerializeField] private int WorldExtent = 2;
-
-	public LayoutMode layoutMode;
-	public int worldExtent;
-}
-
 public class LevelController : MonoBehaviour
 {
 	public enum MazeState
@@ -38,7 +28,7 @@ public class LevelController : MonoBehaviour
 	public static LevelController Instance;
 
 	//public MazeLevelCollection LevelCollection;
-	//public WorldSettings worldSettings;
+	public WorldSettings worldSettings;
 	public GameObject inputHandlerPrefab;
 	public GameObject udlrCamControllerPrefab;
 	public GameObject mazeLineCubePrefab;
@@ -96,8 +86,8 @@ public class LevelController : MonoBehaviour
 		visibilityController = GetComponent<ObjectVisibilityController>();
 		Assert.IsNotNull(visibilityController);
 
-		//WORLD_CUBE_LIMIT = worldSettings.worldExtent;
-		//layout = worldSettings.layoutMode;
+		WORLD_CUBE_LIMIT = worldSettings.worldExtent;
+		layout = worldSettings.layoutMode;
 		Instantiate(inputHandlerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 		Instantiate(udlrCamControllerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 		Instantiate(mazeLineCubePrefab, new Vector3(0, 0, 0), Quaternion.identity);
