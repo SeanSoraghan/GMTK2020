@@ -62,6 +62,8 @@ public class LevelController : MonoBehaviour
 				}
 				if (_mazeState == MazeState.Starting)
 				{
+					for (int panelPos = 0; panelPos < (int)CameraPanel.DisplayPosition.NumPositions; ++panelPos)
+						targetsReachedStates[panelPos] = false;
 					visibilityController.BeginObjectsReveal();
 				}
 				if (_mazeState == MazeState.InProgress)

@@ -27,7 +27,7 @@ public class ObjectVisibilityController : MonoBehaviour
 	public float camRevealDelay = 0.35f;
 	public float initialRevealTime = 0.2f;
 	public float revealDelayGrowth = 1.6f;
-	public float maxRevealDelay = 0.8f;
+	public float maxRevealDelay = 0.5f;
 
 	List<GameObject> camerasToReveal = new List<GameObject>();
 	List<GameObject> mazeBlocksToReveal = new List<GameObject>();
@@ -165,7 +165,8 @@ public class ObjectVisibilityController : MonoBehaviour
 			{
 				timeSinceLastReveal = 0.0f;
 				if (timeUntilNextReveal < maxRevealDelay)
-					timeUntilNextReveal *= revealDelayGrowth;
+					timeUntilNextReveal = Mathf.Clamp(timeUntilNextReveal * revealDelayGrowth, 0.0f, maxRevealDelay);
+
 				mazeBlocksToReveal[0].SetActive(true);
 				mazeBlocksToReveal.RemoveAt(0);
 
