@@ -8,14 +8,15 @@ public class InputHandler : MonoBehaviour
 {
 	public static InputHandler Instance;
 
-	CubeController _cubeController;
-	public CubeController cubeController
+	CubeController[] _cubeControllers = { null, null, null, null };
+	public CubeController[] cubeControllers
 	{
-		private get { return _cubeController; }
+		private get { return _cubeControllers; }
 		set
 		{
-			_cubeController = value;
-			_cubeController.OnMovementEnded += CubeMovementEnded;
+			_cubeControllers = value;
+			foreach(CubeController cubeController in _cubeControllers)
+				cubeController.OnMovementEnded += CubeMovementEnded;
 		}
 	}
 
@@ -24,8 +25,9 @@ public class InputHandler : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		if (cubeController != null)
-			cubeController.OnMovementEnded -= CubeMovementEnded;
+		foreach (CubeController cubeController in _cubeControllers)
+			if (cubeController != null)
+				cubeController.OnMovementEnded -= CubeMovementEnded;
 
 		InputActionMap actionMap = inputActions.actionMaps[0];
 		Assert.IsTrue(actionMap.actions.Count == 5);
@@ -64,9 +66,38 @@ public class InputHandler : MonoBehaviour
 		actionMap.actions[3].performed += OnRight;
 	}
 
+	public void SetCubeController(int index, CubeController controller)
+	{
+		if (cubeControllers[index] != null)
+			cubeControllers[index].OnMovementEnded -= CubeMovementEnded;
+		cubeControllers[index] = controller;
+		if (cubeControllers[index] != null)
+			cubeControllers[index].OnMovementEnded += CubeMovementEnded;
+	}
+
+	public CubeController GetCubeController(int index)
+	{
+		Assert.IsTrue(index < cubeControllers.Length);
+		return cubeControllers[index];
+	}
+
+	bool IsAnyCubeMoving()
+	{
+		foreach (CubeController cubeController in _cubeControllers)
+			if (cubeController != null && cubeController.MoveState != CubeController.MovementState.Stationary)
+				return true;
+		return false;
+	}
+
+	CubeController GetCubeForCameraPanelPosition(CameraPanel.DisplayPosition position)
+	{
+		Assert.IsTrue(cubeControllers.Length == (int)CameraPanel.DisplayPosition.NumPositions);
+		return cubeControllers[(int)position];
+	}
+
 	void Update()
 	{
-		if (cubeController != null && cubeController.MoveState == CubeController.MovementState.Stationary && LevelController.GetMazeState() == LevelController.MazeState.InProgress)
+		if (!IsAnyCubeMoving() && LevelController.GetMazeState() == LevelController.MazeState.InProgress)
 		{
 			InputSystem.Update();
 		}
@@ -74,47 +105,79 @@ public class InputHandler : MonoBehaviour
 
 	void CubeMovementEnded()
 	{
-		if (UDLRCameraController.Instance != null && cubeController != null && !cubeController.isInTrigger)
-			UDLRCameraController.Instance.SwitchCamera(lastMovementDirection);
+		if (UDLRCameraController.Instance != null)
+		{
+			CubeController cubeController = GetCubeForCameraPanelPosition(UDLRCameraController.Instance.selectedPosition);
+			if (cubeController != null && !cubeController.isInTrigger)
+				UDLRCameraController.Instance.SwitchCamera(lastMovementDirection);
+		}
 	}
 
 	public void OnUp(InputAction.CallbackContext context)
 	{
-		//move cube according to selected camera
-		CamAnimator selectedCam = UDLRCameraController.GetSelectedCameraAnimator();
-		Vector3 movementVec = selectedCam != null ? selectedCam.transform.up : Vector3.zero;
-		movementVec.Normalize();
-		cubeController?.MoveInDirection(movementVec);
-		lastMovementDirection = UIPanel.MovementDirection.Up;
+		if (UDLRCameraController.Instance != null)
+		{
+			CubeController cubeController = GetCubeForCameraPanelPosition(UDLRCameraController.Instance.selectedPosition);
+			if (cubeController != null)
+			{
+				//move cube according to selected camera
+				CamAnimator selectedCam = UDLRCameraController.GetSelectedCameraAnimator();
+				Vector3 movementVec = selectedCam != null ? selectedCam.transform.up : Vector3.zero;
+				movementVec.Normalize();
+				cubeController?.MoveInDirection(movementVec);
+				lastMovementDirection = UIPanel.MovementDirection.Up;
+			}
+		}
 	}
 
 	public void OnDown(InputAction.CallbackContext context)
 	{
-		//move cube according to selected camera
-		CamAnimator selectedCam = UDLRCameraController.GetSelectedCameraAnimator();
-		Vector3 movementVec = selectedCam != null ? -selectedCam.transform.up : Vector3.zero;
-		movementVec.Normalize();
-		cubeController?.MoveInDirection(movementVec);
-		lastMovementDirection = UIPanel.MovementDirection.Down;
+		if (UDLRCameraController.Instance != null)
+		{
+			CubeController cubeController = GetCubeForCameraPanelPosition(UDLRCameraController.Instance.selectedPosition);
+			if (cubeController != null)
+			{
+				//move cube according to selected camera
+				CamAnimator selectedCam = UDLRCameraController.GetSelectedCameraAnimator();
+				Vector3 movementVec = selectedCam != null ? -selectedCam.transform.up : Vector3.zero;
+				movementVec.Normalize();
+				cubeController?.MoveInDirection(movementVec);
+				lastMovementDirection = UIPanel.MovementDirection.Down;
+			}
+		}
 	}
 
 	public void OnLeft(InputAction.CallbackContext context)
 	{
-		//move cube according to selected camera
-		CamAnimator selectedCam = UDLRCameraController.GetSelectedCameraAnimator();
-		Vector3 movementVec = selectedCam != null ? -selectedCam.transform.right : Vector3.zero;
-		movementVec.Normalize();
-		cubeController?.MoveInDirection(movementVec);
-		lastMovementDirection = UIPanel.MovementDirection.Left;
+		if (UDLRCameraController.Instance != null)
+		{
+			CubeController cubeController = GetCubeForCameraPanelPosition(UDLRCameraController.Instance.selectedPosition);
+			if (cubeController != null)
+			{
+				//move cube according to selected camera
+				CamAnimator selectedCam = UDLRCameraController.GetSelectedCameraAnimator();
+				Vector3 movementVec = selectedCam != null ? -selectedCam.transform.right : Vector3.zero;
+				movementVec.Normalize();
+				cubeController?.MoveInDirection(movementVec);
+				lastMovementDirection = UIPanel.MovementDirection.Left;
+			}
+		}
 	}
 
 	public void OnRight(InputAction.CallbackContext context)
 	{
-		//move cube according to selected camera
-		CamAnimator selectedCam = UDLRCameraController.GetSelectedCameraAnimator();
-		Vector3 movementVec = selectedCam != null ? selectedCam.transform.right : Vector3.zero;
-		movementVec.Normalize();
-		cubeController?.MoveInDirection(movementVec);
-		lastMovementDirection = UIPanel.MovementDirection.Right;
+		if (UDLRCameraController.Instance != null)
+		{
+			CubeController cubeController = GetCubeForCameraPanelPosition(UDLRCameraController.Instance.selectedPosition);
+			if (cubeController != null)
+			{
+				//move cube according to selected camera
+				CamAnimator selectedCam = UDLRCameraController.GetSelectedCameraAnimator();
+				Vector3 movementVec = selectedCam != null ? selectedCam.transform.right : Vector3.zero;
+				movementVec.Normalize();
+				cubeController?.MoveInDirection(movementVec);
+				lastMovementDirection = UIPanel.MovementDirection.Right;
+			}
+		}
 	}
 }

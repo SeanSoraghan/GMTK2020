@@ -82,9 +82,6 @@ public class CubeController : MonoBehaviour
         moveTargetPos = transform.position;
         moveVec = Vector3.zero;
 
-		if (InputHandler.Instance != null)
-			InputHandler.Instance.cubeController = this;
-
 		if (UDLRCameraController.Instance != null)
 			UDLRCameraController.Instance.OnSelectedCameraChanged += SelectedCameraChanged;
 		SelectedCameraChanged(UDLRCameraController.GetSelectedCameraAnimator());

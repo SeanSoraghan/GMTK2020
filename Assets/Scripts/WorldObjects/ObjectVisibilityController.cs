@@ -19,6 +19,7 @@ public class ObjectVisibilityController : MonoBehaviour
 
 	public GameObject goalCubePrefab;
 	public GameObject playerCubePrefab;
+
 	public GameObject rotatorCubePrefab;
 
 	public float panelRevealDelay = 0.35f; 
@@ -92,7 +93,14 @@ public class ObjectVisibilityController : MonoBehaviour
 				rotatorTrigger.arcType = rotator.arcType;
 			AddObjectToRevealList(rotatorTriggerObj, ref mazeBlocksToReveal);
 		}
-		AddObjectToRevealList(Instantiate(playerCubePrefab, levelData.playerStart, Quaternion.identity), ref mazeBlocksToReveal);
+		if (InputHandler.Instance != null)
+		{
+			for (int panelPos = 0; panelPos < (int)CameraPanel.DisplayPosition.NumPositions; ++panelPos)
+			{
+				InputHandler.Instance.SetCubeController(panelPos, Instantiate(playerCubePrefab, levelData.cubeStartPositions[panelPos], Quaternion.identity).GetComponent<CubeController>());
+				AddObjectToRevealList(InputHandler.Instance.GetCubeController(panelPos).gameObject, ref mazeBlocksToReveal);
+			}
+		}
 		if (UDLRCameraController.Instance != null)
 		{
 			UDLRCameraController.Instance.panelController.enabled = false; // panel will be the last thing that gets displayed

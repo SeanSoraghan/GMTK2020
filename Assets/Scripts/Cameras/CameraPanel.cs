@@ -9,7 +9,8 @@ public class CameraPanel : MonoBehaviour
         TopLeft = 0,
         TopRight,
         BottomLeft,
-        BottomRight
+        BottomRight,
+		NumPositions
 	};
 
 	public static DisplayPosition SwitchPositionHorizontal(DisplayPosition position)
@@ -17,9 +18,9 @@ public class CameraPanel : MonoBehaviour
 		int p = (int)position;
 		int newPos = p + (p % 2 == 0 ? 1 : -1);
 		if (newPos < 0)
-			newPos += 4;
+			newPos += (int)DisplayPosition.NumPositions;
 		else
-			newPos = newPos % 4;
+			newPos = newPos % (int)DisplayPosition.NumPositions;
 		return (DisplayPosition)newPos;
 	}
 
@@ -28,9 +29,9 @@ public class CameraPanel : MonoBehaviour
 		int p = (int)position;
 		int newPos = p + (p % 2 == 0 ? 2 : -2);
 		if (newPos < 0)
-			newPos += 4;
+			newPos += (int)DisplayPosition.NumPositions;
 		else
-			newPos = newPos % 4;
+			newPos = newPos % (int)DisplayPosition.NumPositions;
 		return (DisplayPosition)newPos;
 	}
 
