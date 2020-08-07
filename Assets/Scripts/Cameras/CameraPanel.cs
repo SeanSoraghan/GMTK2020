@@ -13,6 +13,7 @@ public class CameraPanel : MonoBehaviour
 		NumPositions
 	};
 
+	public static string[] PositionLayerNames = { "TopLeft", "TopRight", "BottomLeft", "BottomRight" };
 	public static DisplayPosition SwitchPositionHorizontal(DisplayPosition position)
 	{
 		int p = (int)position;

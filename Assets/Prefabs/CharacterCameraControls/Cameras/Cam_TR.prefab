@@ -257,6 +257,11 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 9.163346
       objectReference: {fileID: 0}
+    - target: {fileID: 1408908693666131669, guid: 2c2e54dee93854c4c8125e99891e124a,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 2359
+      objectReference: {fileID: 0}
     - target: {fileID: 1408908693666131670, guid: 2c2e54dee93854c4c8125e99891e124a,
         type: 3}
       propertyPath: volumeTrigger

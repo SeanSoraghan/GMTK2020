@@ -104,10 +104,12 @@ public class ObjectVisibilityController : MonoBehaviour
 				Assert.IsNotNull(cubeController);
 				InputHandler.Instance.SetCubeController(panelPos, cubeController);
 				cubeController.associatedPanelPosition = (CameraPanel.DisplayPosition)panelPos;
+				cube.layer = LayerMask.NameToLayer(CameraPanel.PositionLayerNames[panelPos]);
 				AddObjectToRevealList(cube, ref mazeBlocksToReveal);
 				GameObject goal = Instantiate(goalCubePrefab, levelData.goalPositions[panelPos], Quaternion.identity);
 				MazeGoal goalController = goal.GetComponent<MazeGoal>();
 				Assert.IsNotNull(goalController);
+				goal.layer = LayerMask.NameToLayer(CameraPanel.PositionLayerNames[panelPos]);
 				AddObjectToRevealList(goal, ref mazeBlocksToReveal);
 				goalController.associatedDisplayPosition = (CameraPanel.DisplayPosition)panelPos;
 				if (UDLRCameraController.Instance != null)
