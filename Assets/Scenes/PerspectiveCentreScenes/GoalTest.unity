@@ -200,5 +200,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d0439952683397e4692e356d9ba54249,
         type: 2}
+    - target: {fileID: 7171768124150075131, guid: 7928161b632f4be43afb4ed05adc1211,
+        type: 3}
+      propertyPath: playerCubePrefab
+      value: 
+      objectReference: {fileID: 9057767762053674604, guid: e7913c3a13dd65b44891d1f2d039a445,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7928161b632f4be43afb4ed05adc1211, type: 3}

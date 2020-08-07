@@ -108,7 +108,7 @@ public class InputHandler : MonoBehaviour
 		if (UDLRCameraController.Instance != null)
 		{
 			CubeController cubeController = GetCubeForCameraPanelPosition(UDLRCameraController.Instance.selectedPosition);
-			if (cubeController != null && !cubeController.isInTrigger)
+			if (cubeController != null && !cubeController.stopPanelMovement)
 				UDLRCameraController.Instance.SwitchCamera(lastMovementDirection);
 		}
 	}

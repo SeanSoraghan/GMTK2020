@@ -36,6 +36,8 @@ public class LevelController : MonoBehaviour
 	public delegate void MazeStateChanged(MazeState state);
 	public event MazeStateChanged OnMazeStateChanged;
 
+	bool[] targetsReachedStates = { false, false, false, false };
+
 	ObjectVisibilityController visibilityController;
 
 	int levelIndex = 0;
@@ -109,6 +111,28 @@ public class LevelController : MonoBehaviour
 		visibilityController.OnObjectsRevealed -= OnObjectsRevealed;
 	}
 
+	public static void SetCubeInTarget(CameraPanel.DisplayPosition position, bool reached)
+	{
+		if (Instance != null)
+		{
+			Assert.IsTrue((int)position < Instance.targetsReachedStates.Length);
+			Instance.targetsReachedStates[(int)position] = reached;
+			if (reached)
+			{
+				foreach (bool positionReached in Instance.targetsReachedStates)
+					if (!positionReached)
+						return;
+				SetMazeCompleted();
+			}
+		}
+	}
+
+	public static void CubeEnteredIncorrectTarget()
+	{
+		if (Instance != null)
+			Instance.ResetLevel();
+	}
+
 	public static bool AreAllObjectsRevealed()
 	{
 		if (Instance != null)
@@ -120,6 +144,16 @@ public class LevelController : MonoBehaviour
 	{
 		if (AreAllWorkersComplete(mazeState))
 			IncrementMazeState();
+	}
+
+	void ResetLevel()
+	{
+		ClearLevel();
+		// When resetting the level, levelIndex will be set to the next level.
+		int currentLevel = levelIndex == 0 ? LevelCollection.levels.Count - 1 : levelIndex - 1;
+		MazeLevel level = LevelCollection.levels[currentLevel];
+		visibilityController.SetupLevel(level);
+		mazeState = MazeState.Starting;
 	}
 
 	void LoadNextLevel()
@@ -168,7 +202,7 @@ public class LevelController : MonoBehaviour
 			return Instance.mazeState;
 		return MazeState.LoadingLevel;
 	}
-	public static void SetMazeCompleted()
+	static void SetMazeCompleted()
 	{
 		if (Instance != null && Instance.mazeState == MazeState.InProgress)
 		{

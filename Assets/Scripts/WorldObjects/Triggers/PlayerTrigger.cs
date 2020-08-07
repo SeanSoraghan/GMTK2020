@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerTrigger : MonoBehaviour
 {
+	/** This will stop the camera panel from moving when a cube enters this trigger */
+	public bool stopPanelMovement = false;
 	public bool RemoveOnTrigger = false;
 
 	CubeController playerController;
@@ -13,10 +15,15 @@ public class PlayerTrigger : MonoBehaviour
 
 	}
 
+	public virtual void PlayerExitedTrigger(CubeController player)
+	{
+
+	}
+
 	private void OnDestroy()
 	{
 		if (playerController != null)
-			playerController.isInTrigger = false;
+			playerController.stopPanelMovement = false;
 	}
 
 	void OnPlayerMovementEnded()
@@ -38,7 +45,8 @@ public class PlayerTrigger : MonoBehaviour
 		CubeController player = other.GetComponent<CubeController>();
 		if (player != null)
 		{
-			player.isInTrigger = true;
+			if (stopPanelMovement)
+				player.stopPanelMovement = true;
 			playerController = player;
 			player.OnMovementEnded += OnPlayerMovementEnded;
 		}
@@ -49,8 +57,9 @@ public class PlayerTrigger : MonoBehaviour
 		CubeController player = other.GetComponent<CubeController>();
 		if (player != null)
 		{
-			player.isInTrigger = false;
+			player.stopPanelMovement = false;
 			player.OnMovementEnded -= OnPlayerMovementEnded;
+			PlayerExitedTrigger(player);
 			playerController = null;
 			triggered = false;
 		}

@@ -16,8 +16,10 @@ public class RotatorTriggerData //: ScriptableObject
 public class MazeLevel : ScriptableObject
 {
 	[SerializeField] private Vector3[] CubeStartPositions = { Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero };
+	[SerializeField] private Vector3[] GoalPositions = { Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero };
 	[SerializeField] private List<RotatorTriggerData> Rotators = new List<RotatorTriggerData>();
 
 	public Vector3[] cubeStartPositions => CubeStartPositions;
+	public Vector3[] goalPositions => GoalPositions;
 	public List<RotatorTriggerData> rotators => Rotators;
 }

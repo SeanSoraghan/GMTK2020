@@ -24,7 +24,7 @@ public class CubeController : MonoBehaviour
 
 	public float unitMovementTimeSeconds = 0.2f;
 
-	public bool isInTrigger { get; set; }
+	public bool stopPanelMovement { get; set; }
 
     public bool shouldReset = false;
 	bool _goalReached = false;
@@ -43,6 +43,8 @@ public class CubeController : MonoBehaviour
 
 	public delegate void MovementEnded();
 	public event MovementEnded OnMovementEnded;
+
+	public CameraPanel.DisplayPosition associatedPanelPosition = CameraPanel.DisplayPosition.NumPositions;
 
     CharacterController controller;
     Vector3 moveTargetPos;

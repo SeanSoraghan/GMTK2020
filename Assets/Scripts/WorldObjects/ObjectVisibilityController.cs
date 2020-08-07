@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class ObjectVisibilityController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class ObjectVisibilityController : MonoBehaviour
 	public float camRevealDelay = 0.35f;
 	public float initialRevealTime = 0.2f;
 	public float revealDelayGrowth = 1.6f;
+	public float maxRevealDelay = 0.8f;
 
 	List<GameObject> camerasToReveal = new List<GameObject>();
 	List<GameObject> mazeBlocksToReveal = new List<GameObject>();
@@ -79,12 +81,12 @@ public class ObjectVisibilityController : MonoBehaviour
 	{
 		if (UDLRCameraController.Instance != null)
 		{
-			foreach (var cam in UDLRCameraController.Instance.GetCameraAnimators())
-			{
-				AddObjectToRevealList(cam.gameObject, ref camerasToReveal);
-			}
+			CamAnimator[] animators = UDLRCameraController.Instance.GetCameraAnimators();
+			AddObjectToRevealList(animators[(int)CameraPanel.DisplayPosition.TopLeft].gameObject, ref camerasToReveal);
+			AddObjectToRevealList(animators[(int)CameraPanel.DisplayPosition.TopRight].gameObject, ref camerasToReveal);
+			AddObjectToRevealList(animators[(int)CameraPanel.DisplayPosition.BottomRight].gameObject, ref camerasToReveal);
+			AddObjectToRevealList(animators[(int)CameraPanel.DisplayPosition.BottomLeft].gameObject, ref camerasToReveal);
 		}
-		AddObjectToRevealList(Instantiate(goalCubePrefab, new Vector3(0, 0, 0), Quaternion.identity), ref mazeBlocksToReveal);
 		foreach (RotatorTriggerData rotator in levelData.rotators)
 		{
 			GameObject rotatorTriggerObj = Instantiate(rotatorCubePrefab, rotator.position, Quaternion.identity);
@@ -97,8 +99,26 @@ public class ObjectVisibilityController : MonoBehaviour
 		{
 			for (int panelPos = 0; panelPos < (int)CameraPanel.DisplayPosition.NumPositions; ++panelPos)
 			{
-				InputHandler.Instance.SetCubeController(panelPos, Instantiate(playerCubePrefab, levelData.cubeStartPositions[panelPos], Quaternion.identity).GetComponent<CubeController>());
-				AddObjectToRevealList(InputHandler.Instance.GetCubeController(panelPos).gameObject, ref mazeBlocksToReveal);
+				GameObject cube = Instantiate(playerCubePrefab, levelData.cubeStartPositions[panelPos], Quaternion.identity);
+				CubeController cubeController = cube.GetComponent<CubeController>();
+				Assert.IsNotNull(cubeController);
+				InputHandler.Instance.SetCubeController(panelPos, cubeController);
+				cubeController.associatedPanelPosition = (CameraPanel.DisplayPosition)panelPos;
+				AddObjectToRevealList(cube, ref mazeBlocksToReveal);
+				GameObject goal = Instantiate(goalCubePrefab, levelData.goalPositions[panelPos], Quaternion.identity);
+				MazeGoal goalController = goal.GetComponent<MazeGoal>();
+				Assert.IsNotNull(goalController);
+				AddObjectToRevealList(goal, ref mazeBlocksToReveal);
+				goalController.associatedDisplayPosition = (CameraPanel.DisplayPosition)panelPos;
+				if (UDLRCameraController.Instance != null)
+				{
+					MeshRenderer meshRenderer = cube.GetComponent<MeshRenderer>();
+					if (meshRenderer != null)
+						meshRenderer.material.SetColor("_EmissionColor", UDLRCameraController.Instance.GetCameraAnimators()[panelPos].GetCamObjColour());
+					MeshRenderer goalMeshRenderer = goal.GetComponent<MeshRenderer>();
+					if (goalMeshRenderer != null)
+						goalMeshRenderer.material.SetColor("_EmissionColor", UDLRCameraController.Instance.GetCameraAnimators()[panelPos].GetCamObjColour());
+				}
 			}
 		}
 		if (UDLRCameraController.Instance != null)
@@ -142,7 +162,8 @@ public class ObjectVisibilityController : MonoBehaviour
 			if (timeSinceLastReveal >= timeUntilNextReveal)
 			{
 				timeSinceLastReveal = 0.0f;
-				timeUntilNextReveal *= revealDelayGrowth;
+				if (timeUntilNextReveal < maxRevealDelay)
+					timeUntilNextReveal *= revealDelayGrowth;
 				mazeBlocksToReveal[0].SetActive(true);
 				mazeBlocksToReveal.RemoveAt(0);
 

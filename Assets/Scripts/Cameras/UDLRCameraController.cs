@@ -12,7 +12,7 @@ public class UDLRCameraController : MonoBehaviour
 	public delegate void SelectedCameraChanged(CamAnimator selectedCamera);
 	public event SelectedCameraChanged OnSelectedCameraChanged;
 
-	CamAnimator[] cameraAnimators;
+	CamAnimator[] cameraAnimators = { null, null, null, null };
 	CameraPanel.DisplayPosition _selectedPosition = CameraPanel.DisplayPosition.TopLeft;
 	public UIPanel panelController { get; private set; }
 	public CameraPanel.DisplayPosition selectedPosition
@@ -83,7 +83,11 @@ public class UDLRCameraController : MonoBehaviour
 
 		panelController = GetComponent<UIPanel>();
 		Assert.IsNotNull(panelController);
-		cameraAnimators = GetComponentsInChildren<CamAnimator>();
+		CamAnimator[] camAnims = GetComponentsInChildren<CamAnimator>();
+		foreach(CamAnimator camAnimator in camAnims)
+		{
+			cameraAnimators.SetValue(camAnimator, (int)camAnimator.CameraPanel.camPosition);
+		}
 	}
 
 	// Start is called before the first frame update
