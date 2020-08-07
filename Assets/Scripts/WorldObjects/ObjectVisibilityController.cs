@@ -74,7 +74,7 @@ public class ObjectVisibilityController : MonoBehaviour
 		return visibilityState == VisibilityState.Revealed;
 	}
 
-	public void SetupLevel(/*MazeLevel levelData*/)
+	public void SetupLevel(MazeLevel levelData)
 	{
 		if (UDLRCameraController.Instance != null)
 		{
@@ -84,15 +84,15 @@ public class ObjectVisibilityController : MonoBehaviour
 			}
 		}
 		AddObjectToRevealList(Instantiate(goalCubePrefab, new Vector3(0, 0, 0), Quaternion.identity), ref mazeBlocksToReveal);
-		//foreach (RotatorTriggerData rotator in levelData.rotators)
-		//{
-		//	GameObject rotatorTriggerObj = Instantiate(rotatorCubePrefab, rotator.position, Quaternion.identity);
-		//	CameraRotatorTrigger rotatorTrigger = rotatorTriggerObj.GetComponent<CameraRotatorTrigger>();
-		//	if (rotatorTrigger != null)
-		//		rotatorTrigger.arcType = rotator.arcType;
-		//	AddObjectToRevealList(rotatorTriggerObj, ref mazeBlocksToReveal);
-		//}
-		AddObjectToRevealList(Instantiate(playerCubePrefab, /*levelData.playerStart*/new Vector3(-2.0f, 0.0f, 0.0f), Quaternion.identity), ref mazeBlocksToReveal);
+		foreach (RotatorTriggerData rotator in levelData.rotators)
+		{
+			GameObject rotatorTriggerObj = Instantiate(rotatorCubePrefab, rotator.position, Quaternion.identity);
+			CameraRotatorTrigger rotatorTrigger = rotatorTriggerObj.GetComponent<CameraRotatorTrigger>();
+			if (rotatorTrigger != null)
+				rotatorTrigger.arcType = rotator.arcType;
+			AddObjectToRevealList(rotatorTriggerObj, ref mazeBlocksToReveal);
+		}
+		AddObjectToRevealList(Instantiate(playerCubePrefab, levelData.playerStart, Quaternion.identity), ref mazeBlocksToReveal);
 		if (UDLRCameraController.Instance != null)
 		{
 			UDLRCameraController.Instance.panelController.enabled = false; // panel will be the last thing that gets displayed

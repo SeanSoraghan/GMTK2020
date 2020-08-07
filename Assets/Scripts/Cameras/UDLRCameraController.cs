@@ -100,6 +100,16 @@ public class UDLRCameraController : MonoBehaviour
 			pulser.StartLooping();
 	}
 
+	public static void RotateCameras(Transform relativeTransform, Rotator.ArcType arcType, AnimCurve.MotionType motionType)
+	{
+		if (Instance == null)
+			return;
+		foreach (CamAnimator camAnimator in Instance.cameraAnimators)
+		{
+			camAnimator.rotator.StartArc(relativeTransform, arcType, Vector3.zero, motionType);
+		}
+	}
+
 	public static CamAnimator GetSelectedCameraAnimator()
 	{
 		if (Instance == null)

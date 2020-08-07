@@ -127,9 +127,9 @@ public class LevelController : MonoBehaviour
 		ClearLevel();
 		if (levelIndex < LevelCollection.levels.Count)
 		{
-			//MazeLevel level = LevelCollection.levels[levelIndex];
-			visibilityController.SetupLevel(/*level*/);
-			//levelIndex = levelIndex + 1 % LevelCollection.levels.Count;
+			MazeLevel level = LevelCollection.levels[levelIndex];
+			visibilityController.SetupLevel(level);
+			levelIndex = levelIndex + 1 % LevelCollection.levels.Count;
 
 			// This happens before Start() is called on some components, so we have to force their 
 			// MazeStateChanged callback whenever they register themselves. Which isn't ideal.

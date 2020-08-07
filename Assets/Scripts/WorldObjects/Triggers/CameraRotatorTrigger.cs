@@ -60,11 +60,12 @@ public class CameraRotatorTrigger : PlayerTrigger
 		if (player != null)
 		{
 			CamAnimator camAnim = UDLRCameraController.GetSelectedCameraAnimator();
+			UDLRCameraController.RotateCameras(camAnim.transform, arcType, AnimCurve.MotionType.Linear);
 			//transform.position = startingTransform.position;
 			//transform.rotation = startingTransform.rotation;
 			//transform.localScale = startingTransform.localScale;
-			if (camAnim != null)
-				camAnim.rotator.StartArc(camAnim.transform, arcType, Vector3.zero, AnimCurve.MotionType.Linear);
+			//if (camAnim != null)
+			//	camAnim.rotator.StartArc(camAnim.transform, arcType, Vector3.zero, AnimCurve.MotionType.Linear);
 		}
 	}
 

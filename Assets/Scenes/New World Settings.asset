@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072d49348a0056147b30415bb144d6ca, type: 3}
   m_Name: New World Settings
   m_EditorClassIdentifier: 
-  layoutMode: 0
+  layoutMode: 1
   worldExtent: 2
