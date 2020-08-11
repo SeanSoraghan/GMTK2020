@@ -97,6 +97,13 @@ public class UDLRCameraController : MonoBehaviour
 		SelectCameraImmediate(CameraPanel.DisplayPosition.TopLeft);
 	}
 
+	public void ResetCameraPositions()
+	{
+		foreach (CamAnimator cam in cameraAnimators)
+			if (cam != null)
+				cam.ResetCameraPosition();
+	}
+
 	public static void StartPulsingSelectedCamera()
 	{
 		ScalePulser pulser = GetSelectedCameraAnimator().GetCameraPulser();

@@ -124,7 +124,11 @@ public class CubeController : MonoBehaviour
 		float eps = 0.05f;
 		float limit = LevelController.WORLD_CUBE_LIMIT + eps;
 		Vector3 target = transform.position + direction;
-		return !(Mathf.Abs(target.x) >= limit || Mathf.Abs(target.y) >= limit || Mathf.Abs(target.z) >= limit);
+		if (Mathf.Abs(target.x) >= limit || Mathf.Abs(target.y) >= limit || Mathf.Abs(target.z) >= limit)
+			return false;
+		if (InputHandler.AreAnyCubesAtPosition(target, eps, this))
+			return false;
+		return true;
 	}
 
 	void FixedUpdate()

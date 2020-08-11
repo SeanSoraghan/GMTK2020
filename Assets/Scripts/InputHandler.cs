@@ -66,6 +66,15 @@ public class InputHandler : MonoBehaviour
 		actionMap.actions[3].performed += OnRight;
 	}
 
+	public static bool AreAnyCubesAtPosition(Vector3 positionToCheck, float thisClose, CubeController notThisCube)
+	{
+		if (Instance != null)
+			foreach (CubeController cube in Instance.cubeControllers)
+				if (cube != notThisCube && Vector3.Distance(cube.transform.position, positionToCheck) <= thisClose)
+					return true;
+		return false;
+	}
+
 	public void SetCubeController(int index, CubeController controller)
 	{
 		if (cubeControllers[index] != null)

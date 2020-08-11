@@ -62,6 +62,8 @@ public class LevelController : MonoBehaviour
 				}
 				if (_mazeState == MazeState.Starting)
 				{
+					if (UDLRCameraController.Instance != null)
+						UDLRCameraController.Instance.SelectCameraImmediate(CameraPanel.DisplayPosition.TopLeft);
 					for (int panelPos = 0; panelPos < (int)CameraPanel.DisplayPosition.NumPositions; ++panelPos)
 						targetsReachedStates[panelPos] = false;
 					visibilityController.BeginObjectsReveal();
@@ -131,8 +133,8 @@ public class LevelController : MonoBehaviour
 
 	public static void CubeEnteredIncorrectTarget()
 	{
-		if (Instance != null)
-			Instance.ResetLevel();
+		//if (Instance != null)
+		//	Instance.ResetLevel();
 	}
 
 	public static bool AreAllObjectsRevealed()
@@ -161,11 +163,13 @@ public class LevelController : MonoBehaviour
 	void LoadNextLevel()
 	{
 		ClearLevel();
+		if (UDLRCameraController.Instance != null)
+			UDLRCameraController.Instance.ResetCameraPositions();
 		if (levelIndex < LevelCollection.levels.Count)
 		{
 			MazeLevel level = LevelCollection.levels[levelIndex];
 			visibilityController.SetupLevel(level);
-			levelIndex = levelIndex + 1 % LevelCollection.levels.Count;
+			levelIndex = (levelIndex + 1) % LevelCollection.levels.Count;
 
 			// This happens before Start() is called on some components, so we have to force their 
 			// MazeStateChanged callback whenever they register themselves. Which isn't ideal.

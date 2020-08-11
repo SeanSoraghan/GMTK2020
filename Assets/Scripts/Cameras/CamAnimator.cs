@@ -33,6 +33,11 @@ public class CamAnimator : MonoBehaviour
 		transform.rotation = newRot;
 	}
 
+	public void ResetCameraPosition()
+	{
+		MoveCameraToWall(initialWallAttach);
+	}
+
 	public Color GetCamObjColour()
 	{
 		MeshRenderer renderer = GetComponentInChildren<MeshRenderer>();
