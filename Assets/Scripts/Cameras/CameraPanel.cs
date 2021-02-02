@@ -22,6 +22,8 @@ public class CameraPanel : MonoBehaviour
 			newPos += (int)DisplayPosition.NumPositions;
 		else
 			newPos = newPos % (int)DisplayPosition.NumPositions;
+		if (UDLRCameraController.Instance.GetCameraAnimators()[newPos] == null)
+			return position;
 		return (DisplayPosition)newPos;
 	}
 
@@ -33,6 +35,8 @@ public class CameraPanel : MonoBehaviour
 			newPos += (int)DisplayPosition.NumPositions;
 		else
 			newPos = newPos % (int)DisplayPosition.NumPositions;
+		if (UDLRCameraController.Instance.GetCameraAnimators()[newPos] == null)
+			return position;
 		return (DisplayPosition)newPos;
 	}
 

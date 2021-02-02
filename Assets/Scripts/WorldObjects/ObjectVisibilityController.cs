@@ -82,10 +82,11 @@ public class ObjectVisibilityController : MonoBehaviour
 		if (UDLRCameraController.Instance != null)
 		{
 			CamAnimator[] animators = UDLRCameraController.Instance.GetCameraAnimators();
-			AddObjectToRevealList(animators[(int)CameraPanel.DisplayPosition.TopLeft].gameObject, ref camerasToReveal);
-			AddObjectToRevealList(animators[(int)CameraPanel.DisplayPosition.TopRight].gameObject, ref camerasToReveal);
-			AddObjectToRevealList(animators[(int)CameraPanel.DisplayPosition.BottomRight].gameObject, ref camerasToReveal);
-			AddObjectToRevealList(animators[(int)CameraPanel.DisplayPosition.BottomLeft].gameObject, ref camerasToReveal);
+			for (int i = 0; i < (int)CameraPanel.DisplayPosition.NumPositions; ++i)
+			{
+				if (animators[i] != null)
+					AddObjectToRevealList(animators[i].gameObject, ref camerasToReveal);
+			}
 		}
 		foreach (RotatorTriggerData rotator in levelData.rotators)
 		{
@@ -99,27 +100,30 @@ public class ObjectVisibilityController : MonoBehaviour
 		{
 			for (int panelPos = 0; panelPos < (int)CameraPanel.DisplayPosition.NumPositions; ++panelPos)
 			{
-				GameObject cube = Instantiate(playerCubePrefab, levelData.cubeStartPositions[panelPos], Quaternion.identity);
-				CubeController cubeController = cube.GetComponent<CubeController>();
-				Assert.IsNotNull(cubeController);
-				InputHandler.Instance.SetCubeController(panelPos, cubeController);
-				cubeController.associatedPanelPosition = (CameraPanel.DisplayPosition)panelPos;
-				cube.layer = LayerMask.NameToLayer(CameraPanel.PositionLayerNames[panelPos]);
-				AddObjectToRevealList(cube, ref mazeBlocksToReveal);
-				GameObject goal = Instantiate(goalCubePrefab, levelData.goalPositions[panelPos], Quaternion.identity);
-				MazeGoal goalController = goal.GetComponent<MazeGoal>();
-				Assert.IsNotNull(goalController);
-				goal.layer = LayerMask.NameToLayer(CameraPanel.PositionLayerNames[panelPos]);
-				AddObjectToRevealList(goal, ref mazeBlocksToReveal);
-				goalController.associatedDisplayPosition = (CameraPanel.DisplayPosition)panelPos;
-				if (UDLRCameraController.Instance != null)
+				if (UDLRCameraController.Instance.GetCameraAnimators()[panelPos] != null)
 				{
-					MeshRenderer meshRenderer = cube.GetComponent<MeshRenderer>();
-					if (meshRenderer != null)
-						meshRenderer.material.SetColor("_EmissionColor", UDLRCameraController.Instance.GetCameraAnimators()[panelPos].GetCamObjColour());
-					MeshRenderer goalMeshRenderer = goal.GetComponent<MeshRenderer>();
-					if (goalMeshRenderer != null)
-						goalMeshRenderer.material.SetColor("_EmissionColor", UDLRCameraController.Instance.GetCameraAnimators()[panelPos].GetCamObjColour());
+					GameObject cube = Instantiate(playerCubePrefab, levelData.cubeStartPositions[panelPos], Quaternion.identity);
+					CubeController cubeController = cube.GetComponent<CubeController>();
+					Assert.IsNotNull(cubeController);
+					InputHandler.Instance.SetCubeController(panelPos, cubeController);
+					cubeController.associatedPanelPosition = (CameraPanel.DisplayPosition)panelPos;
+					cube.layer = LayerMask.NameToLayer(CameraPanel.PositionLayerNames[panelPos]);
+					AddObjectToRevealList(cube, ref mazeBlocksToReveal);
+					GameObject goal = Instantiate(goalCubePrefab, levelData.goalPositions[panelPos], Quaternion.identity);
+					MazeGoal goalController = goal.GetComponent<MazeGoal>();
+					Assert.IsNotNull(goalController);
+					goal.layer = LayerMask.NameToLayer(CameraPanel.PositionLayerNames[panelPos]);
+					AddObjectToRevealList(goal, ref mazeBlocksToReveal);
+					goalController.associatedDisplayPosition = (CameraPanel.DisplayPosition)panelPos;
+					if (UDLRCameraController.Instance != null)
+					{
+						MeshRenderer meshRenderer = cube.GetComponent<MeshRenderer>();
+						if (meshRenderer != null)
+							meshRenderer.material.SetColor("_EmissionColor", UDLRCameraController.Instance.GetCameraAnimators()[panelPos].GetCamObjColour());
+						MeshRenderer goalMeshRenderer = goal.GetComponent<MeshRenderer>();
+						if (goalMeshRenderer != null)
+							goalMeshRenderer.material.SetColor("_EmissionColor", UDLRCameraController.Instance.GetCameraAnimators()[panelPos].GetCamObjColour());
+					}
 				}
 			}
 		}

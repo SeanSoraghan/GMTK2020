@@ -123,72 +123,78 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &1085676958
-PrefabInstance:
+--- !u!4 &2206220892356390130
+Transform:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 119650629642279117, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_Name
-      value: LevelController
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967556620854917921, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7928161b632f4be43afb4ed05adc1211, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3898400584929251102}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3898400584929251102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2206220892356390130}
+  - component: {fileID: 7103992921481331158}
+  - component: {fileID: 6068545711538411816}
+  m_Layer: 0
+  m_Name: LevelController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &6068545711538411816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3898400584929251102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abb332d508534014abb98fba90b938bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goalCubePrefab: {fileID: 6130463442458217897, guid: 980b0b1b15ffdd04a8822e4e4e8e7994,
+    type: 3}
+  playerCubePrefab: {fileID: 9057767762053674604, guid: e7913c3a13dd65b44891d1f2d039a445,
+    type: 3}
+  rotatorCubePrefab: {fileID: 3299260755511506523, guid: 1214d63ebd52e5c4192839bcd1758f37,
+    type: 3}
+  panelRevealDelay: 0.2
+  camRevealDelay: 0.3
+  initialRevealTime: 0.2
+  revealDelayGrowth: 1.6
+  maxRevealDelay: 0.25
+--- !u!114 &7103992921481331158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3898400584929251102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe54aa5d9ee33b418a0f0706d5bf7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelCollection: {fileID: 11400000, guid: 543067e81fab4c84bb0217009aa9300a, type: 2}
+  worldSettings: {fileID: 11400000, guid: d0439952683397e4692e356d9ba54249, type: 2}
+  inputHandlerPrefab: {fileID: 7358183079344923782, guid: 6e45b09cd391db14dad311ba73f7645c,
+    type: 3}
+  udlrCamControllerPrefab: {fileID: 7349384466021854872, guid: 7a28044d420709443a8ddb589ab96660,
+    type: 3}
+  mazeLineCubePrefab: {fileID: 4635258746213430416, guid: 31d477c463df77340adbbe56e04f450a,
+    type: 3}

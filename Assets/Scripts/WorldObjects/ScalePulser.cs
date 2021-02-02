@@ -46,7 +46,6 @@ public class ScalePulser : MonoBehaviour
 	// scale will pulse out (or in) to startScale * pulseScale and back again.
 	float pulseScale = 1.1f;
 
-	// Start is called before the first frame update
 	void Awake()
     {
 		animCurveAttack.animationTimeSeconds = PulseAttackTime;

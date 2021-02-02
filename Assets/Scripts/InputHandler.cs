@@ -70,7 +70,7 @@ public class InputHandler : MonoBehaviour
 	{
 		if (Instance != null)
 			foreach (CubeController cube in Instance.cubeControllers)
-				if (cube != notThisCube && Vector3.Distance(cube.transform.position, positionToCheck) <= thisClose)
+				if (cube != null && cube != notThisCube && Vector3.Distance(cube.transform.position, positionToCheck) <= thisClose)
 					return true;
 		return false;
 	}

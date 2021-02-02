@@ -11,6 +11,7 @@ public class UDLRCameraController : MonoBehaviour
 
 	public delegate void SelectedCameraChanged(CamAnimator selectedCamera);
 	public event SelectedCameraChanged OnSelectedCameraChanged;
+	public CameraPanel.DisplayPosition initialSelectedPosition = CameraPanel.DisplayPosition.TopLeft;
 
 	CamAnimator[] cameraAnimators = { null, null, null, null };
 	CameraPanel.DisplayPosition _selectedPosition = CameraPanel.DisplayPosition.TopLeft;
@@ -23,38 +24,44 @@ public class UDLRCameraController : MonoBehaviour
 			Vector3 selectedCamPosition = Vector3.zero;
 			foreach (CamAnimator cam in cameraAnimators)
 			{
-				CameraPanel panel = cam.CameraPanel;
-				if (panel.camPosition == value)
+				if (cam != null)
 				{
-					selectedCamPosition = cam.transform.position;
+					CameraPanel panel = cam.CameraPanel;
+					if (panel.camPosition == value)
+					{
+						selectedCamPosition = cam.transform.position;
+					}
 				}
 			}
 			foreach (CamAnimator cam in cameraAnimators)
 			{
-				CameraPanel panel = cam.CameraPanel;
-				ScalePulser pulser = cam.GetCameraPulser();
-				if (pulser != null)
-					pulser.StopLooping();
-				MeshRenderer camObjRenderer = cam.GetCameraObjectRenderer();
-				panel.IsSelected = false;
-				if (panel.camPosition == value)
+				if (cam != null)
 				{
-					panel.IsSelected = true;
-					if (pulser != null && LevelController.AreAllObjectsRevealed())
-						pulser.StartLooping();
-				}
-				if (camObjRenderer != null)
-				{
-					if (panel.IsSelected)
+					CameraPanel panel = cam.CameraPanel;
+					ScalePulser pulser = cam.GetCameraPulser();
+					if (pulser != null)
+						pulser.StopLooping();
+					MeshRenderer camObjRenderer = cam.GetCameraObjectRenderer();
+					panel.IsSelected = false;
+					if (panel.camPosition == value)
 					{
-						Color fillColor = camObjRenderer.material.GetColor("_EmissionColor");
-						var fillColorArray = frameTexture.GetPixels();
-						for (var i = 0; i < fillColorArray.Length; ++i)
+						panel.IsSelected = true;
+						if (pulser != null && LevelController.AreAllObjectsRevealed())
+							pulser.StartLooping();
+					}
+					if (camObjRenderer != null)
+					{
+						if (panel.IsSelected)
 						{
-							fillColorArray[i] = fillColor;
+							Color fillColor = camObjRenderer.material.GetColor("_EmissionColor");
+							var fillColorArray = frameTexture.GetPixels();
+							for (var i = 0; i < fillColorArray.Length; ++i)
+							{
+								fillColorArray[i] = fillColor;
+							}
+							frameTexture.SetPixels(fillColorArray);
+							frameTexture.Apply();
 						}
-						frameTexture.SetPixels(fillColorArray);
-						frameTexture.Apply();
 					}
 				}
 				
@@ -86,15 +93,17 @@ public class UDLRCameraController : MonoBehaviour
 		CamAnimator[] camAnims = GetComponentsInChildren<CamAnimator>();
 		foreach(CamAnimator camAnimator in camAnims)
 		{
-			cameraAnimators.SetValue(camAnimator, (int)camAnimator.CameraPanel.camPosition);
+			if (camAnimator != null)
+			{
+				cameraAnimators.SetValue(camAnimator, (int)camAnimator.CameraPanel.camPosition);
+			}
 		}
 	}
 
-	// Start is called before the first frame update
 	void Start()
     {
 		Assert.IsTrue(cameraAnimators.Length == 4);
-		SelectCameraImmediate(CameraPanel.DisplayPosition.TopLeft);
+		SelectCameraImmediate(initialSelectedPosition);
 	}
 
 	public void ResetCameraPositions()
@@ -117,7 +126,7 @@ public class UDLRCameraController : MonoBehaviour
 			return;
 		foreach (CamAnimator camAnimator in Instance.cameraAnimators)
 		{
-			camAnimator.rotator.StartArc(relativeTransform, arcType, Vector3.zero, motionType);
+			camAnimator?.rotator.StartArc(relativeTransform, arcType, Vector3.zero, motionType);
 		}
 	}
 
@@ -128,9 +137,12 @@ public class UDLRCameraController : MonoBehaviour
 
 		foreach (CamAnimator cam in Instance.cameraAnimators)
 		{
-			CameraPanel panel = cam.CameraPanel;
-			if (panel.camPosition == Instance.selectedPosition)
-				return cam;
+			if (cam != null)
+			{
+				CameraPanel panel = cam.CameraPanel;
+				if (panel.camPosition == Instance.selectedPosition)
+					return cam;
+			}
 		}
 		Assert.IsTrue(false /* Found no selected camera! */);
 		return Instance.cameraAnimators[0];
