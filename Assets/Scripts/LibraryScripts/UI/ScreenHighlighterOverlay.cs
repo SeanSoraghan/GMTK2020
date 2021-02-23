@@ -7,6 +7,8 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 	public Vector2 highlightSectionCentre;
 	public Vector2 highlightSectionDimensions;
 
+	public Texture2D borderTexture;
+
 	private void OnGUI()
 	{
 		float sectionLeft = highlightSectionCentre.x - highlightSectionDimensions.x * 0.5f;
@@ -17,11 +19,14 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 		float insetBottomHeight = Mathf.Max(sectionBottom, 0.0f);
 		float insetRightWidth = Screen.width - sectionRight;
 		float insetTopHeight = sectionTop;
-		GUI.Box(new Rect(new Vector2(0.0f, 0.0f), new Vector2(insetLeftWidth, Screen.height)), "");
-		GUI.Box(new Rect(new Vector2(sectionLeft, 0.0f), new Vector2(highlightSectionDimensions.x + insetRightWidth, insetTopHeight)), "");
-		GUI.Box(new Rect(new Vector2(sectionRight, sectionTop), new Vector2(insetRightWidth, Screen.height - insetTopHeight)), "");
-		GUI.Box(new Rect(new Vector2(sectionLeft, sectionBottom), new Vector2(highlightSectionDimensions.x, Screen.height - sectionBottom)), "");
 
-		GUI.Box(new Rect(highlightSectionCentre - highlightSectionDimensions * 0.5f, highlightSectionDimensions), "");
+		GUIStyle guiStyle = new GUIStyle();
+		guiStyle.normal.background = borderTexture;
+		GUI.Label(new Rect(new Vector2(0.0f, 0.0f), new Vector2(insetLeftWidth, Screen.height)), "", guiStyle);
+		GUI.Label(new Rect(new Vector2(sectionLeft, 0.0f), new Vector2(highlightSectionDimensions.x + insetRightWidth, insetTopHeight)), "", guiStyle);
+		GUI.Label(new Rect(new Vector2(sectionRight, sectionTop), new Vector2(insetRightWidth, Screen.height - insetTopHeight)), "", guiStyle);
+		GUI.Label(new Rect(new Vector2(sectionLeft, sectionBottom), new Vector2(highlightSectionDimensions.x, Screen.height - sectionBottom)), "", guiStyle);
+
+		//GUI.Label(new Rect(highlightSectionCentre - highlightSectionDimensions * 0.5f, highlightSectionDimensions), "");
 	}
 }

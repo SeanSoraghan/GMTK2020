@@ -123,21 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &2206220892356390130
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3898400584929251102}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3898400584929251102
+--- !u!1 &1067650698
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,56 +131,124 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2206220892356390130}
-  - component: {fileID: 7103992921481331158}
-  - component: {fileID: 6068545711538411816}
+  - component: {fileID: 1067650700}
+  - component: {fileID: 1067650699}
   m_Layer: 0
-  m_Name: LevelController
+  m_Name: Highlighter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6068545711538411816
+--- !u!114 &1067650699
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3898400584929251102}
+  m_GameObject: {fileID: 1067650698}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abb332d508534014abb98fba90b938bd, type: 3}
+  m_Script: {fileID: 11500000, guid: fcd678a20ee0aa34bab73588a067ea24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goalCubePrefab: {fileID: 6130463442458217897, guid: 980b0b1b15ffdd04a8822e4e4e8e7994,
-    type: 3}
-  playerCubePrefab: {fileID: 9057767762053674604, guid: e7913c3a13dd65b44891d1f2d039a445,
-    type: 3}
-  rotatorCubePrefab: {fileID: 3299260755511506523, guid: 1214d63ebd52e5c4192839bcd1758f37,
-    type: 3}
-  panelRevealDelay: 0.2
-  camRevealDelay: 0.3
-  initialRevealTime: 0.2
-  revealDelayGrowth: 1.6
-  maxRevealDelay: 0.25
---- !u!114 &7103992921481331158
-MonoBehaviour:
+  highlightSectionCentre: {x: 200, y: 200}
+  highlightSectionDimensions: {x: 100, y: 100}
+  borderTexture: {fileID: 2800000, guid: baf924f36e0733b48becbe24624950c1, type: 3}
+--- !u!4 &1067650700
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3898400584929251102}
+  m_GameObject: {fileID: 1067650698}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 370.86703, y: 252.49898, z: -126.85669}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1806698942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1806698945}
+  - component: {fileID: 1806698944}
+  - component: {fileID: 1806698943}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!81 &1806698943
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806698942}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfe54aa5d9ee33b418a0f0706d5bf7e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LevelCollection: {fileID: 11400000, guid: 543067e81fab4c84bb0217009aa9300a, type: 2}
-  worldSettings: {fileID: 11400000, guid: d0439952683397e4692e356d9ba54249, type: 2}
-  inputHandlerPrefab: {fileID: 7358183079344923782, guid: 6e45b09cd391db14dad311ba73f7645c,
-    type: 3}
-  udlrCamControllerPrefab: {fileID: 7349384466021854872, guid: 7a28044d420709443a8ddb589ab96660,
-    type: 3}
-  mazeLineCubePrefab: {fileID: 4635258746213430416, guid: 31d477c463df77340adbbe56e04f450a,
-    type: 3}
+--- !u!20 &1806698944
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806698942}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &1806698945
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806698942}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 370.86703, y: 252.49898, z: -126.85669}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
