@@ -36,7 +36,7 @@ public class AnimCurve
 	}
 
 	// Update is called once per frame
-	public void UpdateCurve(float deltaTime)
+	public bool UpdateCurve(float deltaTime)
     {
 		animLinearCounter += Time.deltaTime * animationSpeed;
 		animCurveCounter = animLinearCounter;
@@ -49,5 +49,53 @@ public class AnimCurve
 		portionThisFrame = (animCurveCounter - prevAnimCurveCounter) / remaining;
 
 		prevAnimCurveCounter = animCurveCounter;
+
+		return animLinearCounter >= 1.0f;
+	}
+}
+
+public class AnimatedValue
+{
+	public AnimCurve animCurve = new AnimCurve();
+	float _animTimeSeconds = 1.0f;
+	public float animTimeSeconds
+	{
+		get { return _animTimeSeconds; }
+		set
+		{
+			_animTimeSeconds = value;
+			animCurve.animationTimeSeconds = _animTimeSeconds;
+		}
+	}
+
+	public float start = 0.0f;
+	public float target = 0.0f;
+	public float value { private set; get; } = 0.0f;
+
+	public void Reset()
+	{
+		animCurve.Reset();
+		value = start;
+	}
+
+	public void SetTargetFromCurrent(float newTarget)
+	{
+		start = value;
+		target = newTarget;
+	}
+
+	public void SetStartAndTarget(float newStart, float newTarget)
+	{
+		start = newStart;
+		target = newTarget;
+	}
+
+	public bool Update(float deltaTime)
+	{
+		bool curveComplete = animCurve.UpdateCurve(deltaTime);
+		value = Mathf.Lerp(start, target, animCurve.animCurveCounter);
+		if (curveComplete)
+			value = target;
+		return curveComplete;
 	}
 }
