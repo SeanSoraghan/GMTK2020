@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1067650700}
   - component: {fileID: 1067650699}
+  - component: {fileID: 1067650701}
   m_Layer: 0
   m_Name: Highlighter
   m_TagString: Untagged
@@ -155,6 +156,8 @@ MonoBehaviour:
   highlightSectionCentre: {x: 200, y: 200}
   highlightSectionDimensions: {x: 100, y: 100}
   borderTexture: {fileID: 2800000, guid: baf924f36e0733b48becbe24624950c1, type: 3}
+  HighlightAnimationTimeSeconds: 0.2
+  AnimMotionType: 1
 --- !u!4 &1067650700
 Transform:
   m_ObjectHideFlags: 0
@@ -169,6 +172,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1067650701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067650698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e3c541c351fe045b8a0ca765d618dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centres:
+  - {x: 100, y: 100}
+  - {x: 200, y: 500}
+  - {x: 100, y: 600}
+  - {x: 500, y: 500}
+  dims:
+  - {x: 100, y: 100}
+  - {x: 50, y: 200}
+  - {x: 200, y: 300}
+  - {x: 100, y: 150}
+  highlighter: {fileID: 0}
+  postHighlightPauseSeconds: 0.5
 --- !u!1 &1806698942
 GameObject:
   m_ObjectHideFlags: 0

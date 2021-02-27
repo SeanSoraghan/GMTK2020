@@ -27,10 +27,13 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 		}
 	}
 
+	public delegate void OnHighlightCompleteDelegate();
+	public event OnHighlightCompleteDelegate HighlightComplete;
+
 	public Vector2 highlightSectionCentre;
 	public Vector2 highlightSectionDimensions;
 
-	public Texture2D borderTexture;
+	public Color32 borderColour;
 
 	public float HighlightAnimationTimeSeconds = 2.0f;
 	public AnimCurve.MotionType AnimMotionType = AnimCurve.MotionType.Exponential;
@@ -39,7 +42,9 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 	AnimatedValue sectionRight = new AnimatedValue();
 	AnimatedValue sectionTop = new AnimatedValue();
 
-	public void HighlightSquare(Vector2 centre, Vector2 widthHeight)
+	GUIStyle guiStyle = new GUIStyle();
+
+	public void HighlightSquareFromScreenEdges(Vector2 centre, Vector2 widthHeight)
 	{
 		highlightSectionCentre = centre;
 		highlightSectionDimensions = widthHeight;
@@ -51,6 +56,28 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 		AnimState = AnimationState.Animating;
 	}
 
+	public void HighlightSquareFromCurrent(Vector2 centre, Vector2 widthHeight)
+	{
+		highlightSectionCentre = centre;
+		highlightSectionDimensions = widthHeight;
+		sectionLeft.SetTargetFromCurrent(highlightSectionCentre.x - highlightSectionDimensions.x * 0.5f);
+		sectionBottom.SetTargetFromCurrent(highlightSectionCentre.y + highlightSectionDimensions.y * 0.5f);
+		sectionRight.SetTargetFromCurrent(highlightSectionCentre.x + highlightSectionDimensions.x * 0.5f);
+		sectionTop.SetTargetFromCurrent(highlightSectionCentre.y - highlightSectionDimensions.y * 0.5f);
+
+		AnimState = AnimationState.Animating;
+	}
+
+	public void Retract()
+	{
+		sectionLeft.SetTargetFromCurrent(0.0f);
+		sectionBottom.SetTargetFromCurrent(Screen.height);
+		sectionRight.SetTargetFromCurrent(Screen.width);
+		sectionTop.SetTargetFromCurrent(0.0f);
+
+		AnimState = AnimationState.Animating;
+	}
+
 	private void Start()
 	{
 		sectionLeft.animTimeSeconds = HighlightAnimationTimeSeconds;
@@ -58,8 +85,10 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 		sectionRight.animTimeSeconds = HighlightAnimationTimeSeconds;
 		sectionTop.animTimeSeconds = HighlightAnimationTimeSeconds;
 
-		// Test
-		HighlightSquare(highlightSectionCentre, highlightSectionDimensions);
+		Texture2D texture = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+		texture.SetPixel(0, 0, borderColour);
+		texture.Apply();
+		guiStyle.normal.background = texture;
 	}
 
 	private void OnGUI()
@@ -69,8 +98,7 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 		float insetRightWidth = Screen.width - sectionRight.value;
 		float insetTopHeight = sectionTop.value;
 
-		GUIStyle guiStyle = new GUIStyle();
-		guiStyle.normal.background = borderTexture;
+		
 		// left
 		GUI.Label(new Rect(new Vector2(0.0f, 0.0f), new Vector2(insetLeftWidth, Screen.height)), "", guiStyle);
 		// top (minus left)
@@ -80,8 +108,6 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 		// bottom (minus left and right)
 		float w = Screen.width - sectionLeft.value - (Screen.width - sectionRight.value);
 		GUI.Label(new Rect(new Vector2(sectionLeft.value, sectionBottom.value), new Vector2(w, Screen.height - sectionBottom.value)), "", guiStyle);
-
-		//GUI.Label(new Rect(highlightSectionCentre - highlightSectionDimensions * 0.5f, highlightSectionDimensions), "");
 	}
 
 	private void FixedUpdate()
@@ -93,7 +119,10 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 			animComplete &= sectionBottom.Update(Time.deltaTime);
 			animComplete &= sectionRight.Update(Time.deltaTime);
 			if (animComplete)
+			{
 				AnimState = AnimationState.Idle;
+				HighlightComplete();
+			}
 		}
 	}
 }
