@@ -14,7 +14,6 @@ public class ObjectVisibilityController : MonoBehaviour
 		NumStates
 	}
 
-
 	public delegate void ObjectsRevealed();
 	public event ObjectsRevealed OnObjectsRevealed;
 
@@ -25,14 +24,11 @@ public class ObjectVisibilityController : MonoBehaviour
 
 	public float panelRevealDelay = 0.35f; 
 	public float camRevealDelay = 0.35f;
-	public float initialRevealTime = 0.2f;
-	public float revealDelayGrowth = 1.6f;
+	public float blocksInitialRevealDelay = 0.2f;
+	public float blocksRevealDelayGrowth = 1.6f;
 	public float maxRevealDelay = 0.5f;
 
-	List<GameObject> camerasToReveal = new List<GameObject>();
-	List<GameObject> mazeBlocksToReveal = new List<GameObject>();
-	float timeUntilNextReveal = 0.0f;
-	float timeSinceLastReveal = 0.0f;
+	public SerialObjectTaskTimer objectRevealTimer;
 
 	VisibilityState _visibilityState = VisibilityState.Revealed;
 	public VisibilityState visibilityState
@@ -41,32 +37,26 @@ public class ObjectVisibilityController : MonoBehaviour
 		set
 		{
 			_visibilityState = value;
-			if (_visibilityState == VisibilityState.RevealingCameras)
+			if (_visibilityState == VisibilityState.Revealed)
 			{
-				timeSinceLastReveal = 0.0f;
-				timeUntilNextReveal = camRevealDelay;
-			}
-			else if (_visibilityState == VisibilityState.RevealingObjects)
-			{
-				timeSinceLastReveal = 0.0f;
-				timeUntilNextReveal = initialRevealTime;
-			}
-			else if (_visibilityState == VisibilityState.RevealingPanel)
-			{
-				timeSinceLastReveal = 0.0f;
-				timeUntilNextReveal = panelRevealDelay;
-			}
-			else if (_visibilityState == VisibilityState.Revealed)
-			{
-				if (UDLRCameraController.Instance != null)
-				{
-					UDLRCameraController.Instance.panelController.enabled = true; // panel will be the last thing that gets displayed
-				}
 				OnObjectsRevealed?.Invoke();
 			}
 		}
 	}
 
+	private void Awake()
+	{
+		objectRevealTimer = gameObject.AddComponent<SerialObjectTaskTimer>();
+		objectRevealTimer.OnObjectPing += ObjectPing;
+		objectRevealTimer.OnBeginNewObjectsList += BeginningObjectRevealList;
+		objectRevealTimer.OnAllListsCompleted += AllRevealListsComplete;
+	}
+	private void OnDestroy()
+	{
+		objectRevealTimer.OnAllListsCompleted -= AllRevealListsComplete;
+		objectRevealTimer.OnBeginNewObjectsList -= BeginningObjectRevealList;
+		objectRevealTimer.OnObjectPing -= ObjectPing;
+	}
 	public void BeginObjectsReveal()
 	{
 		visibilityState = (VisibilityState)0;
@@ -79,13 +69,26 @@ public class ObjectVisibilityController : MonoBehaviour
 
 	public void SetupLevel(MazeLevel levelData)
 	{
+		objectRevealTimer.Clear();
+		objectRevealTimer.AddObjectList(new SerialObjectTaskTimer.ObjectTaskList(blocksInitialRevealDelay));
+		objectRevealTimer.AddObjectList(new SerialObjectTaskTimer.ObjectTaskList(camRevealDelay));
+		objectRevealTimer.AddObjectList(new SerialObjectTaskTimer.ObjectTaskList(panelRevealDelay));
+
 		if (UDLRCameraController.Instance != null)
 		{
 			CamAnimator[] animators = UDLRCameraController.Instance.GetCameraAnimators();
-			for (int i = 0; i < (int)CameraPanel.DisplayPosition.NumPositions; ++i)
+			CameraPanel.DisplayPosition[] camRevealOrder = { CameraPanel.DisplayPosition.TopLeft, CameraPanel.DisplayPosition.TopRight,
+															CameraPanel.DisplayPosition.BottomRight, CameraPanel.DisplayPosition.BottomLeft };
+			for (int i = 0; i < camRevealOrder.Length; ++i)
 			{
-				if (animators[i] != null)
-					AddObjectToRevealList(animators[i].gameObject, ref camerasToReveal);
+				foreach (CamAnimator camAnim in animators)
+				{
+					if (camAnim != null && camAnim.CameraPanel.camPosition == camRevealOrder[i])
+					{
+						HideObjectAndAddToRevealList(camAnim.gameObject, (int)VisibilityState.RevealingCameras);
+						break;
+					}
+				}
 			}
 		}
 		foreach (RotatorTriggerData rotator in levelData.rotators)
@@ -94,7 +97,7 @@ public class ObjectVisibilityController : MonoBehaviour
 			CameraRotatorTrigger rotatorTrigger = rotatorTriggerObj.GetComponent<CameraRotatorTrigger>();
 			if (rotatorTrigger != null)
 				rotatorTrigger.arcType = rotator.arcType;
-			AddObjectToRevealList(rotatorTriggerObj, ref mazeBlocksToReveal);
+			HideObjectAndAddToRevealList(rotatorTriggerObj, (int)VisibilityState.RevealingObjects);
 		}
 		if (InputHandler.Instance != null)
 		{
@@ -108,12 +111,12 @@ public class ObjectVisibilityController : MonoBehaviour
 					InputHandler.Instance.SetCubeController(panelPos, cubeController);
 					cubeController.associatedPanelPosition = (CameraPanel.DisplayPosition)panelPos;
 					cube.layer = LayerMask.NameToLayer(CameraPanel.PositionLayerNames[panelPos]);
-					AddObjectToRevealList(cube, ref mazeBlocksToReveal);
+					HideObjectAndAddToRevealList(cube, (int)VisibilityState.RevealingObjects);
 					GameObject goal = Instantiate(goalCubePrefab, levelData.goalPositions[panelPos], Quaternion.identity);
 					MazeGoal goalController = goal.GetComponent<MazeGoal>();
 					Assert.IsNotNull(goalController);
 					goal.layer = LayerMask.NameToLayer(CameraPanel.PositionLayerNames[panelPos]);
-					AddObjectToRevealList(goal, ref mazeBlocksToReveal);
+					HideObjectAndAddToRevealList(goal, (int)VisibilityState.RevealingObjects);
 					goalController.associatedDisplayPosition = (CameraPanel.DisplayPosition)panelPos;
 					if (UDLRCameraController.Instance != null)
 					{
@@ -129,67 +132,53 @@ public class ObjectVisibilityController : MonoBehaviour
 		}
 		if (UDLRCameraController.Instance != null)
 		{
-			UDLRCameraController.Instance.panelController.enabled = false; // panel will be the last thing that gets displayed
+			UDLRCameraController.Instance.panelController.enabled = false;
+			objectRevealTimer.AddObjectToObjectsList(UDLRCameraController.Instance.gameObject, (int)VisibilityState.RevealingPanel);
 		}
+		objectRevealTimer.BeginObjectTasks();
 	}
 
-	void AddObjectToRevealList(GameObject obj, ref List<GameObject> list)
+	void HideObjectAndAddToRevealList(GameObject obj, int listIndex)
 	{
 		if (obj != null)
 		{
 			obj.SetActive(false);
-			list.Add(obj);
+			objectRevealTimer.AddObjectToObjectsList(obj, listIndex);
 		}
 	}
 
-	private void Update()
+	void ObjectPing(GameObject obj)
 	{
-		if (visibilityState == VisibilityState.RevealingCameras && camerasToReveal.Count > 0)
+		if (objectRevealTimer.CurrentObjectList == (int)VisibilityState.RevealingObjects)
 		{
-			timeSinceLastReveal += Time.deltaTime;
-			if (timeSinceLastReveal >= timeUntilNextReveal)
-			{
-				timeSinceLastReveal = 0.0f;
-				camerasToReveal[0].SetActive(true);
-				CameraPanel camPanel = camerasToReveal[0].GetComponentInChildren<CameraPanel>();
-				if (camPanel != null)
-					camPanel.PostActivate();
-				camerasToReveal.RemoveAt(0);
-
-				if (camerasToReveal.Count == 0)
-				{
-					IncrementVisibilityState();
-				}
-			}
+			obj.SetActive(true);
+			float currentDelay = objectRevealTimer.objectLists[objectRevealTimer.CurrentObjectList].objectTaskDelay;
+			if (currentDelay < maxRevealDelay)
+				objectRevealTimer.SetListRevealDelay(objectRevealTimer.CurrentObjectList, Mathf.Clamp(currentDelay * blocksRevealDelayGrowth, 0.0f, maxRevealDelay));
 		}
-		if (visibilityState == VisibilityState.RevealingObjects && mazeBlocksToReveal.Count > 0)
+		else if (objectRevealTimer.CurrentObjectList == (int)VisibilityState.RevealingCameras)
 		{
-			timeSinceLastReveal += Time.deltaTime;
-			if (timeSinceLastReveal >= timeUntilNextReveal)
-			{
-				timeSinceLastReveal = 0.0f;
-				if (timeUntilNextReveal < maxRevealDelay)
-					timeUntilNextReveal = Mathf.Clamp(timeUntilNextReveal * revealDelayGrowth, 0.0f, maxRevealDelay);
-
-				mazeBlocksToReveal[0].SetActive(true);
-				mazeBlocksToReveal.RemoveAt(0);
-
-				if (mazeBlocksToReveal.Count == 0)
-				{
-					IncrementVisibilityState();
-				}
-			}
+			obj.SetActive(true);
+			CameraPanel camPanel = obj.GetComponentInChildren<CameraPanel>();
+			if (camPanel != null)
+				camPanel.PostActivate();
 		}
-		if (visibilityState == VisibilityState.RevealingPanel)
+		else if (objectRevealTimer.CurrentObjectList == (int)VisibilityState.RevealingPanel)
 		{
-			timeSinceLastReveal += Time.deltaTime;
-			if (timeSinceLastReveal >= timeUntilNextReveal)
+			if (UDLRCameraController.Instance != null)
 			{
-				timeSinceLastReveal = 0.0f;
-				IncrementVisibilityState();
+				UDLRCameraController.Instance.panelController.enabled = true;
 			}
 		}
 	}
 
-	void IncrementVisibilityState() { visibilityState = (VisibilityState)(((int)visibilityState + 1) % (int)VisibilityState.NumStates); }
+	void BeginningObjectRevealList()
+	{
+		visibilityState = (VisibilityState)objectRevealTimer.CurrentObjectList;
+	}
+
+	void AllRevealListsComplete()
+	{
+		visibilityState = VisibilityState.Revealed;
+	}
 }

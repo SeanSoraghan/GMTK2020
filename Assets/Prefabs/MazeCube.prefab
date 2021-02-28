@@ -59,6 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 425443132869812343}
   - component: {fileID: 1396039647986579481}
+  - component: {fileID: 6495448523451125943}
   m_Layer: 0
   m_Name: FrontUpLine
   m_TagString: Untagged
@@ -87,7 +88,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4716539292451818256}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 0
@@ -95,6 +96,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -177,6 +179,25 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!114 &6495448523451125943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4716539292451818256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978a74b5a74a7a446b6a954fc5cb3ea1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineDrawingSpeedUnitsPerSecond: 3
+  PointReachedThreshold: 0.1
+  LineThickness: 0.1
+  Positions:
+  - {x: -1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  textureName: White
 --- !u!1 &6266420827512225725
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,6 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6894128506686654469}
   - component: {fileID: 4900429375362865639}
+  - component: {fileID: 271111208400864694}
   m_Layer: 0
   m_Name: BackPlane
   m_TagString: Untagged
@@ -215,7 +237,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6266420827512225725}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 0
@@ -223,6 +245,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -307,6 +330,27 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!114 &271111208400864694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6266420827512225725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978a74b5a74a7a446b6a954fc5cb3ea1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineDrawingSpeedUnitsPerSecond: 3
+  PointReachedThreshold: 0.1
+  LineThickness: 0.1
+  Positions:
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: 1, z: -1}
+  - {x: 1, y: 1, z: -1}
+  - {x: 1, y: -1, z: -1}
+  textureName: White
 --- !u!1 &8240300516887143612
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6974474647529112762}
   - component: {fileID: 9038686694937077245}
+  - component: {fileID: 4295962182963513059}
   m_Layer: 0
   m_Name: RightPlane
   m_TagString: Untagged
@@ -345,7 +390,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8240300516887143612}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 0
@@ -353,6 +398,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -436,6 +482,26 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!114 &4295962182963513059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8240300516887143612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978a74b5a74a7a446b6a954fc5cb3ea1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineDrawingSpeedUnitsPerSecond: 3
+  PointReachedThreshold: 0.1
+  LineThickness: 0.1
+  Positions:
+  - {x: 1, y: 1, z: -1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: -1, z: 1}
+  textureName: White
 --- !u!1 &8271222518034684277
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 342852622942972369}
   - component: {fileID: 6370919999657052021}
+  - component: {fileID: 2663957590222865677}
   m_Layer: 0
   m_Name: LeftPlane
   m_TagString: Untagged
@@ -474,7 +541,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8271222518034684277}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 0
@@ -482,6 +549,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -565,6 +633,26 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!114 &2663957590222865677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8271222518034684277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978a74b5a74a7a446b6a954fc5cb3ea1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineDrawingSpeedUnitsPerSecond: 3
+  PointReachedThreshold: 0.1
+  LineThickness: 0.1
+  Positions:
+  - {x: -1, y: 1, z: -1}
+  - {x: -1, y: 1, z: 1}
+  - {x: -1, y: -1, z: 1}
+  textureName: White
 --- !u!1 &8867271866860688586
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,6 +663,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3176348269723312907}
   - component: {fileID: 9158177194182079419}
+  - component: {fileID: 3606076274398380667}
   m_Layer: 0
   m_Name: FloorPlane
   m_TagString: Untagged
@@ -603,7 +692,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8867271866860688586}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 0
@@ -611,6 +700,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -696,3 +786,25 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!114 &3606076274398380667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867271866860688586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978a74b5a74a7a446b6a954fc5cb3ea1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineDrawingSpeedUnitsPerSecond: 3
+  PointReachedThreshold: 0.1
+  LineThickness: 0.1
+  Positions:
+  - {x: -1, y: -1, z: -1}
+  - {x: 1, y: -1, z: -1}
+  - {x: 1, y: -1, z: 1}
+  - {x: -1, y: -1, z: 1}
+  - {x: -1, y: -1, z: -1}
+  textureName: White

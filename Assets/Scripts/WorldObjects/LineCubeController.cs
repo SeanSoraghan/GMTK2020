@@ -57,6 +57,18 @@ public class LineCubeController : MonoBehaviour
 				lineRenderer.SetPosition(p, pos * mult);
 			}
 		}
+		foreach (LineMeshRenderer lineMeshRenderer in GetComponentsInChildren<LineMeshRenderer>())
+		{
+			// Since we do this in the editor as well, we don't want to set the position once, then multiply it again every Awake for each PIE.
+			// So we set newExtent as target / current, and multiply by that.
+			float currentExtent = Mathf.Abs(lineMeshRenderer.Positions[0].x);
+			float mult = (LevelController.WORLD_CUBE_LIMIT + 0.5f) / currentExtent;
+			for (int p = 0; p < lineMeshRenderer.Positions.Count; ++p)
+			{
+				Vector3 pos = lineMeshRenderer.Positions[p];
+				lineMeshRenderer.Positions[p] = pos * mult;
+			}
+		}
     }
 
 	private void Start()
@@ -71,6 +83,11 @@ public class LineCubeController : MonoBehaviour
 			LevelController.Instance.OnMazeStateChanged += MazeStateChanged;
 			// Force update to the current maze state ... (a bit untidy).
 			MazeStateChanged(LevelController.GetMazeState());
+		}
+
+		foreach (LineMeshRenderer lineMeshRenderer in GetComponentsInChildren<LineMeshRenderer>())
+		{
+			lineMeshRenderer.BeginDrawingLine();
 		}
 	}
 

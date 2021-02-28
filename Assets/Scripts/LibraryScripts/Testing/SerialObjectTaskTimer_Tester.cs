@@ -11,8 +11,7 @@ public class SerialObjectTaskTimer_Tester : MonoBehaviour
         timer = gameObject.AddComponent<SerialObjectTaskTimer>();
         for (int listIndex = 0; listIndex < 5; ++listIndex)
         {
-            SerialObjectTaskTimer.ObjectTaskList objectList = new SerialObjectTaskTimer.ObjectTaskList();
-            objectList.objectTaskDelay = 0.1f + 0.1f * listIndex;
+            SerialObjectTaskTimer.ObjectTaskList objectList = new SerialObjectTaskTimer.ObjectTaskList(0.1f + 0.1f * listIndex);
             for (int objIndex = 0; objIndex < 5; ++objIndex)
             {
                 objectList.objects.Add(new GameObject("List " + listIndex + " Object " + objIndex));
@@ -20,7 +19,7 @@ public class SerialObjectTaskTimer_Tester : MonoBehaviour
             timer.AddObjectList(objectList);
         }
         timer.OnObjectPing += ObjectPing;
-        timer.OnObjectTasksCompleted += OnObjectsCompleted;
+        timer.OnAllListsCompleted += OnObjectsCompleted;
         timer.BeginObjectTasks();
     }
 

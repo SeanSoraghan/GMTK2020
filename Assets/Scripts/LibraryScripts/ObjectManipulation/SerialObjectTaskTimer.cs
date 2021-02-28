@@ -6,12 +6,27 @@ public class SerialObjectTaskTimer : MonoBehaviour
 {
     public class ObjectTaskList
     {
+        public ObjectTaskList(List<GameObject> objectsList, float delay)
+		{
+            objects = objectsList;
+            objectTaskDelay = delay;
+		}
+
+        public ObjectTaskList(float delay)
+        {
+            objects = new List<GameObject>();
+            objectTaskDelay = delay;
+        }
+
         public List<GameObject> objects = new List<GameObject>();
         public float objectTaskDelay;
     }
 
-    public delegate void ObjectTasksCompleted();
-    public event ObjectTasksCompleted OnObjectTasksCompleted;
+    public delegate void AllListsCompleted();
+    public event AllListsCompleted OnAllListsCompleted;
+
+    public delegate void StartingNewList();
+    public event StartingNewList OnBeginNewObjectsList;
 
     public delegate void ObjectTaskPing(GameObject obj);
     public event ObjectTaskPing OnObjectPing;
@@ -19,25 +34,43 @@ public class SerialObjectTaskTimer : MonoBehaviour
     float timeUntilNextTask = 0.0f;
     float timeSinceLastTask = 0.0f;
     int currentObjectList = 0;
-    int CurrentObjectList
+    public int CurrentObjectList
     {
         get
         {
             return currentObjectList;
         }
-        set
+        private set
         {
             currentObjectList = value;
             timeSinceLastTask = 0.0f;
             if (currentObjectList < objectLists.Count)
+            {
+                OnBeginNewObjectsList?.Invoke();
                 timeUntilNextTask = objectLists[currentObjectList].objectTaskDelay;
+            }
             else
-                OnObjectTasksCompleted?.Invoke();
+            {
+                OnAllListsCompleted?.Invoke();
+            }
         }
     }
 
-    readonly List<ObjectTaskList> objectLists = new List<ObjectTaskList>();
+    public readonly List<ObjectTaskList> objectLists = new List<ObjectTaskList>();
 
+    public void Clear()
+	{
+        foreach (ObjectTaskList list in objectLists)
+		{
+            list.objects.Clear();
+		}
+        objectLists.Clear();
+	}
+
+    public void SetListRevealDelay(int listIndex, float delay)
+	{
+        objectLists[listIndex].objectTaskDelay = delay;
+	}
     public void AddObjectList(ObjectTaskList objectList)
     {
         objectLists.Add(objectList);

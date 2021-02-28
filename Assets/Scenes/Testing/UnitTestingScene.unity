@@ -286,7 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LineDrawingSpeedUnitsPerSecond: 50
   PointReachedThreshold: 0.1
-  LineThickness: 0.1
+  LineThickness: 0.8
   Positions:
   - {x: 10, y: -10, z: -10}
   - {x: 10, y: -10, z: 10}
