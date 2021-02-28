@@ -24,3 +24,4 @@ MonoBehaviour:
   - {x: 1, y: -1, z: 1}
   - {x: -1, y: 1, z: -1}
   Rotators: []
+  InitialPanelPosition: 2
