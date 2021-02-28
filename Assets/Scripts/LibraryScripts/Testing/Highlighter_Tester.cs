@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Highlighter_Tester : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Highlighter_Tester : MonoBehaviour
     int highlightIndex = 0;
     void Start()
     {
+        highlighter = GetComponent<ScreenHighlighterOverlay>();
+        Assert.IsNotNull(highlighter);
         secondsSincePause = postHighlightPauseSeconds;
         highlighter.HighlightComplete += highlightComplete;
         highlighter.HighlightSquareFromScreenEdges(centres[0], dims[0]);
@@ -33,7 +36,7 @@ public class Highlighter_Tester : MonoBehaviour
         if (highlightIndex == centres.Count)
             highlighter.Retract();
         else
-            highlighter.HighlightSquareFromCurrent(centres[highlightIndex], dims[highlightIndex]);
+            highlighter.HighlightSquare(centres[highlightIndex], dims[highlightIndex]);
     }
 
 	private void Update()

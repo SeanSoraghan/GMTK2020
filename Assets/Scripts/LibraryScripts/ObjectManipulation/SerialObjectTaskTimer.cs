@@ -54,7 +54,7 @@ public class SerialObjectTaskTimer : MonoBehaviour
         return CurrentObjectList == objectLists.Count - 1;
     }
 
-    void AddObjectToObjectsList(GameObject obj, int listIndex)
+    public void AddObjectToObjectsList(GameObject obj, int listIndex)
     {
         if (obj != null && listIndex < objectLists.Count && listIndex >= 0)
         {

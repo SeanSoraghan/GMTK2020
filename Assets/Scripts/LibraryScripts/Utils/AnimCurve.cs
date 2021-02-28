@@ -99,3 +99,69 @@ public class AnimatedValue
 		return curveComplete;
 	}
 }
+
+public class InterpedValue
+{
+	public float start = 0.0f;
+	public float target = 0.0f;
+	public float value = 0.0f;
+}
+
+public class AnimatedValueList
+{
+	public AnimCurve animCurve = new AnimCurve();
+	float _animTimeSeconds = 1.0f;
+	public float animTimeSeconds
+	{
+		get { return _animTimeSeconds; }
+		set
+		{
+			_animTimeSeconds = value;
+			animCurve.animationTimeSeconds = _animTimeSeconds;
+		}
+	}
+
+	public List<InterpedValue> interpedValues = new List<InterpedValue>();
+
+	public void AddAnimatedValue(float start = 0.0f, float target = 0.0f)
+	{
+		interpedValues.Add(new InterpedValue());
+		interpedValues[interpedValues.Count - 1].start = start;
+		interpedValues[interpedValues.Count - 1].target = target;
+		interpedValues[interpedValues.Count - 1].value = start;
+	}
+
+	public void Reset()
+	{
+		animCurve.Reset();
+		for (int i = 0; i < interpedValues.Count; ++i)
+		{
+			interpedValues[i].value = interpedValues[i].start;
+		}
+	}
+
+	public void SetTargetFromCurrent(int index, float newTarget)
+	{
+		interpedValues[index].start = interpedValues[index].value;
+		interpedValues[index].target = newTarget;
+	}
+
+	public void SetStartAndTarget(int index, float newStart, float newTarget)
+	{
+		interpedValues[index].start = newStart;
+		interpedValues[index].target = newTarget;
+	}
+
+	public bool Update(float deltaTime)
+	{
+		bool curveComplete = animCurve.UpdateCurve(deltaTime);
+		foreach (InterpedValue interpedValue in interpedValues)
+		{
+			if (curveComplete)
+				interpedValue.value = interpedValue.target;
+			else
+				interpedValue.value = Mathf.Lerp(interpedValue.start, interpedValue.target, animCurve.animCurveCounter);
+		}
+		return curveComplete;
+	}
+}

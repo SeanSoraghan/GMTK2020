@@ -73,19 +73,17 @@ public class ScalePulser : MonoBehaviour
         switch (animState)
 		{
 			case AnimationState.Attack:
-				animCurveAttack.UpdateCurve(Time.deltaTime);
+				bool attackCurveComplete = animCurveAttack.UpdateCurve(Time.deltaTime);
 				float attackScale = Mathf.Lerp(1.0f, pulseScale, animCurveAttack.animCurveCounter);
 				transform.localScale = attackScale * startScale;
-				if (animCurveAttack.animLinearCounter >= 1.0f)
-				{
+				if (attackCurveComplete)
 					animState = AnimationState.Release;
-				}
 				break;
 			case AnimationState.Release:
-				animCurveRelease.UpdateCurve(Time.deltaTime);
+				bool releaseCurveComplete = animCurveRelease.UpdateCurve(Time.deltaTime);
 				float releaseScale = Mathf.Lerp(pulseScale, 1.0f, animCurveRelease.animCurveCounter);
 				transform.localScale = releaseScale * startScale;
-				if (animCurveRelease.animLinearCounter >= 1.0f)
+				if (releaseCurveComplete)
 				{
 					if (loop)
 						animState = AnimationState.Attack;

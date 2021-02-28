@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class ScreenHighlighterOverlay : MonoBehaviour
 {
+	public enum BorderSection
+	{
+		Left,
+		Right,
+		Top,
+		Bottom,
+		NumSections
+	}	
+
 	public enum AnimationState
 	{
 		Idle,
@@ -19,10 +28,7 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 			animState = value;
 			if (animState == AnimationState.Animating)
 			{
-				sectionLeft.Reset();
-				sectionRight.Reset();
-				sectionTop.Reset();
-				sectionBottom.Reset();
+				borderSectionLengths.Reset();
 			}
 		}
 	}
@@ -37,10 +43,7 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 
 	public float HighlightAnimationTimeSeconds = 2.0f;
 	public AnimCurve.MotionType AnimMotionType = AnimCurve.MotionType.Exponential;
-	AnimatedValue sectionLeft = new AnimatedValue();
-	AnimatedValue sectionBottom = new AnimatedValue();
-	AnimatedValue sectionRight = new AnimatedValue();
-	AnimatedValue sectionTop = new AnimatedValue();
+	AnimatedValueList borderSectionLengths = new AnimatedValueList();
 
 	GUIStyle guiStyle = new GUIStyle();
 
@@ -48,42 +51,44 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 	{
 		highlightSectionCentre = centre;
 		highlightSectionDimensions = widthHeight;
-		sectionLeft.SetStartAndTarget(0.0f, highlightSectionCentre.x - highlightSectionDimensions.x * 0.5f);
-		sectionBottom.SetStartAndTarget(Screen.height, highlightSectionCentre.y + highlightSectionDimensions.y * 0.5f);
-		sectionRight.SetStartAndTarget(Screen.width, highlightSectionCentre.x + highlightSectionDimensions.x * 0.5f);
-		sectionTop.SetStartAndTarget(0.0f, highlightSectionCentre.y - highlightSectionDimensions.y * 0.5f);
+		borderSectionLengths.SetStartAndTarget((int)BorderSection.Left, 0.0f, highlightSectionCentre.x - highlightSectionDimensions.x * 0.5f);
+		borderSectionLengths.SetStartAndTarget((int)BorderSection.Bottom, Screen.height, highlightSectionCentre.y + highlightSectionDimensions.y * 0.5f);
+		borderSectionLengths.SetStartAndTarget((int)BorderSection.Right, Screen.width, highlightSectionCentre.x + highlightSectionDimensions.x * 0.5f);
+		borderSectionLengths.SetStartAndTarget((int)BorderSection.Top, 0.0f, highlightSectionCentre.y - highlightSectionDimensions.y * 0.5f);
 
 		AnimState = AnimationState.Animating;
 	}
 
-	public void HighlightSquareFromCurrent(Vector2 centre, Vector2 widthHeight)
+	public void HighlightSquare(Vector2 centre, Vector2 widthHeight)
 	{
 		highlightSectionCentre = centre;
 		highlightSectionDimensions = widthHeight;
-		sectionLeft.SetTargetFromCurrent(highlightSectionCentre.x - highlightSectionDimensions.x * 0.5f);
-		sectionBottom.SetTargetFromCurrent(highlightSectionCentre.y + highlightSectionDimensions.y * 0.5f);
-		sectionRight.SetTargetFromCurrent(highlightSectionCentre.x + highlightSectionDimensions.x * 0.5f);
-		sectionTop.SetTargetFromCurrent(highlightSectionCentre.y - highlightSectionDimensions.y * 0.5f);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Left, highlightSectionCentre.x - highlightSectionDimensions.x * 0.5f);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Bottom, highlightSectionCentre.y + highlightSectionDimensions.y * 0.5f);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Right, highlightSectionCentre.x + highlightSectionDimensions.x * 0.5f);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Top, highlightSectionCentre.y - highlightSectionDimensions.y * 0.5f);
 
 		AnimState = AnimationState.Animating;
 	}
 
 	public void Retract()
 	{
-		sectionLeft.SetTargetFromCurrent(0.0f);
-		sectionBottom.SetTargetFromCurrent(Screen.height);
-		sectionRight.SetTargetFromCurrent(Screen.width);
-		sectionTop.SetTargetFromCurrent(0.0f);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Left, 0.0f);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Right, Screen.width);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Bottom, Screen.height);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Top, 0.0f);
 
 		AnimState = AnimationState.Animating;
 	}
-
-	private void Start()
+	private void Awake()
 	{
-		sectionLeft.animTimeSeconds = HighlightAnimationTimeSeconds;
-		sectionBottom.animTimeSeconds = HighlightAnimationTimeSeconds;
-		sectionRight.animTimeSeconds = HighlightAnimationTimeSeconds;
-		sectionTop.animTimeSeconds = HighlightAnimationTimeSeconds;
+		for (int section = 0; section < (int)BorderSection.NumSections; ++section)
+		{
+			borderSectionLengths.AddAnimatedValue();
+		}
+		borderSectionLengths.animTimeSeconds = HighlightAnimationTimeSeconds;
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Right, Screen.width);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Bottom, Screen.height);
 
 		Texture2D texture = new Texture2D(1, 1, TextureFormat.ARGB32, false);
 		texture.SetPixel(0, 0, borderColour);
@@ -91,33 +96,34 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 		guiStyle.normal.background = texture;
 	}
 
+	float sectionLeft() { return borderSectionLengths.interpedValues[(int)BorderSection.Left].value; }
+	float sectionRight() { return borderSectionLengths.interpedValues[(int)BorderSection.Right].value; }
+	float sectionTop() { return borderSectionLengths.interpedValues[(int)BorderSection.Top].value; }
+	float sectionBottom() { return borderSectionLengths.interpedValues[(int)BorderSection.Bottom].value; }
+
 	private void OnGUI()
 	{
-		float insetLeftWidth = Mathf.Max(sectionLeft.value, 0.0f);
-		float insetBottomHeight = Mathf.Max(sectionBottom.value, 0.0f);
-		float insetRightWidth = Screen.width - sectionRight.value;
-		float insetTopHeight = sectionTop.value;
+		float insetLeftWidth = Mathf.Max(sectionLeft(), 0.0f);
+		float insetRightWidth = Screen.width - sectionRight();
+		float insetTopHeight = sectionTop();
 
 		
 		// left
 		GUI.Label(new Rect(new Vector2(0.0f, 0.0f), new Vector2(insetLeftWidth, Screen.height)), "", guiStyle);
 		// top (minus left)
-		GUI.Label(new Rect(new Vector2(sectionLeft.value, 0.0f), new Vector2(Screen.width - sectionLeft.value, insetTopHeight)), "", guiStyle);
+		GUI.Label(new Rect(new Vector2(sectionLeft(), 0.0f), new Vector2(Screen.width - sectionLeft(), insetTopHeight)), "", guiStyle);
 		// right (minus bottom)
-		GUI.Label(new Rect(new Vector2(sectionRight.value, sectionTop.value), new Vector2(insetRightWidth, Screen.height - insetTopHeight)), "", guiStyle);
+		GUI.Label(new Rect(new Vector2(sectionRight(), sectionTop()), new Vector2(insetRightWidth, Screen.height - insetTopHeight)), "", guiStyle);
 		// bottom (minus left and right)
-		float w = Screen.width - sectionLeft.value - (Screen.width - sectionRight.value);
-		GUI.Label(new Rect(new Vector2(sectionLeft.value, sectionBottom.value), new Vector2(w, Screen.height - sectionBottom.value)), "", guiStyle);
+		float w = Screen.width - sectionLeft() - (Screen.width - sectionRight());
+		GUI.Label(new Rect(new Vector2(sectionLeft(), sectionBottom()), new Vector2(w, Screen.height - sectionBottom())), "", guiStyle);
 	}
 
 	private void FixedUpdate()
 	{
 		if (AnimState == AnimationState.Animating)
 		{
-			bool animComplete = sectionLeft.Update(Time.deltaTime);
-			animComplete &= sectionTop.Update(Time.deltaTime);
-			animComplete &= sectionBottom.Update(Time.deltaTime);
-			animComplete &= sectionRight.Update(Time.deltaTime);
+			bool animComplete = borderSectionLengths.Update(Time.deltaTime);
 			if (animComplete)
 			{
 				AnimState = AnimationState.Idle;
