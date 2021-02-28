@@ -23,10 +23,8 @@ public class LevelController : MonoBehaviour
 	}
 
 	public static LayoutMode layout = LayoutMode.PerspectiveCentre;
-	public static int WORLD_CUBE_LIMIT = 2;
 
 	public static LevelController Instance;
-
 	public MazeLevelCollection LevelCollection;
 	public WorldSettings worldSettings;
 	public GameObject inputHandlerPrefab;
@@ -40,7 +38,7 @@ public class LevelController : MonoBehaviour
 
 	ObjectVisibilityController visibilityController;
 
-	int levelIndex = 0;
+	public int levelIndex { get; private set; } = 0;
 
 	// A collection of components who have work to do during a maze state (e.g. animations and such).
 	// Mainly used with Starting and Finishing.
@@ -63,7 +61,7 @@ public class LevelController : MonoBehaviour
 				if (_mazeState == MazeState.Starting)
 				{
 					if (UDLRCameraController.Instance != null)
-						UDLRCameraController.Instance.SelectCameraImmediate(CameraPanel.DisplayPosition.TopLeft);
+						UDLRCameraController.Instance.SelectCameraImmediate(LevelCollection.levels[levelIndex].InitialPanelPosition);
 					for (int panelPos = 0; panelPos < (int)CameraPanel.DisplayPosition.NumPositions; ++panelPos)
 						targetsReachedStates[panelPos] = false;
 					visibilityController.BeginObjectsReveal();
@@ -92,7 +90,6 @@ public class LevelController : MonoBehaviour
 		visibilityController = GetComponent<ObjectVisibilityController>();
 		Assert.IsNotNull(visibilityController);
 
-		WORLD_CUBE_LIMIT = worldSettings.worldExtent;
 		layout = worldSettings.layoutMode;
 		Instantiate(inputHandlerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 		Instantiate(udlrCamControllerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -115,6 +112,10 @@ public class LevelController : MonoBehaviour
 		visibilityController.OnObjectsRevealed -= OnObjectsRevealed;
 	}
 
+	public MazeLevel GetCurrentLevel()
+	{
+		return LevelCollection.levels[levelIndex];
+	}
 	public static void SetCubeInTarget(CameraPanel.DisplayPosition position, bool reached)
 	{
 		if (Instance != null)
@@ -123,9 +124,12 @@ public class LevelController : MonoBehaviour
 			Instance.targetsReachedStates[(int)position] = reached;
 			if (reached)
 			{
-				foreach (bool positionReached in Instance.targetsReachedStates)
-					if (!positionReached)
-						return;
+				for (int i = 0; i < Instance.targetsReachedStates.Length; ++i)
+				{
+					if (Instance.LevelCollection.levels[Instance.levelIndex].cameraToggles[i])
+						if (!Instance.targetsReachedStates[i])
+							return;
+				}
 				SetMazeCompleted();
 			}
 		}

@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &1002006611
+--- !u!1001 &1488802435
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -192,15 +192,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6135733225253770757, guid: 7928161b632f4be43afb4ed05adc1211,
         type: 3}
-      propertyPath: worldSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: d0439952683397e4692e356d9ba54249,
-        type: 2}
-    - target: {fileID: 6135733225253770757, guid: 7928161b632f4be43afb4ed05adc1211,
-        type: 3}
       propertyPath: LevelCollection
       value: 
-      objectReference: {fileID: 11400000, guid: 543067e81fab4c84bb0217009aa9300a,
+      objectReference: {fileID: 11400000, guid: ca51385ed0b65944db14a9a1ebc727b9,
         type: 2}
     - target: {fileID: 6135733225253770757, guid: 7928161b632f4be43afb4ed05adc1211,
         type: 3}

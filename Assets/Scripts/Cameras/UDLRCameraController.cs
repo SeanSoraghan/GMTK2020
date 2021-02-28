@@ -11,8 +11,8 @@ public class UDLRCameraController : MonoBehaviour
 
 	public delegate void SelectedCameraChanged(CamAnimator selectedCamera);
 	public event SelectedCameraChanged OnSelectedCameraChanged;
-	public CameraPanel.DisplayPosition initialSelectedPosition = CameraPanel.DisplayPosition.TopLeft;
 
+	public GameObject[] CameraPrefabs = { null, null, null, null };
 	CamAnimator[] cameraAnimators = { null, null, null, null };
 	CameraPanel.DisplayPosition _selectedPosition = CameraPanel.DisplayPosition.TopLeft;
 	public UIPanel panelController { get; private set; }
@@ -90,12 +90,24 @@ public class UDLRCameraController : MonoBehaviour
 
 		panelController = GetComponent<UIPanel>();
 		Assert.IsNotNull(panelController);
-		CamAnimator[] camAnims = GetComponentsInChildren<CamAnimator>();
-		foreach(CamAnimator camAnimator in camAnims)
+		//CamAnimator[] camAnims = GetComponentsInChildren<CamAnimator>();
+		//foreach(CamAnimator camAnimator in camAnims)
+		//{
+		//	if (camAnimator != null)
+		//	{
+		//		cameraAnimators.SetValue(camAnimator, (int)camAnimator.CameraPanel.camPosition);
+		//	}
+		//}
+		for (CameraPanel.DisplayPosition camPos = 0; camPos < CameraPanel.DisplayPosition.NumPositions; ++camPos)
 		{
-			if (camAnimator != null)
+			if (LevelController.Instance.LevelCollection.levels[LevelController.Instance.levelIndex].cameraToggles[(int)camPos])
 			{
-				cameraAnimators.SetValue(camAnimator, (int)camAnimator.CameraPanel.camPosition);
+				GameObject camObj = Instantiate(CameraPrefabs[(int)camPos]);
+				camObj.transform.parent = gameObject.transform;
+				cameraAnimators[(int)camPos] = camObj.GetComponent<CamAnimator>();
+				GameObject camModel = camObj.GetComponentInChildren<ScalePulser>().gameObject;
+				Vector3 localPos = camModel.transform.localPosition;
+				camModel.transform.localPosition = new Vector3(localPos.x, localPos.y, LevelController.Instance.worldSettings.worldExtent);
 			}
 		}
 	}
@@ -103,7 +115,7 @@ public class UDLRCameraController : MonoBehaviour
 	void Start()
     {
 		Assert.IsTrue(cameraAnimators.Length == 4);
-		SelectCameraImmediate(initialSelectedPosition);
+		SelectCameraImmediate(LevelController.Instance.GetCurrentLevel().InitialPanelPosition);
 	}
 
 	public void ResetCameraPositions()

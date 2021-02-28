@@ -40,8 +40,6 @@ public class CameraPanel : MonoBehaviour
 		return (DisplayPosition)newPos;
 	}
 
-	public static float sideLengthRatio = 1.0f;
-
     public Camera cam;
 	public DisplayPosition camPosition;
 
@@ -67,9 +65,6 @@ public class CameraPanel : MonoBehaviour
 		}
 	}
 
-	
-
-    // Start is called before the first frame update
     void Start()
     {
 		switch (LevelController.layout)
@@ -104,6 +99,9 @@ public class CameraPanel : MonoBehaviour
 			float h = Screen.height;
 
 			float minDimension = w < h ? w : h;
+			float sideLengthRatio = 1.0f;
+			if (LevelController.Instance != null)
+				sideLengthRatio = LevelController.Instance.worldSettings.cameraViewportSidelength;
 			float maxNormedLength = 0.5f * sideLengthRatio;
 			sideLength = maxNormedLength * minDimension;
 			normedWidth = minDimension == w ? maxNormedLength : (sideLength / w);

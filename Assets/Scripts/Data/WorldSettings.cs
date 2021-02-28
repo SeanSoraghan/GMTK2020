@@ -10,4 +10,7 @@ public class WorldSettings : ScriptableObject
 
 	public LayoutMode layoutMode;
 	public int worldExtent;
+	[Range(0, 1)]
+	public float cameraViewportSidelength = 0.8f;
+	public int BackgroundCamFOV = 25;
 }

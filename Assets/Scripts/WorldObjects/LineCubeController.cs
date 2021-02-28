@@ -50,7 +50,7 @@ public class LineCubeController : MonoBehaviour
 			// Since we do this in the editor as well, we don't want to set the position once, then multiply it again every Awake for each PIE.
 			// So we set newExtent as target / current, and multiply by that.
 			float currentExtent = Mathf.Abs(lineRenderer.GetPosition(0).x);
-			float mult = (LevelController.WORLD_CUBE_LIMIT + 0.5f) / currentExtent;
+			float mult = (LevelController.Instance.worldSettings.worldExtent + 0.5f) / currentExtent;
 			for (int p = 0; p < lineRenderer.positionCount; ++p)
 			{
 				Vector3 pos = lineRenderer.GetPosition(p);
@@ -62,7 +62,7 @@ public class LineCubeController : MonoBehaviour
 			// Since we do this in the editor as well, we don't want to set the position once, then multiply it again every Awake for each PIE.
 			// So we set newExtent as target / current, and multiply by that.
 			float currentExtent = Mathf.Abs(lineMeshRenderer.Positions[0].x);
-			float mult = (LevelController.WORLD_CUBE_LIMIT + 0.5f) / currentExtent;
+			float mult = (LevelController.Instance.worldSettings.worldExtent + 0.5f) / currentExtent;
 			for (int p = 0; p < lineMeshRenderer.Positions.Count; ++p)
 			{
 				Vector3 pos = lineMeshRenderer.Positions[p];

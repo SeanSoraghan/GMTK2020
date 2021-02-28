@@ -122,7 +122,7 @@ public class CubeController : MonoBehaviour
 	{
 		// quick fix to get around seeming inaccuracies in float comparison
 		float eps = 0.05f;
-		float limit = LevelController.WORLD_CUBE_LIMIT + eps;
+		float limit = LevelController.Instance.worldSettings.worldExtent + eps;
 		Vector3 target = transform.position + direction;
 		if (Mathf.Abs(target.x) >= limit || Mathf.Abs(target.y) >= limit || Mathf.Abs(target.z) >= limit)
 			return false;

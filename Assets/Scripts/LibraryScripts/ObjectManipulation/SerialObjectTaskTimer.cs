@@ -103,9 +103,11 @@ public class SerialObjectTaskTimer : MonoBehaviour
             if (timeSinceLastTask >= timeUntilNextTask)
             {
                 timeSinceLastTask = 0.0f;
-                OnObjectPing?.Invoke(objectLists[CurrentObjectList].objects[0]);
-                objectLists[CurrentObjectList].objects.RemoveAt(0);
-
+                if (objectLists[currentObjectList].objects.Count > 0)
+                {
+                    OnObjectPing?.Invoke(objectLists[CurrentObjectList].objects[0]);
+                    objectLists[CurrentObjectList].objects.RemoveAt(0);
+                }
                 if (objectLists[CurrentObjectList].objects.Count == 0)
                 {
                     ++CurrentObjectList;

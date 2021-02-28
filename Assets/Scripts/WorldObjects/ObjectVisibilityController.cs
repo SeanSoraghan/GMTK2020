@@ -81,12 +81,15 @@ public class ObjectVisibilityController : MonoBehaviour
 															CameraPanel.DisplayPosition.BottomRight, CameraPanel.DisplayPosition.BottomLeft };
 			for (int i = 0; i < camRevealOrder.Length; ++i)
 			{
-				foreach (CamAnimator camAnim in animators)
+				if (LevelController.Instance.LevelCollection.levels[LevelController.Instance.levelIndex].cameraToggles[(int)camRevealOrder[i]])
 				{
-					if (camAnim != null && camAnim.CameraPanel.camPosition == camRevealOrder[i])
+					foreach (CamAnimator camAnim in animators)
 					{
-						HideObjectAndAddToRevealList(camAnim.gameObject, (int)VisibilityState.RevealingCameras);
-						break;
+						if (camAnim != null && camAnim.CameraPanel.camPosition == camRevealOrder[i])
+						{
+							HideObjectAndAddToRevealList(camAnim.gameObject, (int)VisibilityState.RevealingCameras);
+							break;
+						}
 					}
 				}
 			}
@@ -103,7 +106,7 @@ public class ObjectVisibilityController : MonoBehaviour
 		{
 			for (int panelPos = 0; panelPos < (int)CameraPanel.DisplayPosition.NumPositions; ++panelPos)
 			{
-				if (UDLRCameraController.Instance.GetCameraAnimators()[panelPos] != null)
+				if (LevelController.Instance.LevelCollection.levels[LevelController.Instance.levelIndex].cameraToggles[panelPos])
 				{
 					GameObject cube = Instantiate(playerCubePrefab, levelData.cubeStartPositions[panelPos], Quaternion.identity);
 					CubeController cubeController = cube.GetComponent<CubeController>();

@@ -21,7 +21,7 @@ public class WallSetup : MonoBehaviour
 		float f = fov * 0.5f;
 		float angle = 180.0f - (f + 90.0f);
 		float sinAngle = Mathf.Sin(Mathf.Deg2Rad * angle);
-		float upOverSinF = (LevelController.WORLD_CUBE_LIMIT * 2.0f + 1) / Mathf.Sin(Mathf.Deg2Rad * f);
+		float upOverSinF = (LevelController.Instance.worldSettings.worldExtent * 2.0f + 1) / Mathf.Sin(Mathf.Deg2Rad * f);
 		float length = sinAngle * upOverSinF;
 		Assert.IsTrue(Mathf.Approximately(upOverSinF, (length / sinAngle)));
 
@@ -61,7 +61,7 @@ public class WallSetup : MonoBehaviour
     void Awake()
     {
         Vector3 pos = transform.position;
-        float worldExtent = LevelController.WORLD_CUBE_LIMIT * 2 + offset;
+        float worldExtent = LevelController.Instance.worldSettings.worldExtent * 2 + offset;
         switch (direction)
 		{
             case WallPosition.Up:

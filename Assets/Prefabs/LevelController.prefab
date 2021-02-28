@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe54aa5d9ee33b418a0f0706d5bf7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CameraViewportSideLength: 0.7
   LevelCollection: {fileID: 11400000, guid: 543067e81fab4c84bb0217009aa9300a, type: 2}
   worldSettings: {fileID: 11400000, guid: d0439952683397e4692e356d9ba54249, type: 2}
   inputHandlerPrefab: {fileID: 7358183079344923782, guid: 6e45b09cd391db14dad311ba73f7645c,
@@ -72,6 +73,7 @@ MonoBehaviour:
     type: 3}
   panelRevealDelay: 0.2
   camRevealDelay: 0.3
-  initialRevealTime: 0.2
-  revealDelayGrowth: 1.6
+  blocksInitialRevealDelay: 0.2
+  blocksRevealDelayGrowth: 1.6
   maxRevealDelay: 0.25
+  objectRevealTimer: {fileID: 0}
