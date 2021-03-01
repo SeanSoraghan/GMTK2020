@@ -36,7 +36,7 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 	public delegate void OnHighlightCompleteDelegate();
 	public event OnHighlightCompleteDelegate HighlightComplete;
 
-	public Vector2 highlightSectionCentre;
+	public Vector2 highlightSectionTopLeft;
 	public Vector2 highlightSectionDimensions;
 
 	public Color32 borderColour;
@@ -47,26 +47,26 @@ public class ScreenHighlighterOverlay : MonoBehaviour
 
 	GUIStyle guiStyle = new GUIStyle();
 
-	public void HighlightSquareFromScreenEdges(Vector2 centre, Vector2 widthHeight)
+	public void HighlightSquareFromScreenEdges(Vector2 topLeft, Vector2 widthHeight)
 	{
-		highlightSectionCentre = centre;
+		highlightSectionTopLeft = topLeft;
 		highlightSectionDimensions = widthHeight;
-		borderSectionLengths.SetStartAndTarget((int)BorderSection.Left, 0.0f, highlightSectionCentre.x - highlightSectionDimensions.x * 0.5f);
-		borderSectionLengths.SetStartAndTarget((int)BorderSection.Bottom, Screen.height, highlightSectionCentre.y + highlightSectionDimensions.y * 0.5f);
-		borderSectionLengths.SetStartAndTarget((int)BorderSection.Right, Screen.width, highlightSectionCentre.x + highlightSectionDimensions.x * 0.5f);
-		borderSectionLengths.SetStartAndTarget((int)BorderSection.Top, 0.0f, highlightSectionCentre.y - highlightSectionDimensions.y * 0.5f);
+		borderSectionLengths.SetStartAndTarget((int)BorderSection.Left, 0.0f, highlightSectionTopLeft.x - highlightSectionDimensions.x * 0.5f);
+		borderSectionLengths.SetStartAndTarget((int)BorderSection.Bottom, Screen.height, highlightSectionTopLeft.y + highlightSectionDimensions.y * 0.5f);
+		borderSectionLengths.SetStartAndTarget((int)BorderSection.Right, Screen.width, highlightSectionTopLeft.x + highlightSectionDimensions.x * 0.5f);
+		borderSectionLengths.SetStartAndTarget((int)BorderSection.Top, 0.0f, highlightSectionTopLeft.y - highlightSectionDimensions.y * 0.5f);
 
 		AnimState = AnimationState.Animating;
 	}
 
-	public void HighlightSquare(Vector2 centre, Vector2 widthHeight)
+	public void HighlightSquare(Vector2 topLeft, Vector2 widthHeight)
 	{
-		highlightSectionCentre = centre;
+		highlightSectionTopLeft = topLeft;
 		highlightSectionDimensions = widthHeight;
-		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Left, highlightSectionCentre.x - highlightSectionDimensions.x * 0.5f);
-		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Bottom, highlightSectionCentre.y + highlightSectionDimensions.y * 0.5f);
-		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Right, highlightSectionCentre.x + highlightSectionDimensions.x * 0.5f);
-		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Top, highlightSectionCentre.y - highlightSectionDimensions.y * 0.5f);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Left, highlightSectionTopLeft.x - highlightSectionDimensions.x * 0.5f);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Bottom, highlightSectionTopLeft.y + highlightSectionDimensions.y * 0.5f);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Right, highlightSectionTopLeft.x + highlightSectionDimensions.x * 0.5f);
+		borderSectionLengths.SetTargetFromCurrent((int)BorderSection.Top, highlightSectionTopLeft.y - highlightSectionDimensions.y * 0.5f);
 
 		AnimState = AnimationState.Animating;
 	}

@@ -182,7 +182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &98606133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,7 +203,8 @@ MonoBehaviour:
   margin: 16
   labelText: Hello world
   alignment: 4
-  screenPos: {x: 100, y: 100}
+  screenPosTopLeft: {x: 0, y: 0}
+  showLabel: 1
 --- !u!4 &98606134
 Transform:
   m_ObjectHideFlags: 0
@@ -217,6 +218,78 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &724021347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 724021350}
+  - component: {fileID: 724021349}
+  - component: {fileID: 724021348}
+  m_Layer: 0
+  m_Name: LabelPopout
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &724021348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724021347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96bd5ce82c8ad6d4d9afa9cec4d281eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popOutFrom: {x: 500, y: 500}
+  horizontalDirection: 0
+  verticalDirection: 0
+  popoutTimeSeconds: 0.5
+  limitsHorizontal: {x: 0, y: 0}
+  limitsVertical: {x: 0, y: 0}
+--- !u!114 &724021349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724021347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23de65cee856b724689dbcf0fa42c914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  labelBackgroundColour:
+    serializedVersion: 2
+    rgba: 2446085243
+  fontSize: 60
+  margin: 5
+  labelText: Popout my popout yo
+  alignment: 0
+  screenPosTopLeft: {x: 0, y: 0}
+  showLabel: 1
+--- !u!4 &724021350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724021347}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -253.81668, y: -265.48865, z: -117.36096}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1067650698
 GameObject:
@@ -248,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd678a20ee0aa34bab73588a067ea24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightSectionCentre: {x: 200, y: 200}
+  highlightSectionTopLeft: {x: 0, y: 0}
   highlightSectionDimensions: {x: 100, y: 100}
   borderColour:
     serializedVersion: 2
@@ -282,7 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centres:
-  - {x: 100, y: 100}
+  - {x: 0, y: 0}
   - {x: 200, y: 500}
   - {x: 100, y: 600}
   - {x: 500, y: 500}

@@ -10,9 +10,11 @@ public class InfoLabelController : MonoBehaviour
     public int margin = 5;
     public string labelText;
     public TextAnchor alignment;
-    public Vector2Int screenPos;
-    GUIStyle guiStyle;
-    Vector2 textSize;
+    public Vector2Int screenPosTopLeft;
+    public bool showLabel = true;
+    public GUIStyle guiStyle { get; private set; }
+    public Vector2 textSize { get; private set; }
+    public Vector2 GetLabelSize() { return textSize + new Vector2(margin * 2, margin * 2); }
 
     void Awake()
     {
@@ -29,6 +31,7 @@ public class InfoLabelController : MonoBehaviour
 
 	private void OnGUI()
 	{
-        GUI.Label(new Rect(screenPos, textSize + new Vector2(margin, margin)), labelText, guiStyle);
+        if (showLabel)
+            GUI.Label(new Rect(screenPosTopLeft, textSize + new Vector2(margin, margin)), labelText, guiStyle);
     }
 }
